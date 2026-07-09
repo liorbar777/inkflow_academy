@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>通書 Tong Shu Academy of Calligraphy — Chinese Calligraphy & Brush Arts · Chengdu</title>
+<title>墨流 Inkflow Academy — Chinese Calligraphy & Brush Arts · Chengdu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Hanken+Grotesk:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
@@ -13,8 +13,10 @@
   --dark:#0C0A18;  --on-ink:#F0E8D5; --muted:#6A6258; --wash:#D8CFBA;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:auto}
-body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;overflow-x:hidden}
+html{scroll-behavior:auto;
+  cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='52'><line x1='28' y1='2' x2='10' y2='36' stroke='%23C9A028' stroke-width='4' stroke-linecap='round' opacity='0.9'/><rect x='8' y='34' width='6' height='5' rx='1' fill='%237A4F00' transform='rotate(-35 11 36)'/><path d='M6 40 L14 37 L5 52 Z' fill='%23C9A028'/><path d='M8 44 L11 41 L6 52 Z' fill='%23F0D878' opacity='0.5'/></svg>") 5 51, auto}
+body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;overflow-x:hidden;
+  color-scheme:dark}
 
 /* ── LIVE CALLIGRAPHY BACKGROUND ── */
 #bgLayer{
@@ -45,24 +47,46 @@ body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-
 
 /* progress */
 #progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:600}
-#pBar{height:100%;width:0;background:var(--seal)}
+#pBar{height:100%;width:0;background:var(--gold)}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.3rem 3.5rem;
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.7rem 3.5rem;
   display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s}
 nav.on{background:rgba(12,10,24,.94);backdrop-filter:blur(18px)}
-.logo{font-family:'Noto Serif SC',serif;font-size:1.1rem;font-weight:700;color:var(--gold);
-  text-decoration:none;letter-spacing:.05em;display:flex;align-items:center;gap:.65rem}
-.logo em{font-style:normal;font-family:'Hanken Grotesk',sans-serif;font-size:.68rem;
-  color:rgba(240,232,213,.45);font-weight:300;letter-spacing:.16em;text-transform:uppercase}
-.nav-ul{display:flex;gap:2rem;list-style:none}
-.nav-ul a{color:rgba(240,232,213,.5);text-decoration:none;font-size:.68rem;
+.logo{font-family:'Noto Serif SC',serif;font-size:1.45rem;font-weight:700;color:var(--gold);
+  text-decoration:none;letter-spacing:.05em;display:flex;align-items:center;gap:.75rem}
+.logo em{font-style:normal;font-family:'Hanken Grotesk',sans-serif;font-size:.75rem;
+  color:rgba(240,232,213,.65);font-weight:400;letter-spacing:.18em;text-transform:uppercase}
+.nav-ul{display:flex;gap:2rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-ul a{color:rgba(240,232,213,.5);text-decoration:none;font-size:.76rem;
   letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:color .2s}
 .nav-ul a:hover{color:var(--gold)}
 .nav-ul .cta{color:var(--gold);border:1px solid rgba(201,160,40,.35);padding:.38rem 1.1rem}
 .nav-ul .cta:hover{background:var(--gold);color:var(--dark)}
 
+/* ── SOUND TOGGLE ── */
+.sound-btn{background:none;border:none;cursor:pointer;padding:.1rem .2rem;
+  display:flex;align-items:center;color:rgba(240,232,213,.35);transition:color .25s}
+.sound-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sound-btn:hover{color:rgba(240,232,213,.7)}
+.sound-btn.on{color:var(--gold)}
+@keyframes soundPulse{0%,100%{opacity:.75}50%{opacity:1}}
+.sound-btn.on{animation:soundPulse 2.8s ease-in-out infinite}
+
 /* ── CART ICON ── */
+.lang-btn{background:none;border:none;cursor:pointer;
+  flex-shrink:0;padding:.2rem .45rem;border-radius:4px;
+  display:inline-flex;align-items:center;gap:.32rem;
+  color:rgba(240,232,213,.6);border:1px solid rgba(240,232,213,.18);
+  transition:color .2s,border-color .2s}
+.lang-btn:hover{color:rgba(240,232,213,.95);border-color:rgba(240,232,213,.4)}
+.lang-flag{font-size:1.3rem;line-height:1;display:inline-block;width:1.4em;text-align:center}
+.lang-code{font-family:'Hanken Grotesk',sans-serif;font-size:.85rem;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;display:inline-block;width:1.6em;text-align:center}
+html.lang-zh .ig-body,html.lang-zh .os-body,html.lang-zh .tc-quote,
+html.lang-zh .cc-desc,html.lang-zh .faq-a p,html.lang-zh .sp-desc,
+html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Serif SC',serif}
 .cart-btn{position:relative;background:none;border:none;cursor:pointer;padding:.3rem .4rem;
   display:flex;align-items:center;color:rgba(240,232,213,.55);transition:color .2s;margin-left:.5rem}
 .cart-btn:hover{color:var(--gold)}
@@ -342,12 +366,12 @@ section,div[class*="section"]{position:relative;z-index:1}
   cursor:pointer;transition:color .2s;line-height:1;padding:.2rem .4rem}
 #lbClose:hover{color:#fff}
 #lbPrev,#lbNext{position:absolute;top:50%;transform:translateY(-50%);
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.75);width:50px;height:50px;border-radius:50%;
+  background:rgba(201,160,40,.08);border:1px solid rgba(201,160,40,.3);
+  color:var(--gold);width:50px;height:50px;border-radius:50%;
   font-size:1.6rem;cursor:pointer;transition:all .2s;
   display:flex;align-items:center;justify-content:center}
 #lbPrev{left:2rem}#lbNext{right:2rem}
-#lbPrev:hover,#lbNext:hover{background:rgba(255,255,255,.16);color:#fff}
+#lbPrev:hover,#lbNext:hover{background:rgba(201,160,40,.18);color:#f0d87a;border-color:rgba(201,160,40,.6)}
 
 /* ── VIDEO SECTION ── */
 .vs{padding:6rem 0 5rem;background:var(--dark);position:relative;overflow:hidden;text-align:center}
@@ -362,7 +386,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   position:relative;width:100%;padding-top:56.25%;
   border-radius:16px;overflow:hidden;
   box-shadow:0 32px 80px rgba(0,0,0,.7),0 0 0 1px rgba(201,160,40,.12);
-  cursor:pointer;user-select:none}
+  cursor:inherit;user-select:none}
 
 .vs-thumb{position:absolute;inset:0;background:#0c0a18;overflow:hidden}
 .vs-slides{position:absolute;inset:0}
@@ -507,6 +531,8 @@ section,div[class*="section"]{position:relative;z-index:1}
 .cc:hover{border-color:rgba(16,14,28,.22)}
 .cc:hover{background:#E8DFC8}
 .cc.selected{background:#EDE3CC;box-shadow:inset 0 0 0 2px var(--seal)}
+@keyframes ccShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.cc.needs-pick{animation:ccShake .45s ease;box-shadow:inset 0 0 0 1.5px var(--seal)}
 .cc-check{position:absolute;top:1rem;right:1rem;width:22px;height:22px;border-radius:50%;
   border:1.5px solid rgba(16,14,28,.2);display:flex;align-items:center;justify-content:center;
   transition:background .2s,border-color .2s;flex-shrink:0}
@@ -559,20 +585,40 @@ section,div[class*="section"]{position:relative;z-index:1}
 .faq-item.open .faq-a{max-height:160px}
 .faq-a p{padding-bottom:1.2rem;font-size:.83rem;line-height:1.8;color:var(--muted)}
 
-/* ── MINIMAL FOOTER BAR ── */
-.foot-bar{
-  background:var(--dark);padding:1.4rem 3.5rem;
-  display:flex;align-items:center;justify-content:space-between;
-  border-top:1px solid rgba(201,160,40,.08);position:relative;z-index:1;
+/* ── FOOTER ── */
+.site-footer{background:#08060f;border-top:1px solid rgba(201,160,40,.1);padding:5rem 3.5rem 2.5rem;position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1100px;margin:0 auto 3.5rem}
+.footer-brand .foot-logo{font-family:'Noto Serif SC',serif;font-size:1.25rem;font-weight:700;
+  color:var(--gold);text-decoration:none;display:block;margin-bottom:.7rem}
+.footer-brand p{font-size:.78rem;color:rgba(240,232,213,.35);line-height:1.7;max-width:260px;margin-bottom:1.6rem}
+.footer-zh{font-family:'Noto Serif SC',serif;font-size:2.8rem;color:rgba(201,160,40,.06);
+  line-height:1;position:absolute;right:3.5rem;top:3rem;pointer-events:none;user-select:none}
+
+.foot-col-title{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(201,160,40,.55);font-weight:600;margin-bottom:1.2rem}
+.foot-contact-list{list-style:none;display:flex;flex-direction:column;gap:1.3rem}
+.foot-contact-list li{display:flex;align-items:flex-start;gap:.65rem}
+.foot-contact-list .ft-icon{font-size:.85rem;line-height:1.5;flex-shrink:0;opacity:.6}
+.foot-contact-list a,.foot-contact-list span{font-size:.78rem;color:rgba(240,232,213,.5);
+  text-decoration:none;line-height:1.5;transition:color .2s}
+.foot-contact-list a:hover{color:var(--gold)}
+
+.foot-nav-list{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+.foot-nav-list a{font-size:.76rem;color:rgba(240,232,213,.35);text-decoration:none;
+  letter-spacing:.08em;transition:color .2s}
+.foot-nav-list a:hover{color:var(--on-ink)}
+
+.foot-divider{border:none;border-top:1px solid rgba(255,255,255,.04);max-width:1100px;margin:0 auto 1.4rem}
+.foot-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.foot-copy{font-size:.62rem;color:rgba(240,232,213,.12);letter-spacing:.06em}
+.foot-made{font-size:.6rem;color:rgba(240,232,213,.1)}
+
+@media(max-width:700px){
+  .footer-grid{grid-template-columns:1fr;gap:2.2rem}
+  .site-footer{padding:3.5rem 1.5rem 2rem}
+  .footer-zh{display:none}
+  .foot-bottom{flex-direction:column;gap:.5rem;text-align:center}
 }
-.foot-bar-logo{font-family:'Noto Serif SC',serif;font-size:.9rem;font-weight:700;color:var(--gold);
-  text-decoration:none;cursor:pointer;transition:opacity .2s}
-.foot-bar-logo:hover{opacity:.75}
-.foot-bar-links{display:flex;gap:1.8rem;list-style:none}
-.foot-bar-links a{font-size:.64rem;color:rgba(240,232,213,.22);text-decoration:none;
-  letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
-.foot-bar-links a:hover{color:var(--on-ink)}
-.foot-bar-copy{font-size:.62rem;color:rgba(240,232,213,.1)}
 
 @media(max-width:768px){
   nav{padding:1rem 1.5rem}.nav-ul{display:none}
@@ -599,12 +645,14 @@ section,div[class*="section"]{position:relative;z-index:1}
 <div id="bgLayer"></div>
 
 <nav id="nav">
-  <a href="#" class="logo"><span>通書</span><em>Tong Shu Academy of Calligraphy</em></a>
+  <a href="#" class="logo"><span>墨流</span><em>Inkflow Academy of Calligraphy</em></a>
   <ul class="nav-ul">
     <li><a href="#our-story">Our Story</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#store">Store</a></li>
     <li><a href="#courses" class="cta">Book a Session</a></li>
+    <li><button class="lang-btn" id="langToggle" aria-label="Switch language"><span class="lang-flag">🇨🇳</span><span class="lang-code">CN</span></button></li>
+    <li><button class="sound-btn" id="soundToggle" title="Play ambient music" aria-label="Toggle ambient music"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button></li>
   </ul>
   <button class="cart-btn" id="cartToggle" aria-label="Open cart">
     <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -648,7 +696,7 @@ section,div[class*="section"]{position:relative;z-index:1}
          onerror="this.parentElement.style.display='none'">
   </div>
   <div class="hero-text" id="heroText">
-    <p class="h-school" id="hSchool">通書 · Tong Shu Academy of Calligraphy</p>
+    <p class="h-school" id="hSchool">墨流 · Inkflow Academy of Calligraphy</p>
     <h1 class="h-ti" id="hTi">Where the brush<br>still <strong>teaches</strong><br>the hand</h1>
   </div>
 </div>
@@ -660,7 +708,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div class="ig-text rv">
     <p class="ey">The Practice</p>
     <h2 class="sh sh-d">The brush knows<br>before you do</h2>
-    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision. At Tong Shu, students learn the tool before the stroke — because the brush carries intention long before the ink does.</p>
+    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision. At Inkflow, students learn the tool before the stroke — because the brush carries intention long before the ink does.</p>
     <a href="#courses" class="btn btn-outline-d" style="align-self:flex-start">View courses →</a>
   </div>
   <div class="slot" style="min-height:75vh;border-radius:0">
@@ -692,7 +740,7 @@ section,div[class*="section"]{position:relative;z-index:1}
           <svg class="vs-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </div>
       </div>
-      <div class="vs-label">Tong Shu Academy · Chengdu</div>
+      <div class="vs-label">Inkflow Academy · Chengdu</div>
       <div class="vs-bar" id="vsBar">
         <button class="vs-btn-sm" id="vsPlayPause" aria-label="Play / Pause">
           <svg class="vs-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -999,17 +1047,51 @@ section,div[class*="section"]{position:relative;z-index:1}
   </div>
 </section>
 
-<!-- ── MINIMAL FOOTER BAR ── -->
-<div class="foot-bar">
-  <a href="#" class="foot-bar-logo">通書 Tong Shu Academy of Calligraphy</a>
-  <ul class="foot-bar-links">
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="mailto:hello@tongshuacademy.com">hello@tongshuacademy.com</a></li>
-    <li><a href="#">Instagram</a></li>
-  </ul>
-  <span class="foot-bar-copy">© 2025 · Chengdu</span>
-</div>
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <span class="footer-zh" aria-hidden="true">通書</span>
+  <div class="footer-grid">
+
+    <!-- Brand -->
+    <div class="footer-brand">
+      <a href="#" class="foot-logo">通書 · Tong Shu Academy</a>
+      <p>A living lineage of Chinese calligraphy, rooted in Chengdu since 2004. Small groups, master teachers, ink that lasts.</p>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <p class="foot-col-title">Contact</p>
+      <ul class="foot-contact-list">
+        <li>
+          <span class="ft-icon">📍</span>
+          <span>21 Kuanzhai Alley, Qingyang District<br>Chengdu, Sichuan 610000</span>
+        </li>
+        <li>
+          <span class="ft-icon">✉</span>
+          <a href="mailto:hello@tongshuacademy.com">hello@tongshuacademy.com</a>
+        </li>
+        <li>
+          <span class="ft-icon">📞</span>
+          <a href="tel:+862887654321">+86 28 8765 4321</a>
+        </li>
+        <li>
+          <span class="ft-icon">💬</span>
+          <span>WeChat: <strong style="color:rgba(240,232,213,.55)">tongshu_academy</strong></span>
+        </li>
+        <li>
+          <span class="ft-icon">🕐</span>
+          <span>Tue – Sun &nbsp; 09:00 – 17:30</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <hr class="foot-divider">
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2025 Tong Shu Academy of Calligraphy · Chengdu</span>
+    <span class="foot-made">Crafted with ink &amp; intention</span>
+  </div>
+</footer>
 
 <!-- ── CART OVERLAY + PANEL ── -->
 <div class="cart-overlay" id="cartOverlay"></div>
@@ -1278,7 +1360,7 @@ function _cancelMomentum() {
   _mVy = 0;
 }
 (function(){
-  const FRICTION = 0.87, MAX = 120, MIN = 0.5;
+  const FRICTION = 0.93, MAX = 80, MIN = 0.3;
   function loop() {
     _mVy *= FRICTION;
     if (Math.abs(_mVy) < MIN) { _mVy = 0; _mRaf = null; return; }
@@ -1291,7 +1373,7 @@ function _cancelMomentum() {
     let d = e.deltaY;
     if (e.deltaMode === 1) d *= 40;
     if (e.deltaMode === 2) d *= window.innerHeight;
-    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.30));
+    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.20));
     if (!_mRaf) _mRaf = requestAnimationFrame(loop);
   }, { passive: false });
 })();
@@ -1324,12 +1406,12 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const id = link.getAttribute('href').slice(1);
     e.preventDefault();
-    if (!id) { smoothScrollTo(0, 820); return; }
+    if (!id) { smoothScrollTo(0, 1100); return; }
     const target = document.getElementById(id);
     if (!target) return;
     const navH = document.getElementById('nav')?.offsetHeight || 0;
     const y = target.getBoundingClientRect().top + window.scrollY - navH;
-    smoothScrollTo(y, 820);
+    smoothScrollTo(y, 1100);
   });
 });
 
@@ -1582,7 +1664,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     const selected = Array.from(cards).filter(c => c.classList.contains('selected'));
     if (selected.length === 0) {
       summary.innerHTML = '';
-      reserveBtn.href = `mailto:${baseEmail}`;
+      reserveBtn.removeAttribute('href');
     } else {
       const names  = selected.map(c => c.dataset.course).join(' + ');
       const prices = selected.map(c => c.dataset.price).join(' + ');
@@ -1591,6 +1673,23 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       reserveBtn.href = `mailto:${baseEmail}?subject=Course Reservation&body=${body}`;
     }
   }
+
+  reserveBtn.addEventListener('click', e => {
+    const selected = Array.from(cards).filter(c => c.classList.contains('selected'));
+    if (selected.length > 0) return;  // has selection — let mailto proceed
+    e.preventDefault();
+    // Prompt user to pick a course
+    summary.innerHTML = '<span style="color:var(--seal)">← Please choose a course above first</span>';
+    // Shake all cards to draw attention
+    cards.forEach(c => {
+      c.classList.remove('needs-pick');
+      void c.offsetWidth;  // force reflow to restart animation
+      c.classList.add('needs-pick');
+    });
+    setTimeout(() => cards.forEach(c => c.classList.remove('needs-pick')), 500);
+    // Scroll courses into view if offscreen
+    cards[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
@@ -1710,6 +1809,444 @@ new IntersectionObserver(entries => {
   });
 
   render();
+})();
+
+// ── LANGUAGE TOGGLE ──
+(function(){
+  const ZH = {
+    'nav-story':  '关于我们',
+    'nav-gal':    '作品',
+    'nav-store':  '商店',
+    'nav-book':   '预约课程',
+    'hero-school':'通書 · 通书书法学院',
+    'hero-h1':    '笔，<br>仍在<strong>教导</strong><br>你的双手',
+    'ig-ey':      '习练之道',
+    'ig-h2':      '笔知，<br>先于你心',
+    'ig-body':    '羊毫柔顺，狼毫富有弹性，兔毫细腻精准。在通书，学生先学工具，再学笔法——因为笔在落墨之前，已承载了书者的意念。',
+    'ig-btn':     '查看课程 →',
+    'vs-ey':      '了解学院',
+    'vs-h2':      '走进我们的工作室',
+    'vs-body':    '探寻传统笔法在成都的传承——空间、老师，以及墨香中的宁静修行。',
+    'vs-label':   '通书书法学院 · 成都',
+    'os-ey':      '关于我们',
+    'os-h2':      '墨迹代代相传，<br>薪火永续不断',
+    'os-body1':   '通书由第三代传人刘文先生创立于成都，承袭唐代书法传统。学院从一间庭院工作室起步，逐渐发展为四川最具声誉的笔墨艺术中心。',
+    'os-body2':   '书法非表演，乃日常修行。小班教学，名师传授，从第一笔到完稿，全程亲授指导。',
+    'os-s1':      '年教学经验',
+    'os-s2':      '位驻院名师',
+    'os-s3':      '名学员',
+    'os-quote':   '习书法，先学为人。',
+    'gal-h2':     '从第一笔，<br>到完稿之作',
+    'gal-f1':     '全部作品',
+    'gal-f2':     '书法',
+    'gal-f3':     '笔墨',
+    'gal-f4':     '学院',
+    'st-ey':      '工作室商店',
+    'st-h2':      '一支好笔，<br>改变一切。',
+    'st-body':    '通书出售的每一支笔都曾在我们的工作室中使用。精心甄选，注重平衡、弹性与耐用性——由名师信赖数十年的供应商提供。',
+    'st-tag1':    '入门', 'st-name1': '入门套装',
+    'st-desc1':   '三支羊毫笔、砚台及研墨棒。',
+    'st-add1':    '加入购物车',
+    'st-tag2':    '进阶', 'st-name2': '竹制大师套装',
+    'st-desc2':   '六支混毫笔——狼毫、羊毫与兔毫混合。',
+    'st-add2':    '加入购物车',
+    'st-tag3':    '收藏', 'st-name3': '节日礼盒',
+    'st-desc3':   '八支漆制毛笔，手工丝绸织锦包装。',
+    'st-add3':    '加入购物车',
+    'st-tag4':    '特制', 'st-name4': '市集毛笔',
+    'st-desc4':   '成都笔墨市场手工制作，每支独一无二。',
+    'st-add4':    '加入购物车',
+    'tst-ey':     '学员心声',
+    'tst-h2':     '作品，胜于言语。',
+    'tst-q1':     '「入学六个月，我已开始为客户设计餐厅招牌。」',
+    'tst-m1':     '大师班 · 深圳',
+    'tst-q2':     '「当笔迹在数分钟内消散，你便不再执着于完美。」',
+    'tst-m2':     '访学生 · 华沙',
+    'tst-q3':     '「一堂课所学，胜过四年设计学院关于视觉平衡的全部教导。」',
+    'tst-m3':     '习练者 · 成都',
+    'cc-ey':      '课程',
+    'cc-h2':      '经典训练，现代应用。',
+    'cc-tag1':    '私教 · 90分钟',
+    'cc-name1':   '私人点评——楷书',
+    'cc-desc1':   '与陈师傅一对一授课，当场红墨点评纠正。',
+    'cc-tag2':    '小组 · 3小时 · 限12人',
+    'cc-name2':   '小组工作坊——楷书基础',
+    'cc-desc2':   '正楷基础入门，从横笔到完整字形。',
+    'cc-tag3':    '集训 · 2天 · 限8人',
+    'cc-name3':   '周末集训——品牌字体设计',
+    'cc-desc3':   '从毛笔字到矢量标志，两天全程包含。',
+    'cc-reserve': '立即预约',
+    'faq-ey':     '常见问题',
+    'faq-h2':     '开始之前。',
+    'faq-q1':     '需要书法基础吗？<span class="faq-icon"></span>',
+    'faq-a1':     '不需要。入门工作坊从基本笔画开始，循序渐进至完整字形。',
+    'faq-q2':     '需要携带什么？<span class="faq-icon"></span>',
+    'faq-a2':     '第一堂课无需携带任何物品，所有材料均已提供。课后我们会根据水平推荐适合的材料套装。',
+    'faq-q3':     '墨园是如何运作的？<span class="faq-icon"></span>',
+    'faq-a3':     '用水笔在湿润的庭院石板上书写，笔迹出现后数分钟内自然蒸发。开放练习，无需老师指导。',
+    'faq-q4':     '改期政策？<span class="faq-icon"></span>',
+    'faq-a4':     '私教课：提前24小时通知。小组工作坊：提前48小时。缺席不予退款。',
+    'ft-logo':    '通書 通书书法学院',
+    'ft-gal':     '作品',
+    'ft-crs':     '课程',
+    'ft-copy':    '© 2025 · 成都',
+    'cart-title': '购物车',
+    'cart-empty': '购物车为空。',
+    'cart-tot':   '合计',
+    'cart-out':   '结账',
+  };
+
+  // Resolve elements lazily by selector
+  const SEL = {
+    'nav-story':  '.nav-ul li:nth-child(1) a',
+    'nav-gal':    '.nav-ul li:nth-child(2) a',
+    'nav-store':  '.nav-ul li:nth-child(3) a',
+    'nav-book':   '.nav-ul li:nth-child(4) a',
+    'hero-school':'#hSchool',
+    'hero-h1':    '#hTi',
+    'ig-ey':      '#inkGarden .ey',
+    'ig-h2':      '#inkGarden .sh',
+    'ig-body':    '#inkGarden .ig-body',
+    'ig-btn':     '#inkGarden .btn',
+    'vs-ey':      '#academy-video .ey',
+    'vs-h2':      '#academy-video .sh',
+    'vs-body':    '#academy-video .vs-head p:last-child',
+    'vs-label':   '.vs-label',
+    'os-ey':      '#our-story .ey',
+    'os-h2':      '#our-story .sh',
+    'vs-label':   '.vs-label',
+    'os-h2':      '#our-story .sh',
+    'gal-h2':     '#gallery .sh',
+    'st-ey':      '#store .ey',
+    'st-h2':      '#store .sh',
+    'tst-ey':     '.tst .ey',
+    'tst-h2':     '.tst .sh',
+    'cc-ey':      '#courses .ey',
+    'cc-h2':      '#courses .sh',
+    'cc-reserve': '#reserve',
+    'faq-ey':     '#faq .ey',
+    'faq-h2':     '#faq .sh',
+    'ft-logo':    '.foot-bar-logo',
+    'ft-gal':     '.foot-bar-links li:nth-child(1) a',
+    'ft-crs':     '.foot-bar-links li:nth-child(2) a',
+    'ft-copy':    '.foot-bar-copy',
+    'cart-title': '.cart-title',
+    'cart-empty': '#cartEmpty',
+    'cart-tot':   '.cart-total-label',
+    'cart-out':   '#cartCheckout',
+  };
+
+  // Multi-element selectors (querySelectorAll + index)
+  const SELM = {
+    'os-body1': ['.os-body', 0], 'os-body2': ['.os-body', 1],
+    'os-s1':    ['.os-label', 0], 'os-s2': ['.os-label', 1], 'os-s3': ['.os-label', 2],
+    'os-quote': ['.os-quote em', 0],
+    'gal-f1':   ['.gf', 0], 'gal-f2': ['.gf', 1], 'gal-f3': ['.gf', 2], 'gal-f4': ['.gf', 3],
+    'st-body':  ['#store .container > div:first-child > p:last-child', 0],
+    'st-tag1':  ['.sp-tag', 0], 'st-name1': ['.sp-name', 0], 'st-desc1': ['.sp-desc', 0], 'st-add1': ['.sp-add', 0],
+    'st-tag2':  ['.sp-tag', 1], 'st-name2': ['.sp-name', 1], 'st-desc2': ['.sp-desc', 1], 'st-add2': ['.sp-add', 1],
+    'st-tag3':  ['.sp-tag', 2], 'st-name3': ['.sp-name', 2], 'st-desc3': ['.sp-desc', 2], 'st-add3': ['.sp-add', 2],
+    'st-tag4':  ['.sp-tag', 3], 'st-name4': ['.sp-name', 3], 'st-desc4': ['.sp-desc', 3], 'st-add4': ['.sp-add', 3],
+    'tst-q1':   ['.tc-quote', 0], 'tst-m1': ['.tc-meta', 0],
+    'tst-q2':   ['.tc-quote', 1], 'tst-m2': ['.tc-meta', 1],
+    'tst-q3':   ['.tc-quote', 2], 'tst-m3': ['.tc-meta', 2],
+    'cc-tag1':  ['.cc-tag', 0], 'cc-name1': ['.cc-name', 0], 'cc-desc1': ['.cc-desc', 0],
+    'cc-tag2':  ['.cc-tag', 1], 'cc-name2': ['.cc-name', 1], 'cc-desc2': ['.cc-desc', 1],
+    'cc-tag3':  ['.cc-tag', 2], 'cc-name3': ['.cc-name', 2], 'cc-desc3': ['.cc-desc', 2],
+    'faq-q1':   ['.faq-q', 0], 'faq-a1': ['.faq-a p', 0],
+    'faq-q2':   ['.faq-q', 1], 'faq-a2': ['.faq-a p', 1],
+    'faq-q3':   ['.faq-q', 2], 'faq-a3': ['.faq-a p', 2],
+    'faq-q4':   ['.faq-q', 3], 'faq-a4': ['.faq-a p', 3],
+  };
+
+  function getEl(key) {
+    if (SEL[key])  return document.querySelector(SEL[key]);
+    if (SELM[key]) return document.querySelectorAll(SELM[key][0])[SELM[key][1]];
+    return null;
+  }
+
+  const stored = {};
+  let lang = 'en';
+
+  function storeEn() {
+    const keys = [...Object.keys(SEL), ...Object.keys(SELM)];
+    keys.forEach(k => {
+      const el = getEl(k);
+      if (!el) return;
+      stored[k] = el.innerHTML;
+      el.dataset.en = el.innerHTML;  // pin EN text on the element itself
+    });
+  }
+
+  function reanimateHero() {
+    const school = document.getElementById('hSchool');
+    const ti     = document.getElementById('hTi');
+    if (!school || !ti) return;
+    school.style.transition = ti.style.transition = 'opacity .25s';
+    school.style.opacity = ti.style.opacity = '0';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      school.style.opacity = '1';
+      ti.style.opacity     = '1';
+    }));
+  }
+
+  function applyLang(l) {
+    lang = l;
+    const isZh = l === 'zh';
+    document.documentElement.classList.toggle('lang-zh', isZh);
+    const _btn = document.getElementById('langToggle');
+    _btn.querySelector('.lang-flag').textContent = isZh ? '🇬🇧' : '🇨🇳';
+    _btn.querySelector('.lang-code').textContent = isZh ? 'EN' : 'CN';
+    const keys = [...Object.keys(SEL), ...Object.keys(SELM)];
+    keys.forEach(k => {
+      const el = getEl(k);
+      if (!el) return;
+      el.innerHTML = isZh ? (ZH[k] ?? el.dataset.en) : (el.dataset.en ?? stored[k]);
+    });
+    reanimateHero();
+  }
+
+  storeEn();
+  document.getElementById('langToggle').addEventListener('click', () => applyLang(lang === 'en' ? 'zh' : 'en'));
+})();
+
+// ── AMBIENT SIDE FLUTE MUSIC ──
+(function(){
+  let ctx = null, master = null, echo = null;
+  let playing = false, seqTimer = null, noteTime = 0, phraseIdx = 0;
+
+  // G major pentatonic — bright, airy, perfect for side flute
+  // G3  A3  B3  D4  E4  G4  A4  B4  D5  E5  G5
+  const F = [196.00,220.00,246.94,293.66,329.63,392.00,440.00,493.88,587.33,659.26,783.99];
+
+  // Slow, flowing melodic phrases — flute phrases breathe and soar
+  const PHRASES = [
+    [2,4,5,4,2,1,2,4],      // rise and settle
+    [5,6,7,6,5,4,2,4,5],    // high arc, descend
+    [4,5,7,8,7,5,4,2],      // sweep upward then float down
+    [2,1,0,1,2,4,5,4,2],    // low, introspective
+    [5,7,8,9,8,7,5,6,5],    // soaring high phrase
+    [4,2,4,5,4,2,1,2],      // gentle rocking
+    [2,4,5,7,5,4,2,0,1,2],  // long wandering line
+  ];
+
+  function init() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain();
+    master.gain.value = 0;
+
+    // Warm reverb: longer tail, darker feedback
+    echo = ctx.createDelay(2.5);
+    echo.delayTime.value = 0.38;
+    const fb  = ctx.createGain();    fb.gain.value = 0.32;
+    const lpf = ctx.createBiquadFilter();
+    lpf.type = 'lowpass'; lpf.frequency.value = 1800;
+    echo.connect(lpf); lpf.connect(fb); fb.connect(echo);
+    echo.connect(master);
+
+    const hpf = ctx.createBiquadFilter();
+    hpf.type = 'highpass'; hpf.frequency.value = 60;
+    master.connect(hpf);
+    hpf.connect(ctx.destination);
+  }
+
+  function blowNote(freq, t, dur, vol) {
+    // ── Vibrato LFO (5.5 Hz, gentle) ──
+    const lfo  = ctx.createOscillator();
+    const lfoG = ctx.createGain();
+    lfo.frequency.value = 5.5;
+    lfoG.gain.value = freq * 0.007;       // ~0.7 % pitch wobble
+    lfo.connect(lfoG);
+    lfo.start(t + 0.25); lfo.stop(t + dur + 0.1); // vibrato kicks in after attack
+
+    // ── Fundamental (sine — pure flute core) ──
+    const osc1 = ctx.createOscillator();
+    const g1   = ctx.createGain();
+    osc1.type  = 'sine';
+    osc1.frequency.value = freq;
+    lfoG.connect(osc1.frequency);
+    g1.gain.setValueAtTime(0, t);
+    g1.gain.linearRampToValueAtTime(vol, t + 0.09);        // soft 90 ms attack
+    g1.gain.setValueAtTime(vol * 0.88, t + dur - 0.18);
+    g1.gain.linearRampToValueAtTime(0, t + dur);
+    osc1.connect(g1); g1.connect(master); g1.connect(echo);
+    osc1.start(t); osc1.stop(t + dur + 0.1);
+
+    // ── 2nd harmonic (weak — flutes are mostly fundamental) ──
+    const osc2 = ctx.createOscillator();
+    const g2   = ctx.createGain();
+    osc2.type  = 'sine';
+    osc2.frequency.value = freq * 2;
+    g2.gain.setValueAtTime(0, t);
+    g2.gain.linearRampToValueAtTime(vol * 0.12, t + 0.07);
+    g2.gain.linearRampToValueAtTime(0, t + dur * 0.75);
+    osc2.connect(g2); g2.connect(master);
+    osc2.start(t); osc2.stop(t + dur * 0.75 + 0.05);
+
+    // ── Breath noise (bandpass near fundamental — airy flute character) ──
+    const bufSz = Math.ceil(ctx.sampleRate * (dur + 0.1));
+    const buf   = ctx.createBuffer(1, bufSz, ctx.sampleRate);
+    const data  = buf.getChannelData(0);
+    for (let i = 0; i < bufSz; i++) data[i] = Math.random() * 2 - 1;
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const nbp   = ctx.createBiquadFilter();
+    nbp.type = 'bandpass'; nbp.frequency.value = freq * 1.8; nbp.Q.value = 1.2;
+    const ng    = ctx.createGain();
+    ng.gain.setValueAtTime(0, t);
+    ng.gain.linearRampToValueAtTime(vol * 0.055, t + 0.1);
+    ng.gain.setValueAtTime(vol * 0.04, t + dur - 0.18);
+    ng.gain.linearRampToValueAtTime(0, t + dur);
+    noise.connect(nbp); nbp.connect(ng); ng.connect(master);
+    noise.start(t); noise.stop(t + dur + 0.05);
+  }
+
+  function schedule() {
+    const now = ctx.currentTime;
+    while (noteTime < now + 3) {
+      const phrase = PHRASES[phraseIdx % PHRASES.length];
+      const gap    = 0.75 + Math.random() * 0.65;   // 0.75–1.4 s between notes
+      const dur    = 1.8  + Math.random() * 1.8;    // 1.8–3.6 s sustain per note
+
+      phrase.forEach((ni, i) => {
+        blowNote(F[ni], noteTime + i * gap, dur, 0.11 + Math.random() * 0.03);
+      });
+
+      // Silence between phrases (breath pause)
+      noteTime += phrase.length * gap + 1.8 + Math.random() * 2.5;
+      phraseIdx++;
+    }
+    seqTimer = setTimeout(schedule, 500);
+  }
+
+  function startScheduler() {
+    if (seqTimer) { clearTimeout(seqTimer); seqTimer = null; }
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
+    noteTime = ctx.currentTime + 0.1;
+    playing = true;   // audio is genuinely running now — flip icon ON here
+    sync();
+    schedule();
+  }
+
+  function doResume() {
+    ctx.resume().then(() => {
+      if (!seqTimer) startScheduler();  // startScheduler sets playing+sync itself
+    }).catch(() => {});
+  }
+
+  function startMusic() {
+    if (!ctx) init();
+    doResume();
+  }
+
+  function stopMusic() {
+    clearTimeout(seqTimer);
+    seqTimer = null;
+    playing = false;
+    if (ctx && master) {
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 2.5);
+    }
+    sync();
+  }
+
+  const SVG_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+  const SVG_ON  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+
+  function sync() {
+    const btn = document.getElementById('soundToggle');
+    if (!btn) return;
+    btn.classList.toggle('on', playing);
+    btn.innerHTML = playing ? SVG_ON : SVG_OFF;
+    btn.title = playing ? 'Stop music' : 'Play ambient music';
+  }
+
+  function removeAutoListeners() {
+    document.removeEventListener('touchstart', onTouchScroll);
+    document.removeEventListener('wheel',      onWheelScroll);
+  }
+
+  // Mobile: touchstart is a trusted gesture AND is the start of a scroll swipe
+  function onTouchScroll() {
+    removeAutoListeners();
+    doResume();
+  }
+
+  // Desktop: wheel fires on trackpad/mouse scroll — not trusted in Chrome strict mode
+  // but works on Firefox and Chrome with prior site engagement (returning visitor)
+  function onWheelScroll() {
+    removeAutoListeners();
+    ctx.resume().then(() => {
+      if (!seqTimer) startScheduler();
+    }).catch(() => {});
+  }
+
+  function autoStart() {
+    playing = false;
+    sync();
+    init();
+    doResume(); // works immediately if browser grants autoplay for this origin
+    document.addEventListener('touchstart', onTouchScroll, { passive: true });
+    document.addEventListener('wheel',      onWheelScroll, { passive: true });
+  }
+
+  document.getElementById('soundToggle').addEventListener('click', e => {
+    e.stopPropagation();
+    removeAutoListeners();
+    if (playing) {
+      stopMusic();
+    } else {
+      startMusic();
+    }
+  });
+
+  autoStart();
+})();
+
+// ── CHINESE CHARACTER MOUSE TRAIL ──
+(function(){
+  const CHARS = '永書法墨筆道心禪雅風水山竹蘭梅松雲霧月星花鳥龍鳳韻意境神氣力美善';
+  const GOLD  = 'rgba(201,160,40,';
+  let last = 0;
+
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - last < 80) return;   // throttle: one char per 80 ms
+    last = now;
+
+    const el = document.createElement('span');
+    el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+    const size = 13 + Math.random() * 14;          // 13–27 px
+    const angle = (Math.random() - 0.5) * 40;      // ±20 deg
+    const drift = (Math.random() - 0.5) * 24;      // horizontal float
+    el.style.cssText = `
+      position:fixed;
+      left:${e.clientX + (Math.random() - 0.5) * 18}px;
+      top:${e.clientY  + (Math.random() - 0.5) * 18}px;
+      font-family:'Noto Serif SC',serif;
+      font-size:${size}px;
+      color:${GOLD}${(0.55 + Math.random() * 0.35).toFixed(2)});
+      pointer-events:none;
+      user-select:none;
+      z-index:99999;
+      transform:rotate(${angle}deg) translateX(0px);
+      transition:
+        transform 1.4s cubic-bezier(.2,.8,.4,1),
+        opacity   1.4s ease-out;
+    `;
+    document.body.appendChild(el);
+
+    // Force reflow so transition fires
+    el.getBoundingClientRect();
+    el.style.transform  = `rotate(${angle}deg) translateX(${drift}px) translateY(-38px)`;
+    el.style.opacity    = '0';
+
+    setTimeout(() => el.remove(), 1450);
+  });
 })();
 </script>
 
