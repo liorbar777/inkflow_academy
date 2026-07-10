@@ -1848,7 +1848,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   // default: open the partition ~0.5 cm of student work (width-independent)
   const PX_PER_CM = 37.8;
   const w0 = wrap.getBoundingClientRect().width || 900;
-  set(100 - (0.5 * PX_PER_CM / w0) * 100);
+  let restP = 100 - (0.5 * PX_PER_CM / w0) * 100;   // where it rests while the section is in view
+  set(restP);
 
   const xToP = x => {
     const r = wrap.getBoundingClientRect();
@@ -1863,7 +1864,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     e.preventDefault();
   }
   function move(e){ if (dragging) set(xToP(e.clientX)); }
-  function end(){ dragging = false; wrap.classList.remove('dragging'); }
+  function end(){ dragging = false; wrap.classList.remove('dragging'); restP = P; }
 
   divider.addEventListener('pointerdown', start);
   window.addEventListener('pointermove', move);
@@ -1871,9 +1872,29 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   window.addEventListener('pointercancel', end);
   // keyboard support
   divider.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  { set(P - 6); e.preventDefault(); }
-    if (e.key === 'ArrowRight') { set(P + 6); e.preventDefault(); }
+    if (e.key === 'ArrowLeft')  { set(P - 6); restP = P; e.preventDefault(); }
+    if (e.key === 'ArrowRight') { set(P + 6); restP = P; e.preventDefault(); }
   });
+
+  // ── auto-open the partition as the section scrolls out of view (accelerating) ──
+  const section = document.querySelector('.tst');
+  if (section) {
+    const ENTER = 0.30;                             // within this band around centre → rest position
+    let ticking = false;
+    function reveal(){
+      ticking = false;
+      if (isMobile() || dragging) return;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const dist = Math.abs(rect.top + rect.height / 2 - vh / 2);
+      const prog = Math.min(1, dist / (vh / 2 + rect.height / 2));
+      if (prog <= ENTER) { set(restP); return; }    // in view — sit at the rest position
+      const t = (prog - ENTER) / (1 - ENTER);       // 0..1 as it leaves, up or down
+      set(restP * (1 - t * t));                     // t² → accelerates open toward fully revealed
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(reveal); } }, { passive: true });
+    reveal();
+  }
 })();
 
 // ── FLOATING CALLIGRAPHY CHARS — all bright sections ──
