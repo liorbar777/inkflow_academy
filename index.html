@@ -623,10 +623,10 @@ section,div[class*="section"]{position:relative;z-index:1}
   background:rgba(12,10,24,.6);padding:.35rem .75rem;border-radius:20px}
 /* front — testimonials, clipped by the divider */
 .tst-cover{position:absolute;inset:0;z-index:2;background:var(--dark);
-  display:flex;align-items:center;clip-path:inset(0 2% 0 0);will-change:clip-path}
+  display:flex;align-items:center;clip-path:inset(0 0 0 0);will-change:clip-path}
 .tst-cover .tst-grid{margin-top:0;width:100%}
 /* divider + handle */
-.tst-divider{position:absolute;top:0;bottom:0;left:98%;width:2px;z-index:5;transform:translateX(-1px);
+.tst-divider{position:absolute;top:0;bottom:0;left:100%;width:2px;z-index:5;transform:translateX(-1px);
   background:linear-gradient(rgba(201,160,40,0),rgba(201,160,40,.9) 12%,rgba(201,160,40,.9) 88%,rgba(201,160,40,0));
   cursor:ew-resize;touch-action:none}
 .tst-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -1136,7 +1136,7 @@ section,div[class*="section"]{position:relative;z-index:1}
       </div>
      </div><!-- /tst-stage -->
       <!-- draggable divider -->
-      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="98" tabindex="0">
+      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
         <div class="tst-handle" aria-hidden="true">⟺</div>
       </div>
       <span class="tst-hint" id="tstHint">◀ Drag to reveal their work</span>
@@ -1845,10 +1845,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     if (hint) hint.textContent = P < 55 ? 'Drag back to the reviews ▶' : '◀ Drag to reveal their work';
   }
 
-  // default: open the partition ~0.5 cm of student work (width-independent)
-  const PX_PER_CM = 37.8;
-  const w0 = wrap.getBoundingClientRect().width || 900;
-  let restP = 100 - (0.5 * PX_PER_CM / w0) * 100;   // where it rests while the section is in view
+  let restP = 100;                                   // default: fully closed (partition covers the testimonials)
   set(restP);
 
   const xToP = x => {
@@ -1887,7 +1884,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const dist = Math.abs(rect.top + rect.height / 2 - vh / 2);
-      const prog = Math.min(1, dist / (vh / 2 + rect.height / 2));
+      const prog = Math.min(1, dist / ((vh / 2 + rect.height / 2) * 1.2)); // ×1.2 → ~20% slower open
       if (prog <= ENTER) { set(restP); return; }    // in view — sit at the rest position
       const t = (prog - ENTER) / (1 - ENTER);       // 0..1 as it leaves, up or down
       set(restP * (1 - t * t));                     // t² → accelerates open toward fully revealed
