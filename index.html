@@ -1877,7 +1877,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     if (e.key === 'ArrowRight') { set(P + 6); restP = P; e.preventDefault(); }
   });
 
-  // ── as the section scrolls out of view, close the partition (accelerating) to reveal the reviews ──
+  // ── scrolling the section out closes the partition (tracking scroll); once fully out it stays closed ──
   const section = document.querySelector('.tst');
   if (section) {
     const ENTER = 0.45;                             // stays put while comfortably in view — only moves on the way out
@@ -1889,9 +1889,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       const vh = window.innerHeight;
       const dist = Math.abs(rect.top + rect.height / 2 - vh / 2);
       const prog = Math.min(1, dist / ((vh / 2 + rect.height / 2) * 1.2)); // ×1.2 → ~20% slower
-      if (prog <= ENTER) { set(restP); return; }    // in view — hold the 0.5cm default, no movement
+      if (prog <= ENTER) { set(restP); return; }    // in view — hold the current rest position
       const t = (prog - ENTER) / (1 - ENTER);       // 0..1 as it scrolls out, up or down
-      set(restP + (100 - restP) * (t * t));         // t² → accelerates CLOSED, revealing the reviews
+      set(restP + (100 - restP) * (t * t));         // t² → accelerates CLOSED, tracking the scroll
+      if (rect.bottom <= 0 || rect.top >= vh) restP = 100; // fully scrolled past → latch closed; stays closed until re-opened by drag
     }
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(reveal); } }, { passive: true });
     reveal();
