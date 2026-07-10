@@ -623,10 +623,10 @@ section,div[class*="section"]{position:relative;z-index:1}
   background:rgba(12,10,24,.6);padding:.35rem .75rem;border-radius:20px}
 /* front — testimonials, clipped by the divider */
 .tst-cover{position:absolute;inset:0;z-index:2;background:var(--dark);
-  display:flex;align-items:center;clip-path:inset(0 6% 0 0);will-change:clip-path}
+  display:flex;align-items:center;clip-path:inset(0 2% 0 0);will-change:clip-path}
 .tst-cover .tst-grid{margin-top:0;width:100%}
 /* divider + handle */
-.tst-divider{position:absolute;top:0;bottom:0;left:94%;width:2px;z-index:5;transform:translateX(-1px);
+.tst-divider{position:absolute;top:0;bottom:0;left:98%;width:2px;z-index:5;transform:translateX(-1px);
   background:linear-gradient(rgba(201,160,40,0),rgba(201,160,40,.9) 12%,rgba(201,160,40,.9) 88%,rgba(201,160,40,0));
   cursor:ew-resize;touch-action:none}
 .tst-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -1136,7 +1136,7 @@ section,div[class*="section"]{position:relative;z-index:1}
       </div>
      </div><!-- /tst-stage -->
       <!-- draggable divider -->
-      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="94" tabindex="0">
+      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="98" tabindex="0">
         <div class="tst-handle" aria-hidden="true">⟺</div>
       </div>
       <span class="tst-hint" id="tstHint">◀ Drag to reveal their work</span>
@@ -1835,7 +1835,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   if (!wrap || !cover || !divider) return;
 
   const isMobile = () => window.matchMedia('(max-width:760px)').matches;
-  let P = 94;                                        // default: testimonials fully shown + a thin teaser strip of work
+  let P = 98;                                        // refined below to a ~0.5cm opening
 
   function set(p){
     P = Math.max(0, Math.min(100, p));            // full range — closes with no gap
@@ -1844,7 +1844,11 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     divider.setAttribute('aria-valuenow', Math.round(P));
     if (hint) hint.textContent = P < 55 ? 'Drag back to the reviews ▶' : '◀ Drag to reveal their work';
   }
-  set(P);
+
+  // default: open the partition ~0.5 cm of student work (width-independent)
+  const PX_PER_CM = 37.8;
+  const w0 = wrap.getBoundingClientRect().width || 900;
+  set(100 - (0.5 * PX_PER_CM / w0) * 100);
 
   const xToP = x => {
     const r = wrap.getBoundingClientRect();
