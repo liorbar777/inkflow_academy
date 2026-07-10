@@ -1846,10 +1846,11 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     if (hint) hint.textContent = P < 55 ? 'Drag back to the reviews ▶' : '◀ Drag to reveal their work';
   }
 
-  // default: open the partition ~0.5 cm of student work (width-independent); stays put until you scroll out
+  // ~0.5 cm teaser opening (width-independent) — the partition's resting/closed-to point
   const PX_PER_CM = 37.8;
   const w0 = wrap.getBoundingClientRect().width || 900;
-  let restP = 100 - (0.5 * PX_PER_CM / w0) * 100;
+  const DEFAULT_P = 100 - (0.5 * PX_PER_CM / w0) * 100;
+  let restP = DEFAULT_P;
   set(restP);
 
   const xToP = x => {
@@ -1891,8 +1892,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       const prog = Math.min(1, dist / ((vh / 2 + rect.height / 2) * 1.2)); // ×1.2 → ~20% slower
       if (prog <= ENTER) { set(restP); return; }    // in view — hold the current rest position
       const t = (prog - ENTER) / (1 - ENTER);       // 0..1 as it scrolls out, up or down
-      set(restP + (100 - restP) * (t * t));         // t² → accelerates CLOSED, tracking the scroll
-      if (rect.bottom <= 0 || rect.top >= vh) restP = 100; // fully scrolled past → latch closed; stays closed until re-opened by drag
+      set(restP + (DEFAULT_P - restP) * (t * t));   // t² → closes only to the 0.5cm teaser, tracking the scroll
+      if (rect.bottom <= 0 || rect.top >= vh) restP = DEFAULT_P; // fully scrolled past → latch at 0.5cm; stays until re-opened by drag
     }
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(reveal); } }, { passive: true });
     reveal();
