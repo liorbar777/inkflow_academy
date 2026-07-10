@@ -605,6 +605,49 @@ section,div[class*="section"]{position:relative;z-index:1}
 .tc-name{font-family:'Hanken Grotesk',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--seal)}
 .tc-meta{font-family:'Hanken Grotesk',sans-serif;font-size:.65rem;color:rgba(240,232,213,.5);margin-top:.22rem;letter-spacing:.04em}
 
+/* ── STUDENTS REVEAL SLIDER (drag the divider to wipe between testimonials and student work) ── */
+.tst-reveal{position:relative;height:clamp(330px,42vh,460px);margin-top:3rem;border-radius:14px;
+  overflow:hidden;border:1px solid rgba(240,232,213,.09);box-shadow:0 24px 60px rgba(0,0,0,.4);user-select:none}
+/* behind — students' work */
+.tst-works{position:absolute;inset:0;z-index:1;display:flex;background:#0a0812}
+.tst-works figure{flex:1;position:relative;margin:0;overflow:hidden;border-right:1px solid rgba(0,0,0,.5)}
+.tst-works figure:last-child{border-right:none}
+.tst-works img{width:100%;height:100%;object-fit:cover;filter:brightness(.92)}
+.tst-works figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.4rem .8rem .7rem;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,232,213,.85);background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.tst-works-tag{position:absolute;top:1rem;left:1.1rem;z-index:2;font-family:'Hanken Grotesk',sans-serif;
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  background:rgba(12,10,24,.6);padding:.35rem .75rem;border-radius:20px}
+/* front — testimonials, clipped by the divider */
+.tst-cover{position:absolute;inset:0;z-index:2;background:var(--dark);
+  display:flex;align-items:center;clip-path:inset(0 12% 0 0);will-change:clip-path}
+.tst-cover .tst-grid{margin-top:0;width:100%}
+/* divider + handle */
+.tst-divider{position:absolute;top:0;bottom:0;left:88%;width:2px;z-index:5;transform:translateX(-1px);
+  background:linear-gradient(rgba(201,160,40,0),rgba(201,160,40,.9) 12%,rgba(201,160,40,.9) 88%,rgba(201,160,40,0));
+  cursor:ew-resize;touch-action:none}
+.tst-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;
+  box-shadow:0 4px 16px rgba(0,0,0,.55);animation:tstPulse 2.4s ease-in-out infinite}
+@keyframes tstPulse{0%,100%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 0 rgba(201,160,40,.5)}
+  50%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 13px rgba(201,160,40,0)}}
+.tst-hint{position:absolute;top:calc(50% + 42px);left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(240,232,213,.9);background:rgba(12,10,24,.78);padding:.35rem .75rem;border-radius:20px;
+  pointer-events:none;transition:opacity .3s}
+.tst-reveal.dragging{cursor:ew-resize}
+.tst-reveal.dragging .tst-hint{opacity:0}
+.tst-reveal.dragging .tst-handle{animation:none}
+@media(prefers-reduced-motion:reduce){.tst-handle{animation:none}}
+/* mobile — drop the slider, just stack the testimonials */
+@media(max-width:760px){
+  .tst-reveal{height:auto;border:none;box-shadow:none;overflow:visible;margin-top:2rem}
+  .tst-works,.tst-divider{display:none}
+  .tst-cover{position:static;clip-path:none;background:transparent;display:block}
+}
+
 /* ── COURSES ── */
 .courses{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
 .courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;background:transparent}
@@ -1056,18 +1099,36 @@ section,div[class*="section"]{position:relative;z-index:1}
       <h2 class="sh sh-l">The work speaks for itself.</h2>
       <div class="rule"></div>
     </div>
-    <div class="tst-grid">
-      <div class="tc rv">
-        <p class="tc-quote">"After six months, I was already designing restaurant signs for real clients."</p>
-        <p class="tc-name">Xu Jianfeng</p><p class="tc-meta">Master Track · Shenzhen</p>
+    <div class="tst-reveal" id="tstReveal">
+      <!-- behind: students' work, revealed by dragging -->
+      <div class="tst-works">
+        <span class="tst-works-tag">Students' work</span>
+        <figure><img src="images/writing-spring-character.png" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
+        <figure><img src="images/calligraphy-scroll.png" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
+        <figure><img src="images/ink-orchid.jpg" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
+        <figure><img src="images/landscape.jpg" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
       </div>
-      <div class="tc rv" style="transition-delay:.06s">
-        <p class="tc-quote">"We practice on water, so every stroke fades in minutes. It taught me to stop chasing perfection."</p>
-        <p class="tc-name">Anna Kowalski</p><p class="tc-meta">Visiting student · Warsaw</p>
+      <!-- front: the testimonials (clipped by the divider) -->
+      <div class="tst-cover" id="tstCover">
+        <div class="tst-grid">
+          <div class="tc rv">
+            <p class="tc-quote">"After six months, I was already designing restaurant signs for real clients."</p>
+            <p class="tc-name">Xu Jianfeng</p><p class="tc-meta">Master Track · Shenzhen</p>
+          </div>
+          <div class="tc rv" style="transition-delay:.06s">
+            <p class="tc-quote">"We practice on water, so every stroke fades in minutes. It taught me to stop chasing perfection."</p>
+            <p class="tc-name">Anna Kowalski</p><p class="tc-meta">Visiting student · Warsaw</p>
+          </div>
+          <div class="tc rv" style="transition-delay:.12s">
+            <p class="tc-quote">"One class taught me more about visual balance than four years of design school."</p>
+            <p class="tc-name">Lin Bingqian</p><p class="tc-meta">Practitioner · Chengdu</p>
+          </div>
+        </div>
       </div>
-      <div class="tc rv" style="transition-delay:.12s">
-        <p class="tc-quote">"One class taught me more about visual balance than four years of design school."</p>
-        <p class="tc-name">Lin Bingqian</p><p class="tc-meta">Practitioner · Chengdu</p>
+      <!-- draggable divider -->
+      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88" tabindex="0">
+        <div class="tst-handle" aria-hidden="true">⟺</div>
+        <span class="tst-hint" id="tstHint">Drag to reveal their work</span>
       </div>
     </div>
   </div>
@@ -1753,6 +1814,52 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
   }, { threshold: 0.5 });
   items.forEach(it => io.observe(it.el));
+})();
+
+// ── STUDENTS REVEAL SLIDER — drag the divider to wipe testimonials ⇄ student work ──
+(function(){
+  const wrap    = document.getElementById('tstReveal');
+  const cover   = document.getElementById('tstCover');
+  const divider = document.getElementById('tstDivider');
+  const hint    = document.getElementById('tstHint');
+  if (!wrap || !cover || !divider) return;
+
+  const isMobile = () => window.matchMedia('(max-width:760px)').matches;
+  let P = 88;                                        // % of the width the testimonials still cover
+
+  function set(p){
+    P = Math.max(3, Math.min(97, p));
+    cover.style.clipPath = `inset(0 ${100 - P}% 0 0)`;
+    divider.style.left = P + '%';
+    divider.setAttribute('aria-valuenow', Math.round(P));
+    if (hint) hint.textContent = P < 55 ? 'Drag back to the reviews' : 'Drag to reveal their work';
+  }
+  set(P);
+
+  const xToP = x => {
+    const r = wrap.getBoundingClientRect();
+    return ((x - r.left) / r.width) * 100;
+  };
+
+  let dragging = false;
+  function start(e){
+    if (isMobile()) return;
+    dragging = true; wrap.classList.add('dragging');
+    try { divider.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault();
+  }
+  function move(e){ if (dragging) set(xToP(e.clientX)); }
+  function end(){ dragging = false; wrap.classList.remove('dragging'); }
+
+  divider.addEventListener('pointerdown', start);
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', end);
+  window.addEventListener('pointercancel', end);
+  // keyboard support
+  divider.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { set(P - 6); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { set(P + 6); e.preventDefault(); }
+  });
 })();
 
 // ── FLOATING CALLIGRAPHY CHARS — all bright sections ──
