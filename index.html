@@ -599,11 +599,62 @@ section,div[class*="section"]{position:relative;z-index:1}
 .tst-zh span{font-family:'Noto Serif SC',serif;font-size:55vw;font-weight:700;color:rgba(240,232,213,.018);line-height:1}
 .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;background:rgba(240,232,213,.05)}
 .tc{background:var(--dark);padding:2.4rem 2rem;border-top:2px solid var(--seal)}
-.tc-quote{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-style:italic;font-weight:500;
+.tc-quote{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;font-weight:500;
   color:rgba(240,232,213,.95);line-height:1.7;margin-bottom:1.5rem;
   text-shadow:0 1px 8px rgba(0,0,0,.4)}
 .tc-name{font-family:'Hanken Grotesk',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--seal)}
 .tc-meta{font-family:'Hanken Grotesk',sans-serif;font-size:.65rem;color:rgba(240,232,213,.5);margin-top:.22rem;letter-spacing:.04em}
+
+/* ── STUDENTS REVEAL SLIDER (drag the divider to wipe between testimonials and student work) ── */
+.tst-reveal{position:relative;height:clamp(330px,42vh,460px);margin-top:3rem;user-select:none}
+/* inner stage carries the rounded clip so the divider handle (outside it) is never cut off */
+.tst-stage{position:absolute;inset:0;overflow:hidden;border-radius:14px;
+  border:1px solid rgba(240,232,213,.09);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+/* behind — students' work */
+.tst-works{position:absolute;inset:0;z-index:1;display:flex;background:#0a0812}
+.tst-works figure{flex:1;position:relative;margin:0;overflow:hidden;border-right:1px solid rgba(0,0,0,.5)}
+.tst-works figure:last-child{border-right:none}
+.tst-works img{width:100%;height:100%;object-fit:cover;filter:brightness(.92)}
+.tst-works figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.4rem .8rem .7rem;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,232,213,.85);background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.tst-works-tag{position:absolute;top:1rem;left:1.1rem;z-index:2;font-family:'Hanken Grotesk',sans-serif;
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  background:rgba(12,10,24,.6);padding:.35rem .75rem;border-radius:20px}
+/* front — testimonials, clipped by the divider */
+.tst-cover{position:absolute;inset:0;z-index:2;background:var(--dark);
+  display:flex;align-items:center;clip-path:inset(0 2% 0 0);will-change:clip-path}
+.tst-cover .tst-grid{margin-top:0;width:100%}
+/* divider + handle */
+.tst-divider{position:absolute;top:0;bottom:0;left:98%;width:2px;z-index:5;transform:translateX(-1px);
+  background:linear-gradient(rgba(201,160,40,0),rgba(201,160,40,.9) 12%,rgba(201,160,40,.9) 88%,rgba(201,160,40,0));
+  cursor:ew-resize;touch-action:none}
+.tst-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;
+  box-shadow:0 4px 16px rgba(0,0,0,.55);animation:tstPulse 2.4s ease-in-out infinite}
+@keyframes tstPulse{0%,100%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 0 rgba(201,160,40,.5)}
+  50%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 13px rgba(201,160,40,0)}}
+.tst-hint{position:absolute;left:50%;bottom:1.3rem;transform:translateX(-50%);white-space:nowrap;z-index:6;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;background:rgba(12,10,24,.9);padding:.7rem 1.3rem;border-radius:26px;
+  border:1.5px solid rgba(201,160,40,.6);pointer-events:none;
+  animation:hintPulse 2.1s ease-in-out infinite;transition:opacity .3s}
+@keyframes hintPulse{
+  0%,100%{transform:translateX(-50%) scale(1);   border-color:rgba(201,160,40,.5); box-shadow:0 6px 20px rgba(0,0,0,.45)}
+  50%    {transform:translateX(-50%) scale(1.05);border-color:rgba(201,160,40,1);  box-shadow:0 8px 26px rgba(201,160,40,.5)}
+}
+.tst-reveal.dragging{cursor:ew-resize}
+.tst-reveal.dragging .tst-hint{opacity:0;animation:none}
+@media(prefers-reduced-motion:reduce){.tst-hint{animation:none}}
+.tst-reveal.dragging .tst-handle{animation:none}
+@media(prefers-reduced-motion:reduce){.tst-handle{animation:none}}
+/* mobile — drop the slider, just stack the testimonials */
+@media(max-width:760px){
+  .tst-reveal{height:auto;border:none;box-shadow:none;overflow:visible;margin-top:2rem}
+  .tst-works,.tst-divider,.tst-hint{display:none}
+  .tst-cover{position:static;clip-path:none;background:transparent;display:block}
+}
 
 /* ── COURSES ── */
 .courses{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
@@ -659,30 +710,30 @@ section,div[class*="section"]{position:relative;z-index:1}
 .faq-q{width:100%;text-align:left;padding:1.2rem 0;background:none;border:none;
   font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:600;color:var(--ink);
   cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.faq-icon{width:14px;height:14px;flex-shrink:0;position:relative;opacity:.25;transition:transform .3s}
+.faq-icon{width:16px;height:16px;flex-shrink:0;position:relative;opacity:.6;transition:transform .3s}
 .faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--ink)}
-.faq-icon::before{top:50%;left:0;right:0;height:1px;transform:translateY(-50%)}
-.faq-icon::after{top:0;bottom:0;left:50%;width:1px;transform:translateX(-50%);transition:transform .3s}
-.faq-item.open .faq-icon{opacity:.55;transform:rotate(45deg)}
+.faq-icon::before{top:50%;left:0;right:0;height:2px;transform:translateY(-50%)}
+.faq-icon::after{top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);transition:transform .3s}
+.faq-item.open .faq-icon{opacity:.85;transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1)}
 .faq-item.open .faq-a{max-height:160px}
 .faq-a p{padding-bottom:1.2rem;font-size:.83rem;line-height:1.8;color:var(--muted)}
 
 /* ── FOOTER ── */
-.site-footer{background:#08060f;border-top:1px solid rgba(201,160,40,.1);padding:5rem 3.5rem 2.5rem;position:relative;z-index:1}
-.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1100px;margin:0 auto 3.5rem}
+.site-footer{background:#08060f;border-top:1px solid rgba(201,160,40,.1);padding:2.1rem 3.5rem 1.2rem;position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1100px;margin:0 auto 1.4rem}
 .footer-brand .foot-logo{font-family:'Noto Serif SC',serif;font-size:1.45rem;font-weight:700;
   color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:.75rem;
   letter-spacing:.05em;margin-bottom:.7rem}
 .footer-brand .foot-logo em{font-style:normal;font-family:'Hanken Grotesk',sans-serif;font-size:.75rem;
   color:rgba(240,232,213,.65);font-weight:400;letter-spacing:.18em;text-transform:uppercase}
-.footer-brand p{font-size:.78rem;color:rgba(240,232,213,.35);line-height:1.7;max-width:260px;margin-bottom:1.6rem}
+.footer-brand p{font-size:.78rem;color:rgba(240,232,213,.35);line-height:1.55;max-width:260px;margin-bottom:.7rem}
 .footer-zh{font-family:'Noto Serif SC',serif;font-size:2.8rem;color:rgba(201,160,40,.06);
   line-height:1;position:absolute;right:3.5rem;top:3rem;pointer-events:none;user-select:none}
 
 .foot-col-title{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(201,160,40,.55);font-weight:600;margin-bottom:1.2rem}
-.foot-contact-list{list-style:none;display:flex;flex-direction:column;gap:1.3rem}
+  color:rgba(201,160,40,.55);font-weight:600;margin-bottom:.85rem}
+.foot-contact-list{list-style:none;display:flex;flex-direction:column;gap:.62rem}
 .foot-contact-list li{display:flex;align-items:flex-start;gap:.65rem}
 .foot-contact-list .ft-icon{font-size:.85rem;line-height:1.5;flex-shrink:0;opacity:.6}
 .foot-contact-list a,.foot-contact-list span{font-size:.78rem;color:rgba(240,232,213,.5);
@@ -694,7 +745,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   letter-spacing:.08em;transition:color .2s}
 .foot-nav-list a:hover{color:var(--on-ink)}
 
-.foot-divider{border:none;border-top:1px solid rgba(255,255,255,.04);max-width:1100px;margin:0 auto 1.4rem}
+.foot-divider{border:none;border-top:1px solid rgba(255,255,255,.04);max-width:1100px;margin:0 auto 1rem}
 .foot-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
 .foot-copy{font-size:.62rem;color:rgba(240,232,213,.12);letter-spacing:.06em}
 .foot-made{font-size:.6rem;color:rgba(240,232,213,.1)}
@@ -736,6 +787,7 @@ section,div[class*="section"]{position:relative;z-index:1}
     <li><a href="#our-story">Our Story</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#store">Store</a></li>
+    <li><a href="#students">Students</a></li>
     <li><a href="#courses" class="cta">Book a Session</a></li>
     <li><button class="lang-btn" id="langToggle" aria-label="Switch language"><span class="lang-flag">🇨🇳</span><span class="lang-code">CN</span></button></li>
     <li><button class="sound-btn" id="soundToggle" title="Play ambient music" aria-label="Toggle ambient music"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button></li>
@@ -807,7 +859,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div class="ig-text rv">
     <p class="ey">The Practice</p>
     <h2 class="sh sh-d">The brush knows<br>before you do</h2>
-    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision — students learn the tool before the stroke.</p>
+    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision — students get to know their brush before they ever write a stroke.</p>
     <a href="#courses" class="btn btn-outline-d" style="align-self:flex-start">View courses →</a>
   </div>
   <div class="slot" style="min-height:75vh;border-radius:0">
@@ -1048,7 +1100,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 </section>
 
 <!-- ── TESTIMONIALS ── -->
-<section class="tst">
+<section class="tst" id="students">
   <div class="tst-zh"><span>學</span></div>
   <div class="container" style="position:relative;z-index:1">
     <div class="rv" style="text-align:center">
@@ -1056,19 +1108,39 @@ section,div[class*="section"]{position:relative;z-index:1}
       <h2 class="sh sh-l">The work speaks for itself.</h2>
       <div class="rule"></div>
     </div>
-    <div class="tst-grid">
-      <div class="tc rv">
-        <p class="tc-quote">"Six months in, I was designing restaurant signage for clients."</p>
-        <p class="tc-name">Xu Jianfeng</p><p class="tc-meta">Master Track · Shenzhen</p>
+    <div class="tst-reveal" id="tstReveal">
+     <div class="tst-stage">
+      <!-- behind: students' work, revealed by dragging -->
+      <div class="tst-works">
+        <span class="tst-works-tag">Students' work</span>
+        <figure><img src="images/writing-spring-character.png" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
+        <figure><img src="images/calligraphy-scroll.png" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
+        <figure><img src="images/ink-orchid.jpg" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
+        <figure><img src="images/landscape.jpg" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
       </div>
-      <div class="tc rv" style="transition-delay:.06s">
-        <p class="tc-quote">"When your stroke evaporates in minutes, you stop being precious."</p>
-        <p class="tc-name">Anna Kowalski</p><p class="tc-meta">Visiting student · Warsaw</p>
+      <!-- front: the testimonials (clipped by the divider) -->
+      <div class="tst-cover" id="tstCover">
+        <div class="tst-grid">
+          <div class="tc rv">
+            <p class="tc-quote">"After six months, I was already designing restaurant signs for real clients."</p>
+            <p class="tc-name">Xu Jianfeng</p><p class="tc-meta">Master Track · Shenzhen</p>
+          </div>
+          <div class="tc rv" style="transition-delay:.06s">
+            <p class="tc-quote">"We practice on water, so every stroke fades in minutes. It taught me to stop chasing perfection."</p>
+            <p class="tc-name">Anna Kowalski</p><p class="tc-meta">Visiting student · Warsaw</p>
+          </div>
+          <div class="tc rv" style="transition-delay:.12s">
+            <p class="tc-quote">"One class taught me more about visual balance than four years of design school."</p>
+            <p class="tc-name">Lin Bingqian</p><p class="tc-meta">Practitioner · Chengdu</p>
+          </div>
+        </div>
       </div>
-      <div class="tc rv" style="transition-delay:.12s">
-        <p class="tc-quote">"One session taught me more about visual balance than four years of design school."</p>
-        <p class="tc-name">Lin Bingqian</p><p class="tc-meta">Practitioner · Chengdu</p>
+     </div><!-- /tst-stage -->
+      <!-- draggable divider -->
+      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="98" tabindex="0">
+        <div class="tst-handle" aria-hidden="true">⟺</div>
       </div>
+      <span class="tst-hint" id="tstHint">◀ Drag to reveal their work</span>
     </div>
   </div>
 </section>
@@ -1755,6 +1827,79 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   items.forEach(it => io.observe(it.el));
 })();
 
+// ── STUDENTS REVEAL SLIDER — drag the divider to wipe testimonials ⇄ student work ──
+(function(){
+  const wrap    = document.getElementById('tstReveal');
+  const cover   = document.getElementById('tstCover');
+  const divider = document.getElementById('tstDivider');
+  const hint    = document.getElementById('tstHint');
+  if (!wrap || !cover || !divider) return;
+
+  const isMobile = () => window.matchMedia('(max-width:760px)').matches;
+  let P = 98;                                        // refined below to a ~0.5cm opening
+
+  function set(p){
+    P = Math.max(0, Math.min(100, p));            // full range — closes with no gap
+    cover.style.clipPath = `inset(0 ${100 - P}% 0 0)`;
+    divider.style.left = P + '%';
+    divider.setAttribute('aria-valuenow', Math.round(P));
+    if (hint) hint.textContent = P < 55 ? 'Drag back to the reviews ▶' : '◀ Drag to reveal their work';
+  }
+
+  // ~0.5 cm teaser opening (width-independent) — the partition's resting/closed-to point
+  const PX_PER_CM = 37.8;
+  const w0 = wrap.getBoundingClientRect().width || 900;
+  const DEFAULT_P = 100 - (0.5 * PX_PER_CM / w0) * 100;
+  let restP = DEFAULT_P;
+  set(restP);
+
+  const xToP = x => {
+    const r = wrap.getBoundingClientRect();
+    return ((x - r.left) / r.width) * 100;
+  };
+
+  let dragging = false;
+  function start(e){
+    if (isMobile()) return;
+    dragging = true; wrap.classList.add('dragging');
+    try { divider.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault();
+  }
+  function move(e){ if (dragging) set(xToP(e.clientX)); }
+  function end(){ dragging = false; wrap.classList.remove('dragging'); restP = P; }
+
+  divider.addEventListener('pointerdown', start);
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', end);
+  window.addEventListener('pointercancel', end);
+  // keyboard support
+  divider.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { set(P - 6); restP = P; e.preventDefault(); }
+    if (e.key === 'ArrowRight') { set(P + 6); restP = P; e.preventDefault(); }
+  });
+
+  // ── scrolling the section out closes the partition (tracking scroll); once fully out it stays closed ──
+  const section = document.querySelector('.tst');
+  if (section) {
+    const ENTER = 0.45;                             // stays put while comfortably in view — only moves on the way out
+    let ticking = false;
+    function reveal(){
+      ticking = false;
+      if (isMobile() || dragging) return;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const dist = Math.abs(rect.top + rect.height / 2 - vh / 2);
+      const prog = Math.min(1, dist / ((vh / 2 + rect.height / 2) * 1.2)); // ×1.2 → ~20% slower
+      if (prog <= ENTER) { set(restP); return; }    // in view — hold the current rest position
+      const t = (prog - ENTER) / (1 - ENTER);       // 0..1 as it scrolls out, up or down
+      set(restP + (DEFAULT_P - restP) * (t * t));   // t² → closes only to the 0.5cm teaser, tracking the scroll
+      if (rect.bottom <= 0 || rect.top >= vh) restP = DEFAULT_P; // fully scrolled past → latch at 0.5cm; stays until re-opened by drag
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(reveal); } }, { passive: true });
+    reveal();
+  }
+})();
+
 // ── FLOATING CALLIGRAPHY CHARS — all bright sections ──
 (function(){
   const CHARS = ['書','墨','筆','道','藝','心','靜','氣','水','練','法','美','古','雅','宣','志','德','禪','蒼','雲','山','風'];
@@ -1998,6 +2143,7 @@ new IntersectionObserver(entries => {
     'nav-story':  '关于我们',
     'nav-gal':    '作品',
     'nav-store':  '商店',
+    'nav-students':'学员',
     'nav-book':   '预约课程',
     'hero-school':'通書 · 通书书法学院',
     'hero-h1':    '笔，<br>仍在<strong>教导</strong><br>你的双手',
@@ -2038,11 +2184,11 @@ new IntersectionObserver(entries => {
     'st-add4':    '加入购物车',
     'tst-ey':     '学员心声',
     'tst-h2':     '作品，胜于言语。',
-    'tst-q1':     '「入学六个月，我已开始为客户设计餐厅招牌。」',
+    'tst-q1':     '「入学六个月，我就开始为真实客户设计餐厅招牌。」',
     'tst-m1':     '大师班 · 深圳',
-    'tst-q2':     '「当笔迹在数分钟内消散，你便不再执着于完美。」',
+    'tst-q2':     '「我们在水上练字，每一笔几分钟就消失。它让我学会不再追求完美。」',
     'tst-m2':     '访学生 · 华沙',
-    'tst-q3':     '「一堂课所学，胜过四年设计学院关于视觉平衡的全部教导。」',
+    'tst-q3':     '「一堂课让我学到的视觉平衡，胜过四年设计学院。」',
     'tst-m3':     '习练者 · 成都',
     'cc-ey':      '课程',
     'cc-h2':      '经典训练，现代应用。',
@@ -2081,7 +2227,8 @@ new IntersectionObserver(entries => {
     'nav-story':  '.nav-ul li:nth-child(1) a',
     'nav-gal':    '.nav-ul li:nth-child(2) a',
     'nav-store':  '.nav-ul li:nth-child(3) a',
-    'nav-book':   '.nav-ul li:nth-child(4) a',
+    'nav-students':'.nav-ul li:nth-child(4) a',
+    'nav-book':   '.nav-ul li:nth-child(5) a',
     'hero-school':'#hSchool',
     'hero-h1':    '#hTi',
     'ig-ey':      '#inkGarden .ey',
