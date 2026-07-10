@@ -787,6 +787,7 @@ section,div[class*="section"]{position:relative;z-index:1}
     <li><a href="#our-story">Our Story</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#store">Store</a></li>
+    <li><a href="#students">Students</a></li>
     <li><a href="#courses" class="cta">Book a Session</a></li>
     <li><button class="lang-btn" id="langToggle" aria-label="Switch language"><span class="lang-flag">🇨🇳</span><span class="lang-code">CN</span></button></li>
     <li><button class="sound-btn" id="soundToggle" title="Play ambient music" aria-label="Toggle ambient music"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button></li>
@@ -1099,7 +1100,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 </section>
 
 <!-- ── TESTIMONIALS ── -->
-<section class="tst">
+<section class="tst" id="students">
   <div class="tst-zh"><span>學</span></div>
   <div class="container" style="position:relative;z-index:1">
     <div class="rv" style="text-align:center">
@@ -2140,6 +2141,7 @@ new IntersectionObserver(entries => {
     'nav-story':  '关于我们',
     'nav-gal':    '作品',
     'nav-store':  '商店',
+    'nav-students':'学员',
     'nav-book':   '预约课程',
     'hero-school':'通書 · 通书书法学院',
     'hero-h1':    '笔，<br>仍在<strong>教导</strong><br>你的双手',
@@ -2223,7 +2225,8 @@ new IntersectionObserver(entries => {
     'nav-story':  '.nav-ul li:nth-child(1) a',
     'nav-gal':    '.nav-ul li:nth-child(2) a',
     'nav-store':  '.nav-ul li:nth-child(3) a',
-    'nav-book':   '.nav-ul li:nth-child(4) a',
+    'nav-students':'.nav-ul li:nth-child(4) a',
+    'nav-book':   '.nav-ul li:nth-child(5) a',
     'hero-school':'#hSchool',
     'hero-h1':    '#hTi',
     'ig-ey':      '#inkGarden .ey',
