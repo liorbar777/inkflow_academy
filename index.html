@@ -65,13 +65,16 @@ nav.on{background:rgba(12,10,24,.94);backdrop-filter:blur(18px)}
 .nav-ul .cta:hover{background:var(--gold);color:var(--dark)}
 
 /* ── SOUND TOGGLE ── */
-.sound-btn{background:none;border:none;cursor:pointer;padding:.1rem .2rem;
-  display:flex;align-items:center;color:rgba(240,232,213,.35);transition:color .25s}
-.sound-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;
+.sound-btn{background:rgba(201,160,40,.08);border:1px solid rgba(201,160,40,.35);
+  cursor:pointer;padding:0;width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(240,232,213,.85);transition:color .25s,background .25s,border-color .25s,transform .2s}
+.sound-btn svg{width:30px;height:30px;fill:none;stroke:currentColor;
   stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.sound-btn:hover{color:rgba(240,232,213,.7)}
-.sound-btn.on{color:var(--gold)}
-@keyframes soundPulse{0%,100%{opacity:.75}50%{opacity:1}}
+.sound-btn:hover{color:#fff;background:rgba(201,160,40,.16);
+  border-color:rgba(201,160,40,.6);transform:scale(1.06)}
+.sound-btn.on{color:var(--gold);background:rgba(201,160,40,.14);border-color:var(--gold)}
+@keyframes soundPulse{0%,100%{box-shadow:0 0 0 0 rgba(201,160,40,.35)}50%{box-shadow:0 0 0 6px rgba(201,160,40,0)}}
 .sound-btn.on{animation:soundPulse 2.8s ease-in-out infinite}
 
 /* ── CART ICON ── */
@@ -153,6 +156,11 @@ html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Ser
 .hero-stage{position:relative;height:100vh;overflow:hidden;background:var(--dark)}
 #heroBg{position:absolute;inset:0;background:url('images/ink-orchid.jpg') center/cover no-repeat;
   opacity:0;transition:opacity .6s;filter:url(#ink-ripple)}
+/* live motion background — faint, lightly blurred, under the overlay so hero text stays readable */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.22;filter:blur(4px) brightness(1.06) saturate(1.1);transform:scale(1.12);
+  pointer-events:none}
+@media (prefers-reduced-motion: reduce){.hero-video{display:none}}
 #heroBgOverlay{position:absolute;inset:0;
   background:linear-gradient(130deg,rgba(12,10,24,.85) 0%,rgba(12,10,24,.5) 55%,rgba(12,10,24,.2) 100%)}
 
@@ -210,14 +218,14 @@ section,div[class*="section"]{position:relative;z-index:1}
 
 .ey{font-size:.82rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
   color:var(--seal);display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;
-  opacity:0;transform:translateY(10px);transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1)}
+  opacity:0;transform:translateY(12px);transition:opacity .65s,transform .65s}   /* exact same fade as the hero title (.h-school) */
 .ey.ey-visible{opacity:1;transform:none}
 .ey::after{content:'';width:22px;height:1px;background:var(--seal);opacity:.45}
 .ey-c{justify-content:center}
 .ey-c::before{content:'';width:22px;height:1px;background:var(--seal);opacity:.45}
 .ey-c::after{display:none}
 .sh{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:300;font-style:italic;line-height:1.1;letter-spacing:.02em;
-  opacity:0;transform:translateY(14px);transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1)}
+  opacity:0;transform:translateY(12px);transition:opacity .65s,transform .65s}   /* same gentle motion as the hero title (.h-school) */
 .sh.sh-visible{opacity:1;transform:none}
 .sh-l{color:var(--on-ink)}.sh-d{color:var(--ink)}
 .rule{width:28px;height:1px;background:var(--gold);margin:.8rem auto}
@@ -269,6 +277,74 @@ section,div[class*="section"]{position:relative;z-index:1}
 .ig-text{padding:5rem 4rem 5rem 6rem;display:flex;flex-direction:column;justify-content:center}
 .ig-body{font-size:.85rem;line-height:1.9;color:var(--muted);max-width:360px;margin-bottom:2rem}
 
+/* ── HANGING CALLIGRAPHY CURTAIN — realistic cloth: irregular folds, drifting sheen, wavy hem ── */
+.ig-curtain{position:absolute;top:0;bottom:0;left:42%;margin-left:calc(clamp(130px,14vw,190px) / -2);
+  width:clamp(130px,14vw,190px);z-index:2;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;
+  transform-origin:top center;animation:curtain-sway 8s ease-in-out infinite;will-change:transform}
+.ig-curtain-rod{width:118%;height:9px;border-radius:5px;flex-shrink:0;z-index:2;
+  background:linear-gradient(180deg,#7a6338,#3a2c18 60%,#2a2013);
+  box-shadow:0 3px 9px rgba(0,0,0,.45)}
+.ig-curtain-cord{width:2px;height:11px;background:#3a2c18;flex-shrink:0}
+.ig-curtain-cloth{position:relative;flex:1;width:100%;
+  background:
+    /* gather shadow just under the rod */
+    linear-gradient(180deg,rgba(55,40,18,.42) 0,rgba(55,40,18,.06) 20px,transparent 46px),
+    /* irregular vertical folds — hand-placed ridges & valleys */
+    linear-gradient(90deg,
+      rgba(70,52,24,.30) 0%, rgba(150,120,60,.06) 3%,
+      rgba(255,254,247,.55) 8%, rgba(150,120,60,.08) 12%, rgba(75,56,26,.26) 16%,
+      rgba(255,253,245,.40) 21%, rgba(140,110,55,.05) 27%, rgba(82,62,28,.24) 32%,
+      rgba(255,254,247,.52) 38%, rgba(150,120,60,.07) 44%, rgba(72,54,25,.20) 49%,
+      rgba(255,253,245,.46) 55%, rgba(140,110,55,.05) 61%, rgba(82,62,28,.25) 66%,
+      rgba(255,254,247,.54) 72%, rgba(150,120,60,.08) 77%, rgba(74,55,26,.22) 82%,
+      rgba(255,253,245,.42) 88%, rgba(150,120,60,.06) 93%, rgba(70,52,24,.30) 100%),
+    /* vertical light: bright near the top, soft shadow toward the hem */
+    linear-gradient(180deg,#faf5e8 0%,#f3ead4 52%,#e6d9bd 100%);
+  background-size:100% 46px,100% 100%,100% 100%;
+  background-position:top,center,center;background-repeat:no-repeat;
+  box-shadow:0 26px 50px rgba(0,0,0,.22);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:.12em;padding:1.3rem .5rem 2rem;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200%20H100%20V85%20C97%2089%2094%2095%2089%2092%20C84%2089%2080%2094%2074%2091%20C68%2088%2063%2096%2056%2092%20C50%2089%2046%2094%2040%2091%20C34%2088%2029%2095%2022%2092%20C16%2089%2011%2094%205%2091%20L0%2093%20Z'%20fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size:100% 100%;-webkit-mask-repeat:no-repeat;
+  mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200%20H100%20V85%20C97%2089%2094%2095%2089%2092%20C84%2089%2080%2094%2074%2091%20C68%2088%2063%2096%2056%2092%20C50%2089%2046%2094%2040%2091%20C34%2088%2029%2095%2022%2092%20C16%2089%2011%2094%205%2091%20L0%2093%20Z'%20fill='%23000'/%3E%3C/svg%3E");
+  mask-size:100% 100%;mask-repeat:no-repeat;
+  animation:cloth-billow 7s ease-in-out infinite}
+/* moving light sheen across the folds — the wind cue */
+.ig-curtain-sheen{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 36%,rgba(255,255,255,.16) 50%,transparent 64%);
+  background-size:220% 100%;background-repeat:no-repeat;mix-blend-mode:soft-light;
+  animation:cloth-sheen 8s ease-in-out infinite}
+.ig-curtain-ink{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.12em}
+.ig-curtain-seal{width:1.9rem;height:1.9rem;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif SC',serif;font-size:1rem;color:#fff;
+  background:var(--seal);border-radius:3px;margin-bottom:.5rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.ig-curtain-char{font-family:'Ma Shan Zheng','Noto Serif SC',serif;
+  font-size:clamp(2.6rem,5.4vw,4.2rem);line-height:1.02;color:#1a150c;
+  text-shadow:0 1px 1px rgba(255,255,255,.45)}
+@keyframes curtain-sway{
+  0%  {transform:rotate(0deg)   skewX(0deg)}
+  25% {transform:rotate(1.3deg) skewX(-.9deg)}
+  50% {transform:rotate(-.6deg) skewX(.6deg)}
+  75% {transform:rotate(.9deg)  skewX(-.4deg)}
+  100%{transform:rotate(0deg)   skewX(0deg)}
+}
+/* the cloth breathes/skews like fabric catching wind (transform only — folds stay put) */
+@keyframes cloth-billow{
+  0%,100%{transform:skewX(0deg)   scaleX(1)}
+  30%    {transform:skewX(-1.1deg) scaleX(.993)}
+  60%    {transform:skewX(.8deg)  scaleX(1.007)}
+}
+@keyframes cloth-sheen{
+  0%,100%{background-position:130% 0}
+  50%    {background-position:-30% 0}
+}
+@media (prefers-reduced-motion: reduce){.ig-curtain,.ig-curtain-cloth,.ig-curtain-sheen{animation:none}}
+@media (max-width:900px){.ig-curtain{display:none}}
+
 /* ── GALLERY ── */
 .gallery{background:var(--paper);padding:3.5rem 0 2rem;min-height:90vh;display:flex;flex-direction:column;justify-content:flex-start;position:relative;overflow:hidden}
 .gallery::before{content:'';position:absolute;inset:0;
@@ -277,13 +353,13 @@ section,div[class*="section"]{position:relative;z-index:1}
 .gallery .container{position:relative;z-index:1}
 .gal-filters{display:flex;justify-content:center;margin:2.5rem 0 0;
   border-bottom:1px solid rgba(16,14,28,.12)}
-.gf{padding:.55rem 1.5rem;border:none;background:transparent;cursor:pointer;
-  font-family:'Hanken Grotesk',sans-serif;font-size:.65rem;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;color:rgba(16,14,28,.52);
+.gf{padding:.85rem 2rem;border:none;background:transparent;cursor:pointer;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.9rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(16,14,28,.62);
   position:relative;transition:color .25s}
-.gf::after{content:'';position:absolute;bottom:-1px;left:15%;right:15%;height:2px;
+.gf::after{content:'';position:absolute;bottom:-1px;left:12%;right:12%;height:3px;
   background:var(--gold);transform:scaleX(0);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.gf:hover{color:rgba(16,14,28,.82)}
+.gf:hover{color:rgba(16,14,28,.9)}
 .gf.on{color:var(--ink);font-weight:700}
 .gf.on::after{transform:scaleX(1)}
 
@@ -352,9 +428,12 @@ section,div[class*="section"]{position:relative;z-index:1}
   opacity:0;pointer-events:none;transition:opacity .3s}
 #lightbox.open{opacity:1;pointer-events:all}
 #lbImg{max-width:88vw;max-height:84vh;object-fit:contain;border-radius:6px;
-  box-shadow:0 40px 100px rgba(0,0,0,.9);
-  transform:scale(.94);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+  box-shadow:0 40px 100px rgba(0,0,0,.9);cursor:grab;touch-action:pan-y;user-select:none;
+  transform:scale(.94);opacity:1;
+  transition:opacity .38s ease,transform .35s cubic-bezier(.16,1,.3,1)}
 #lightbox.open #lbImg{transform:scale(1)}
+#lbImg.fading{opacity:0}                          /* fade-out / fade-in on switch */
+#lightbox.grabbing #lbImg{cursor:grabbing;transition:opacity .38s ease}  /* 1:1 drag, no transform lag */
 #lbCaption{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
   font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;
   color:rgba(240,232,213,.55);white-space:nowrap;pointer-events:none}
@@ -379,7 +458,8 @@ section,div[class*="section"]{position:relative;z-index:1}
 .vs-head{margin-bottom:2.8rem}
 .vs-head .ey{margin-bottom:.6rem}
 .vs-head h2{margin-bottom:.9rem}
-.vs-head p{font-size:.9rem;color:rgba(240,232,213,.5);max-width:520px;margin:0 auto;line-height:1.6}
+.vs-head p{font-size:1.05rem;color:rgba(240,232,213,.55);max-width:none;margin:0 auto;line-height:1.6;white-space:nowrap}
+@media(max-width:720px){.vs-head p{white-space:normal;max-width:88vw;font-size:.95rem}}
 
 /* 16:9 player wrapper */
 .vs-player{
@@ -392,10 +472,11 @@ section,div[class*="section"]{position:relative;z-index:1}
 .vs-slides{position:absolute;inset:0}
 .vs-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   object-position:center 30%;filter:brightness(.78) contrast(1.06);
-  opacity:0;transition:opacity 2s ease-in-out;transform-origin:center;z-index:1}
+  opacity:0;transition:opacity 1s ease-in-out;transform-origin:center;z-index:1}
 .vs-slide.active{opacity:1;z-index:2}
+.vs-slide.active.behind{z-index:1}   /* outgoing slide: stays opaque but forced below the incoming one, so stacking never depends on DOM order */
 .vs-slide.leaving{opacity:0;z-index:1}
-.vs-slide.sharp{filter:url(#sharpen) brightness(.86) contrast(1.18) saturate(1.12)}
+.vs-slide.sharp{filter:brightness(.86) contrast(1.18) saturate(1.12)}
 .vs-grad{position:absolute;inset:0;z-index:3;
   background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 55%,transparent 100%)}
 
@@ -442,25 +523,27 @@ section,div[class*="section"]{position:relative;z-index:1}
   display:grid;grid-template-columns:1fr 340px;gap:5rem;align-items:center}
 .os-text{display:flex;flex-direction:column;gap:1.4rem}
 .os-text .sh{color:var(--ink);margin:0;font-size:clamp(3rem,6vw,5.2rem);font-weight:500;line-height:1.05}
-.os-body{font-size:.93rem;color:var(--muted);line-height:1.82;margin:0}
+.os-body{font-size:1.1rem;color:var(--muted);line-height:1.8;margin:0}
+.os-body-group{display:flex;flex-direction:column;gap:.4rem}
 .os-figures{display:flex;gap:2.5rem;margin-top:.6rem;padding-top:1.4rem;
   border-top:1px solid rgba(16,14,28,.12)}
 .os-fig{display:flex;flex-direction:column;gap:.2rem}
 .os-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;
-  color:var(--ink);line-height:1}
+  color:var(--ink);line-height:1;will-change:transform,opacity}
+@keyframes numRise{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+.os-num.counting{animation:numRise 1.02s cubic-bezier(.2,.75,.25,1) both}
 .os-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 /* right accent panel */
 .os-accent{display:flex;flex-direction:column;align-items:center;gap:1.6rem;
   background:var(--ink);border-radius:18px;padding:3rem 2rem;text-align:center;
   box-shadow:0 24px 60px rgba(16,14,28,.18)}
-.os-char{font-family:'Noto Serif SC',serif;font-size:8.5rem;font-weight:300;
-  color:transparent;-webkit-text-stroke:1px rgba(201,160,40,.55);
-  line-height:1;text-shadow:0 0 40px rgba(201,160,40,.12);
-  letter-spacing:.02em}
+.os-char{font-family:'Noto Serif SC',serif;font-size:clamp(4rem,11vw,6.4rem);font-weight:700;
+  color:var(--gold);line-height:1;text-shadow:0 0 44px rgba(201,160,40,.22);
+  letter-spacing:.05em;white-space:nowrap}
 .os-quote{font-family:'Cormorant Garamond',serif;font-size:1.05rem;
   color:rgba(240,232,213,.75);line-height:1.7;margin:0}
-.os-quote em{display:block;margin-top:.5rem;font-size:.82rem;
-  color:rgba(240,232,213,.45);font-style:italic}
+.os-quote em{display:block;margin-top:0;font-size:1.2rem;
+  color:rgba(240,232,213,.62);font-style:italic;line-height:1.5}
 @media(max-width:900px){
   .os-inner{grid-template-columns:1fr;gap:3rem}
   .os-accent{max-width:380px;margin:0 auto}
@@ -479,7 +562,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 .sp-body{padding:1.4rem 1.3rem 1.6rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
 .sp-tag{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.75}
 .sp-name{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:600;color:var(--on-ink);line-height:1.2}
-.sp-desc{font-size:.72rem;color:rgba(240,232,213,.42);line-height:1.65;margin-top:.1rem;flex:1}
+.sp-desc{font-size:.86rem;color:rgba(240,232,213,.5);line-height:1.6;margin-top:.1rem;flex:1}
 .sp-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.9rem;
   border-top:1px solid rgba(240,232,213,.08)}
 .sp-price{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--gold)}
@@ -588,8 +671,11 @@ section,div[class*="section"]{position:relative;z-index:1}
 /* ── FOOTER ── */
 .site-footer{background:#08060f;border-top:1px solid rgba(201,160,40,.1);padding:5rem 3.5rem 2.5rem;position:relative;z-index:1}
 .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1100px;margin:0 auto 3.5rem}
-.footer-brand .foot-logo{font-family:'Noto Serif SC',serif;font-size:1.25rem;font-weight:700;
-  color:var(--gold);text-decoration:none;display:block;margin-bottom:.7rem}
+.footer-brand .foot-logo{font-family:'Noto Serif SC',serif;font-size:1.45rem;font-weight:700;
+  color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:.75rem;
+  letter-spacing:.05em;margin-bottom:.7rem}
+.footer-brand .foot-logo em{font-style:normal;font-family:'Hanken Grotesk',sans-serif;font-size:.75rem;
+  color:rgba(240,232,213,.65);font-weight:400;letter-spacing:.18em;text-transform:uppercase}
 .footer-brand p{font-size:.78rem;color:rgba(240,232,213,.35);line-height:1.7;max-width:260px;margin-bottom:1.6rem}
 .footer-zh{font-family:'Noto Serif SC',serif;font-size:2.8rem;color:rgba(201,160,40,.06);
   line-height:1;position:absolute;right:3.5rem;top:3rem;pointer-events:none;user-select:none}
@@ -679,6 +765,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 <div class="hero-track" id="heroTrack">
 <div class="hero-stage" id="heroStage">
   <div id="heroBg"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto"><source src="video/motion.mp4" type="video/mp4"></video>
   <div id="heroBgOverlay"></div>
   <img id="classPhoto" src="images/calligraphy-class.jpg" alt="Calligraphy class"
        onerror="this.style.display='none'">
@@ -705,10 +792,22 @@ section,div[class*="section"]{position:relative;z-index:1}
 
 <!-- ── INK GARDEN ── -->
 <section class="ig" id="inkGarden">
+  <div class="ig-curtain" aria-hidden="true">
+    <div class="ig-curtain-rod"></div>
+    <div class="ig-curtain-cord"></div>
+    <div class="ig-curtain-cloth">
+      <div class="ig-curtain-sheen"></div>
+      <div class="ig-curtain-ink">
+        <span class="ig-curtain-seal">心</span>
+        <span class="ig-curtain-char">書</span>
+        <span class="ig-curtain-char">道</span>
+      </div>
+    </div>
+  </div>
   <div class="ig-text rv">
     <p class="ey">The Practice</p>
     <h2 class="sh sh-d">The brush knows<br>before you do</h2>
-    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision. At Inkflow, students learn the tool before the stroke — because the brush carries intention long before the ink does.</p>
+    <p class="ig-body">Goat hair for softness, wolf for spring, rabbit for precision — students learn the tool before the stroke.</p>
     <a href="#courses" class="btn btn-outline-d" style="align-self:flex-start">View courses →</a>
   </div>
   <div class="slot" style="min-height:75vh;border-radius:0">
@@ -724,7 +823,7 @@ section,div[class*="section"]{position:relative;z-index:1}
     <div class="vs-head rv">
       <p class="ey ey-c">Know the Academy</p>
       <h2 class="sh sh-d">A glimpse inside our studio</h2>
-      <p>Watch how traditional brushwork comes alive in Chengdu — the space, the teachers, and the quiet discipline of ink.</p>
+      <p>Brushwork alive in Chengdu — the space, the teachers, the discipline of ink.</p>
     </div>
     <div class="vs-player rv" id="vsPlayer">
       <div class="vs-thumb" id="vsThumb">
@@ -740,7 +839,6 @@ section,div[class*="section"]{position:relative;z-index:1}
           <svg class="vs-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </div>
       </div>
-      <div class="vs-label">Inkflow Academy · Chengdu</div>
       <div class="vs-bar" id="vsBar">
         <button class="vs-btn-sm" id="vsPlayPause" aria-label="Play / Pause">
           <svg class="vs-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -763,8 +861,10 @@ section,div[class*="section"]{position:relative;z-index:1}
     <div class="os-text rv">
       <p class="ey">Our Story</p>
       <h2 class="sh sh-l">Ink passed down<br>through living hands</h2>
-      <p class="os-body">Founded in Chengdu by Master Liú Wén — third-generation, Tang tradition — Tong Shu began as a courtyard studio and grew into Sichuan's most respected brush arts centre.</p>
-      <p class="os-body">Calligraphy is not performance. It is daily practice. Small groups, lineage teachers, personal guidance from first stroke to finished work.</p>
+      <div class="os-body-group">
+        <p class="os-body">Founded in Chengdu by Master Liú Wén — Sichuan's most respected brush arts centre.</p>
+        <p class="os-body">Calligraphy is daily practice: small groups, lineage teachers, first stroke to last.</p>
+      </div>
       <div class="os-figures">
         <div class="os-fig"><span class="os-num">21</span><span class="os-label">years of teaching</span></div>
         <div class="os-fig"><span class="os-num">6</span><span class="os-label">resident masters</span></div>
@@ -772,8 +872,8 @@ section,div[class*="section"]{position:relative;z-index:1}
       </div>
     </div>
     <div class="os-accent rv">
-      <div class="os-char">書</div>
-      <p class="os-quote">「學書先學做人」<br><em>To learn calligraphy, first learn to be human.</em></p>
+      <div class="os-char">墨流</div>
+      <p class="os-quote"><em>To learn calligraphy, first learn to be human.</em></p>
     </div>
   </div>
 </section>
@@ -880,9 +980,6 @@ section,div[class*="section"]{position:relative;z-index:1}
       <p class="ey ey-c" style="color:rgba(201,160,40,.8)">Studio Shop</p>
       <h2 class="sh sh-l">The right brush<br>changes everything.</h2>
       <div class="rule"></div>
-      <p style="font-size:.82rem;color:rgba(240,232,213,.42);max-width:480px;margin:.8rem auto 0;line-height:1.65">
-        Every brush sold at Tong Shu is used in our studio. Curated for balance, spring, and longevity — sourced from the same suppliers our masters have trusted for decades.
-      </p>
     </div>
     <div class="store-grid">
 
@@ -1049,12 +1146,12 @@ section,div[class*="section"]{position:relative;z-index:1}
 
 <!-- ── FOOTER ── -->
 <footer class="site-footer">
-  <span class="footer-zh" aria-hidden="true">通書</span>
+  <span class="footer-zh" aria-hidden="true">墨流</span>
   <div class="footer-grid">
 
     <!-- Brand -->
     <div class="footer-brand">
-      <a href="#" class="foot-logo">通書 · Tong Shu Academy</a>
+      <a href="#" class="foot-logo"><span>墨流</span><em>Inkflow Academy of Calligraphy</em></a>
       <p>A living lineage of Chinese calligraphy, rooted in Chengdu since 2004. Small groups, master teachers, ink that lasts.</p>
     </div>
 
@@ -1088,7 +1185,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   </div>
   <hr class="foot-divider">
   <div class="foot-bottom">
-    <span class="foot-copy">© 2025 Tong Shu Academy of Calligraphy · Chengdu</span>
+    <span class="foot-copy">© 2025 Inkflow Academy of Calligraphy · Chengdu</span>
     <span class="foot-made">Crafted with ink &amp; intention</span>
   </div>
 </footer>
@@ -1336,16 +1433,17 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
   function nextSlide() {
     const prev = slideIdx;
     slideIdx = (slideIdx + 1) % slides.length;
+    slides[prev].classList.add('behind');          // pin outgoing below incoming (fixes the 3→0 wrap where DOM order otherwise hides the new slide)
     slides[slideIdx].classList.add('active');      // new slide fades in on top (z-index:2)
     setTimeout(() => {
-      slides[prev].classList.remove('active');     // old slide fades out underneath after overlap
-    }, 2100); // just past the 2s CSS transition
+      slides[prev].classList.remove('active', 'behind'); // old slide fades out, hidden under the now-opaque new one
+    }, 1000); // matches the 1s CSS transition — crossfade finishes well inside the 2.5s beat
   }
   function startSlides(interval) {
     clearInterval(slideTimer);
     slideTimer = setInterval(nextSlide, interval);
   }
-  startSlides(2500); // 2.5s per slide, 2s crossfade overlap
+  startSlides(2500); // exactly 2.5s per slide, 1s crossfade + 1.5s hold
 
   // autoplay immediately — no button press needed
   player.classList.add('playing', 'started');
@@ -1360,7 +1458,7 @@ function _cancelMomentum() {
   _mVy = 0;
 }
 (function(){
-  const FRICTION = 0.93, MAX = 80, MIN = 0.3;
+  const FRICTION = 0.93, MAX = 65, MIN = 0.3;   // 62 → 65 (+5% faster)
   function loop() {
     _mVy *= FRICTION;
     if (Math.abs(_mVy) < MIN) { _mVy = 0; _mRaf = null; return; }
@@ -1373,7 +1471,7 @@ function _cancelMomentum() {
     let d = e.deltaY;
     if (e.deltaMode === 1) d *= 40;
     if (e.deltaMode === 2) d *= window.innerHeight;
-    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.20));
+    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.162));  // 0.154 → 0.162 (+5% faster per tick)
     if (!_mRaf) _mRaf = requestAnimationFrame(loop);
   }, { passive: false });
 })();
@@ -1406,12 +1504,12 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const id = link.getAttribute('href').slice(1);
     e.preventDefault();
-    if (!id) { smoothScrollTo(0, 1100); return; }
+    if (!id) { smoothScrollTo(0, 1240); return; }
     const target = document.getElementById(id);
     if (!target) return;
     const navH = document.getElementById('nav')?.offsetHeight || 0;
     const y = target.getBoundingClientRect().top + window.scrollY - navH;
-    smoothScrollTo(y, 1100);
+    smoothScrollTo(y, 1240);
   });
 });
 
@@ -1534,10 +1632,19 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   function show(i) {
     idx = (i + items.length) % items.length;
     const it = items[idx];
-    lbImg.src = it.src;
-    lbImg.alt = it.title;
-    lbCap.textContent = it.title;
-    lbCnt.textContent = (idx + 1) + ' / ' + items.length;
+    // fade the current image out, swap the source, then fade the new one in once it's ready
+    lbImg.classList.add('fading');
+    clearTimeout(show._t);
+    show._t = setTimeout(() => {
+      const reveal = () => lbImg.classList.remove('fading');
+      lbImg.onload = reveal;
+      lbImg.onerror = reveal;
+      lbImg.src = it.src;
+      lbImg.alt = it.title;
+      if (lbImg.complete) reveal();   // already cached — onload may not refire
+      lbCap.textContent = it.title;
+      lbCnt.textContent = (idx + 1) + ' / ' + items.length;
+    }, 340);
   }
 
   function open(i) {
@@ -1566,12 +1673,86 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   document.getElementById('lbPrev').addEventListener('click', () => show(idx - 1));
   document.getElementById('lbNext').addEventListener('click', () => show(idx + 1));
   lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  // ── drag left / right to switch (hand cursor) ──
+  let dragX0 = null, dragging = false, moved = false;
+  const THRESHOLD = 60;   // px before a drag counts as a switch
+  lbImg.addEventListener('pointerdown', e => {
+    dragging = true; moved = false; dragX0 = e.clientX;
+    lb.classList.add('grabbing');
+    try { lbImg.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  lbImg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - dragX0;
+    if (Math.abs(dx) > 4) moved = true;
+    lbImg.style.transform = `scale(1) translateX(${dx * 0.35}px)`;   // follow the drag
+    lbImg.style.opacity = Math.max(0, 1 - Math.abs(dx) / 320);        // slowly fade out as it's dragged away
+  });
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    lb.classList.remove('grabbing');
+    lbImg.style.transform = '';                                       // snap position back (transition returns)
+    lbImg.style.opacity = '';                                         // released: snap back to 1, or let show()'s fade take over
+    const dx = e.clientX - dragX0;
+    if (Math.abs(dx) > THRESHOLD) { dx < 0 ? show(idx + 1) : show(idx - 1); }  // left→next, right→prev
+  }
+  lbImg.addEventListener('pointerup', endDrag);
+  lbImg.addEventListener('pointercancel', endDrag);
+  lbImg.addEventListener('dragstart', e => e.preventDefault());        // block native image drag
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape')      close();
     if (e.key === 'ArrowLeft')   show(idx - 1);
     if (e.key === 'ArrowRight')  show(idx + 1);
   });
+})();
+
+// ── OUR STORY — count-up numbers when the section comes into view ──
+(function(){
+  const nums = Array.from(document.querySelectorAll('.os-num'));
+  if (!nums.length) return;
+  const DUR = 1680, STAGGER = 228;                    // per-number roll (ms) + cascade offset (+20% slower)
+  const fmt = n => n.toLocaleString('en-US');         // keeps the thousands comma (1,400)
+  const easeInOutCubic = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+  const items = nums.map((el, i) => {
+    const raw = el.textContent.trim();
+    const m = raw.match(/[\d,]+/);
+    const target = m ? parseInt(m[0].replace(/,/g, ''), 10) : 0;
+    const suffix = m ? raw.slice(m.index + m[0].length) : '';  // e.g. the "+"
+    el.textContent = '0' + suffix;
+    el.style.opacity = '0';                           // hidden until its turn in the cascade
+    return { el, i, target, suffix, done: false };
+  });
+
+  function roll(it){
+    it.el.classList.add('counting');                  // subtle rise + fade-in as it starts
+    let start = null;
+    (function step(ts){
+      if (start === null) start = ts;
+      const t = Math.min(1, (ts - start) / DUR);
+      it.el.textContent = fmt(Math.round(it.target * easeInOutCubic(t))) + it.suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else it.el.textContent = fmt(it.target) + it.suffix;
+    })();
+  }
+
+  function run(it){
+    if (it.done) return; it.done = true;
+    setTimeout(() => roll(it), it.i * STAGGER);        // cascade the three figures one after another
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const it = items.find(x => x.el === en.target);
+      if (it) run(it);
+      io.unobserve(en.target);
+    });
+  }, { threshold: 0.5 });
+  items.forEach(it => io.observe(it.el));
 })();
 
 // ── FLOATING CALLIGRAPHY CHARS — all bright sections ──
@@ -1822,16 +2003,16 @@ new IntersectionObserver(entries => {
     'hero-h1':    '笔，<br>仍在<strong>教导</strong><br>你的双手',
     'ig-ey':      '习练之道',
     'ig-h2':      '笔知，<br>先于你心',
-    'ig-body':    '羊毫柔顺，狼毫富有弹性，兔毫细腻精准。在通书，学生先学工具，再学笔法——因为笔在落墨之前，已承载了书者的意念。',
+    'ig-body':    '羊毫柔顺，狼毫富弹，兔毫精准——先识其笔，后习其法。',
     'ig-btn':     '查看课程 →',
     'vs-ey':      '了解学院',
     'vs-h2':      '走进我们的工作室',
-    'vs-body':    '探寻传统笔法在成都的传承——空间、老师，以及墨香中的宁静修行。',
+    'vs-body':    '成都的笔法传承——空间、老师，与墨中修行。',
     'vs-label':   '通书书法学院 · 成都',
     'os-ey':      '关于我们',
     'os-h2':      '墨迹代代相传，<br>薪火永续不断',
-    'os-body1':   '通书由第三代传人刘文先生创立于成都，承袭唐代书法传统。学院从一间庭院工作室起步，逐渐发展为四川最具声誉的笔墨艺术中心。',
-    'os-body2':   '书法非表演，乃日常修行。小班教学，名师传授，从第一笔到完稿，全程亲授指导。',
+    'os-body1':   '通书由刘文先生创立于成都，是四川最具声誉的笔墨艺术中心。',
+    'os-body2':   '书法乃日常修行——小班教学，名师亲授。',
     'os-s1':      '年教学经验',
     'os-s2':      '位驻院名师',
     'os-s3':      '名学员',
@@ -1843,7 +2024,6 @@ new IntersectionObserver(entries => {
     'gal-f4':     '学院',
     'st-ey':      '工作室商店',
     'st-h2':      '一支好笔，<br>改变一切。',
-    'st-body':    '通书出售的每一支笔都曾在我们的工作室中使用。精心甄选，注重平衡、弹性与耐用性——由名师信赖数十年的供应商提供。',
     'st-tag1':    '入门', 'st-name1': '入门套装',
     'st-desc1':   '三支羊毫笔、砚台及研墨棒。',
     'st-add1':    '加入购物车',
@@ -1886,7 +2066,7 @@ new IntersectionObserver(entries => {
     'faq-a3':     '用水笔在湿润的庭院石板上书写，笔迹出现后数分钟内自然蒸发。开放练习，无需老师指导。',
     'faq-q4':     '改期政策？<span class="faq-icon"></span>',
     'faq-a4':     '私教课：提前24小时通知。小组工作坊：提前48小时。缺席不予退款。',
-    'ft-logo':    '通書 通书书法学院',
+    'ft-logo':    '墨流 · 墨流书法学院',
     'ft-gal':     '作品',
     'ft-crs':     '课程',
     'ft-copy':    '© 2025 · 成都',
@@ -1942,7 +2122,6 @@ new IntersectionObserver(entries => {
     'os-s1':    ['.os-label', 0], 'os-s2': ['.os-label', 1], 'os-s3': ['.os-label', 2],
     'os-quote': ['.os-quote em', 0],
     'gal-f1':   ['.gf', 0], 'gal-f2': ['.gf', 1], 'gal-f3': ['.gf', 2], 'gal-f4': ['.gf', 3],
-    'st-body':  ['#store .container > div:first-child > p:last-child', 0],
     'st-tag1':  ['.sp-tag', 0], 'st-name1': ['.sp-name', 0], 'st-desc1': ['.sp-desc', 0], 'st-add1': ['.sp-add', 0],
     'st-tag2':  ['.sp-tag', 1], 'st-name2': ['.sp-name', 1], 'st-desc2': ['.sp-desc', 1], 'st-add2': ['.sp-add', 1],
     'st-tag3':  ['.sp-tag', 2], 'st-name3': ['.sp-name', 2], 'st-desc3': ['.sp-desc', 2], 'st-add3': ['.sp-add', 2],
@@ -2010,148 +2189,43 @@ new IntersectionObserver(entries => {
   document.getElementById('langToggle').addEventListener('click', () => applyLang(lang === 'en' ? 'zh' : 'en'));
 })();
 
-// ── AMBIENT SIDE FLUTE MUSIC ──
+// ── AMBIENT BACKGROUND MUSIC (looped MP3) ──
 (function(){
-  let ctx = null, master = null, echo = null;
-  let playing = false, seqTimer = null, noteTime = 0, phraseIdx = 0;
+  const SRC     = 'audio/theme.mp3';
+  const MAX_VOL = 0.55;          // ceiling — ambient, sits under the page
+  const FADE_IN = 2000;          // ms
+  const FADE_OUT= 1500;          // ms
 
-  // G major pentatonic — bright, airy, perfect for side flute
-  // G3  A3  B3  D4  E4  G4  A4  B4  D5  E5  G5
-  const F = [196.00,220.00,246.94,293.66,329.63,392.00,440.00,493.88,587.33,659.26,783.99];
+  let playing = false, fadeRaf = null;
 
-  // Slow, flowing melodic phrases — flute phrases breathe and soar
-  const PHRASES = [
-    [2,4,5,4,2,1,2,4],      // rise and settle
-    [5,6,7,6,5,4,2,4,5],    // high arc, descend
-    [4,5,7,8,7,5,4,2],      // sweep upward then float down
-    [2,1,0,1,2,4,5,4,2],    // low, introspective
-    [5,7,8,9,8,7,5,6,5],    // soaring high phrase
-    [4,2,4,5,4,2,1,2],      // gentle rocking
-    [2,4,5,7,5,4,2,0,1,2],  // long wandering line
-  ];
+  const audio = new Audio(SRC);
+  audio.loop     = true;
+  audio.preload  = 'auto';
+  audio.volume   = 0;
 
-  function init() {
-    if (ctx) return;
-    ctx = new (window.AudioContext || window.webkitAudioContext)();
-    master = ctx.createGain();
-    master.gain.value = 0;
-
-    // Warm reverb: longer tail, darker feedback
-    echo = ctx.createDelay(2.5);
-    echo.delayTime.value = 0.38;
-    const fb  = ctx.createGain();    fb.gain.value = 0.32;
-    const lpf = ctx.createBiquadFilter();
-    lpf.type = 'lowpass'; lpf.frequency.value = 1800;
-    echo.connect(lpf); lpf.connect(fb); fb.connect(echo);
-    echo.connect(master);
-
-    const hpf = ctx.createBiquadFilter();
-    hpf.type = 'highpass'; hpf.frequency.value = 60;
-    master.connect(hpf);
-    hpf.connect(ctx.destination);
-  }
-
-  function blowNote(freq, t, dur, vol) {
-    // ── Vibrato LFO (5.5 Hz, gentle) ──
-    const lfo  = ctx.createOscillator();
-    const lfoG = ctx.createGain();
-    lfo.frequency.value = 5.5;
-    lfoG.gain.value = freq * 0.007;       // ~0.7 % pitch wobble
-    lfo.connect(lfoG);
-    lfo.start(t + 0.25); lfo.stop(t + dur + 0.1); // vibrato kicks in after attack
-
-    // ── Fundamental (sine — pure flute core) ──
-    const osc1 = ctx.createOscillator();
-    const g1   = ctx.createGain();
-    osc1.type  = 'sine';
-    osc1.frequency.value = freq;
-    lfoG.connect(osc1.frequency);
-    g1.gain.setValueAtTime(0, t);
-    g1.gain.linearRampToValueAtTime(vol, t + 0.09);        // soft 90 ms attack
-    g1.gain.setValueAtTime(vol * 0.88, t + dur - 0.18);
-    g1.gain.linearRampToValueAtTime(0, t + dur);
-    osc1.connect(g1); g1.connect(master); g1.connect(echo);
-    osc1.start(t); osc1.stop(t + dur + 0.1);
-
-    // ── 2nd harmonic (weak — flutes are mostly fundamental) ──
-    const osc2 = ctx.createOscillator();
-    const g2   = ctx.createGain();
-    osc2.type  = 'sine';
-    osc2.frequency.value = freq * 2;
-    g2.gain.setValueAtTime(0, t);
-    g2.gain.linearRampToValueAtTime(vol * 0.12, t + 0.07);
-    g2.gain.linearRampToValueAtTime(0, t + dur * 0.75);
-    osc2.connect(g2); g2.connect(master);
-    osc2.start(t); osc2.stop(t + dur * 0.75 + 0.05);
-
-    // ── Breath noise (bandpass near fundamental — airy flute character) ──
-    const bufSz = Math.ceil(ctx.sampleRate * (dur + 0.1));
-    const buf   = ctx.createBuffer(1, bufSz, ctx.sampleRate);
-    const data  = buf.getChannelData(0);
-    for (let i = 0; i < bufSz; i++) data[i] = Math.random() * 2 - 1;
-    const noise = ctx.createBufferSource();
-    noise.buffer = buf;
-    const nbp   = ctx.createBiquadFilter();
-    nbp.type = 'bandpass'; nbp.frequency.value = freq * 1.8; nbp.Q.value = 1.2;
-    const ng    = ctx.createGain();
-    ng.gain.setValueAtTime(0, t);
-    ng.gain.linearRampToValueAtTime(vol * 0.055, t + 0.1);
-    ng.gain.setValueAtTime(vol * 0.04, t + dur - 0.18);
-    ng.gain.linearRampToValueAtTime(0, t + dur);
-    noise.connect(nbp); nbp.connect(ng); ng.connect(master);
-    noise.start(t); noise.stop(t + dur + 0.05);
-  }
-
-  function schedule() {
-    const now = ctx.currentTime;
-    while (noteTime < now + 3) {
-      const phrase = PHRASES[phraseIdx % PHRASES.length];
-      const gap    = 0.75 + Math.random() * 0.65;   // 0.75–1.4 s between notes
-      const dur    = 1.8  + Math.random() * 1.8;    // 1.8–3.6 s sustain per note
-
-      phrase.forEach((ni, i) => {
-        blowNote(F[ni], noteTime + i * gap, dur, 0.11 + Math.random() * 0.03);
-      });
-
-      // Silence between phrases (breath pause)
-      noteTime += phrase.length * gap + 1.8 + Math.random() * 2.5;
-      phraseIdx++;
-    }
-    seqTimer = setTimeout(schedule, 500);
-  }
-
-  function startScheduler() {
-    if (seqTimer) { clearTimeout(seqTimer); seqTimer = null; }
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
-    noteTime = ctx.currentTime + 0.1;
-    playing = true;   // audio is genuinely running now — flip icon ON here
-    sync();
-    schedule();
-  }
-
-  function doResume() {
-    ctx.resume().then(() => {
-      if (!seqTimer) startScheduler();  // startScheduler sets playing+sync itself
-    }).catch(() => {});
+  function fadeTo(target, ms, onDone) {
+    cancelAnimationFrame(fadeRaf);
+    const from = audio.volume, delta = target - from, start = performance.now();
+    (function step(now){
+      const p = Math.min(1, (now - start) / ms);
+      audio.volume = Math.max(0, Math.min(1, from + delta * p));
+      if (p < 1) { fadeRaf = requestAnimationFrame(step); }
+      else if (onDone) onDone();
+    })(start);
   }
 
   function startMusic() {
-    if (!ctx) init();
-    doResume();
+    audio.play().then(() => {
+      playing = true;
+      sync();
+      fadeTo(MAX_VOL, FADE_IN);
+    }).catch(() => {});
   }
 
   function stopMusic() {
-    clearTimeout(seqTimer);
-    seqTimer = null;
     playing = false;
-    if (ctx && master) {
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 2.5);
-    }
     sync();
+    fadeTo(0, FADE_OUT, () => audio.pause());
   }
 
   const SVG_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
@@ -2165,46 +2239,14 @@ new IntersectionObserver(entries => {
     btn.title = playing ? 'Stop music' : 'Play ambient music';
   }
 
-  function removeAutoListeners() {
-    document.removeEventListener('touchstart', onTouchScroll);
-    document.removeEventListener('wheel',      onWheelScroll);
-  }
-
-  // Mobile: touchstart is a trusted gesture AND is the start of a scroll swipe
-  function onTouchScroll() {
-    removeAutoListeners();
-    doResume();
-  }
-
-  // Desktop: wheel fires on trackpad/mouse scroll — not trusted in Chrome strict mode
-  // but works on Firefox and Chrome with prior site engagement (returning visitor)
-  function onWheelScroll() {
-    removeAutoListeners();
-    ctx.resume().then(() => {
-      if (!seqTimer) startScheduler();
-    }).catch(() => {});
-  }
-
-  function autoStart() {
-    playing = false;
-    sync();
-    init();
-    doResume(); // works immediately if browser grants autoplay for this origin
-    document.addEventListener('touchstart', onTouchScroll, { passive: true });
-    document.addEventListener('wheel',      onWheelScroll, { passive: true });
-  }
-
+  // Music is off on load and starts ONLY from the sound button — no autoplay, no gesture fallback.
   document.getElementById('soundToggle').addEventListener('click', e => {
     e.stopPropagation();
-    removeAutoListeners();
-    if (playing) {
-      stopMusic();
-    } else {
-      startMusic();
-    }
+    if (playing) stopMusic();
+    else         startMusic();
   });
 
-  autoStart();
+  sync();   // render the OFF icon initially
 })();
 
 // ── CHINESE CHARACTER MOUSE TRAIL ──

@@ -21,7 +21,7 @@ python3 -m http.server 8000
 
 - **Plain HTML + CSS + vanilla JavaScript** — everything inline in `index.html` (one `<style>` block, one `<script>` block).
 - **Google Fonts** — the only external dependency (Ma Shan Zheng, Cormorant Garamond, Hanken Grotesk, Noto Serif SC).
-- **Web Audio API** — the ambient flute is synthesized in-browser; there is no audio file to ship.
+- **HTML5 Audio** — an ambient Chinese instrumental theme (`audio/theme.mp3`) loops in the background, faded in/out and toggled from the nav.
 - **HTML Canvas + IntersectionObserver** — for the ink-flow background and scroll-triggered reveals.
 
 No framework, no bundler, no package manager.
@@ -46,7 +46,7 @@ Hero → Ink Garden ("The Practice") → Video → Our Story → Gallery → Sto
 ## Features
 
 - **Bilingual EN / 中文** — the nav toggle swaps copy in place; Chinese text activates `Noto Serif SC` via a `lang-zh` class.
-- **Ambient music** — a procedurally synthesized flute (Web Audio API), off by default, toggled from the nav.
+- **Ambient music** — a looped Chinese instrumental theme (`audio/theme.mp3`), gently faded in, toggled from the nav.
 - **Shopping cart** — add/remove/adjust store items with a running total and slide-out panel. Checkout composes an order-summary `mailto:`.
 - **Course reservation** — the "Book a Session" CTA opens a prefilled `mailto:`.
 - **Live ink background** — a canvas flow-field animation plus spawned calligraphy characters.
