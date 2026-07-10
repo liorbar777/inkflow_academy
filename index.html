@@ -621,10 +621,10 @@ section,div[class*="section"]{position:relative;z-index:1}
   background:rgba(12,10,24,.6);padding:.35rem .75rem;border-radius:20px}
 /* front — testimonials, clipped by the divider */
 .tst-cover{position:absolute;inset:0;z-index:2;background:var(--dark);
-  display:flex;align-items:center;clip-path:inset(0 12% 0 0);will-change:clip-path}
+  display:flex;align-items:center;clip-path:inset(0 6% 0 0);will-change:clip-path}
 .tst-cover .tst-grid{margin-top:0;width:100%}
 /* divider + handle */
-.tst-divider{position:absolute;top:0;bottom:0;left:88%;width:2px;z-index:5;transform:translateX(-1px);
+.tst-divider{position:absolute;top:0;bottom:0;left:94%;width:2px;z-index:5;transform:translateX(-1px);
   background:linear-gradient(rgba(201,160,40,0),rgba(201,160,40,.9) 12%,rgba(201,160,40,.9) 88%,rgba(201,160,40,0));
   cursor:ew-resize;touch-action:none}
 .tst-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -633,13 +633,18 @@ section,div[class*="section"]{position:relative;z-index:1}
   box-shadow:0 4px 16px rgba(0,0,0,.55);animation:tstPulse 2.4s ease-in-out infinite}
 @keyframes tstPulse{0%,100%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 0 rgba(201,160,40,.5)}
   50%{box-shadow:0 4px 16px rgba(0,0,0,.55),0 0 0 13px rgba(201,160,40,0)}}
-.tst-hint{position:absolute;left:50%;bottom:1.2rem;transform:translateX(-50%);white-space:nowrap;z-index:6;
-  font-family:'Hanken Grotesk',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:#fff;background:rgba(12,10,24,.85);padding:.6rem 1.1rem;border-radius:24px;
-  border:1px solid rgba(201,160,40,.45);box-shadow:0 6px 20px rgba(0,0,0,.4);
-  pointer-events:none;transition:opacity .3s}
+.tst-hint{position:absolute;left:50%;bottom:1.3rem;transform:translateX(-50%);white-space:nowrap;z-index:6;
+  font-family:'Hanken Grotesk',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;background:rgba(12,10,24,.9);padding:.7rem 1.3rem;border-radius:26px;
+  border:1.5px solid rgba(201,160,40,.6);pointer-events:none;
+  animation:hintPulse 2.1s ease-in-out infinite;transition:opacity .3s}
+@keyframes hintPulse{
+  0%,100%{transform:translateX(-50%) scale(1);   border-color:rgba(201,160,40,.5); box-shadow:0 6px 20px rgba(0,0,0,.45)}
+  50%    {transform:translateX(-50%) scale(1.05);border-color:rgba(201,160,40,1);  box-shadow:0 8px 26px rgba(201,160,40,.5)}
+}
 .tst-reveal.dragging{cursor:ew-resize}
-.tst-reveal.dragging .tst-hint{opacity:0}
+.tst-reveal.dragging .tst-hint{opacity:0;animation:none}
+@media(prefers-reduced-motion:reduce){.tst-hint{animation:none}}
 .tst-reveal.dragging .tst-handle{animation:none}
 @media(prefers-reduced-motion:reduce){.tst-handle{animation:none}}
 /* mobile — drop the slider, just stack the testimonials */
@@ -1127,7 +1132,7 @@ section,div[class*="section"]{position:relative;z-index:1}
         </div>
       </div>
       <!-- draggable divider -->
-      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88" tabindex="0">
+      <div class="tst-divider" id="tstDivider" role="slider" aria-label="Drag to reveal students' work" aria-valuemin="0" aria-valuemax="100" aria-valuenow="94" tabindex="0">
         <div class="tst-handle" aria-hidden="true">⟺</div>
       </div>
       <span class="tst-hint" id="tstHint">◀ Drag to reveal their work</span>
@@ -1826,7 +1831,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   if (!wrap || !cover || !divider) return;
 
   const isMobile = () => window.matchMedia('(max-width:760px)').matches;
-  let P = 88;                                        // % of the width the testimonials still cover
+  let P = 94;                                        // default: testimonials fully shown + a thin teaser strip of work
 
   function set(p){
     P = Math.max(0, Math.min(100, p));            // full range — closes with no gap
