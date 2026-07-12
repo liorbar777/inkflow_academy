@@ -181,7 +181,7 @@ html.lang-zh .pr-lead,html.lang-zh .pr-hint,html.lang-zh .pr-choose{font-family:
 /* ── HERO ── */
 .hero-track{height:100vh;position:relative}
 .hero-stage{position:relative;height:100vh;overflow:hidden;background:var(--dark)}
-#heroBg{position:absolute;inset:0;background:url('images/ink-orchid.jpg') center/cover no-repeat;
+#heroBg{position:absolute;inset:0;background:url('images/ink-orchid.webp') center/cover no-repeat;
   opacity:0;transition:opacity .6s;filter:url(#ink-ripple)}
 /* live motion background — faint, lightly blurred, under the overlay so hero text stays readable */
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
@@ -326,7 +326,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   opacity:.08;filter:blur(2.4px);
   animation:ig-drift 120s linear infinite;z-index:0}
 .ig::before{content:'';position:absolute;inset:0;
-  background:url('images/calliback.jpeg') center/cover no-repeat;
+  background:url('images/calliback.webp') center/cover no-repeat;
   opacity:.10;filter:saturate(.5) brightness(1.05);pointer-events:none;z-index:0}
 .ig .ig-text,.ig .slot{position:relative;z-index:1}
 .ig-text{padding:5rem 4rem 5rem 6rem;display:flex;flex-direction:column;justify-content:center}
@@ -403,7 +403,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 /* ── GALLERY ── */
 .gallery{background:var(--paper);padding:3.5rem 0 2rem;min-height:90vh;display:flex;flex-direction:column;justify-content:flex-start;position:relative;overflow:hidden}
 .gallery::before{content:'';position:absolute;inset:0;
-  background:url('images/calliback.jpeg') center/cover no-repeat;
+  background:url('images/calliback.webp') center/cover no-repeat;
   opacity:.09;filter:saturate(.5) brightness(1.05);pointer-events:none;z-index:0}
 .gallery .container{position:relative;z-index:1}
 .gal-filters{display:flex;justify-content:center;margin:2.5rem 0 0;
@@ -757,7 +757,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 /* ── FAQ ── */
 .faq{padding:2rem 0 3.5rem;background:var(--paper);position:relative;min-height:560px;overflow:hidden}
 .faq::before{content:'';position:absolute;inset:0;
-  background:url('images/landscape.jpg') center/cover no-repeat;
+  background:url('images/landscape.webp') center/cover no-repeat;
   opacity:.13;filter:saturate(.6) brightness(1.1);pointer-events:none;z-index:0}
 .faq .container{position:relative;z-index:1}
 .faq-list{max-width:640px;margin:1rem auto 0}
@@ -1038,7 +1038,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div id="heroBg"></div>
   <video class="hero-video" autoplay muted loop playsinline preload="auto"><source src="video/motion.mp4" type="video/mp4"></video>
   <div id="heroBgOverlay"></div>
-  <img width="756" height="463" decoding="async" fetchpriority="high" id="classPhoto" src="images/calligraphy-class.jpg" alt="Calligraphy class"
+  <img width="756" height="463" decoding="async" fetchpriority="high" id="classPhoto" src="images/calligraphy-class.webp" alt="Calligraphy class"
        onerror="this.style.display='none'">
   <!-- ink-wash base blobs — cool smoke tones -->
   <div class="ink-wash" style="width:55vw;height:42vw;left:-8%;top:5%;background:radial-gradient(ellipse,rgba(90,95,110,1),transparent);animation:iw0 26s ease-in-out infinite"></div>
@@ -1050,7 +1050,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div class="hfc" id="hfc4">墨</div>
   <!-- pen — static -->
   <div class="pen-photo" id="penPhoto">
-    <img width="286" height="342" decoding="async" src="images/pen-nib.jpg" alt="Gold fountain pen"
+    <img width="286" height="342" decoding="async" src="images/pen-nib.webp" alt="Gold fountain pen"
          onerror="this.parentElement.style.display='none'">
   </div>
   <!-- self-drawing brush centerpiece — the 墨 writes itself in gold on load -->
@@ -1092,7 +1092,7 @@ section,div[class*="section"]{position:relative;z-index:1}
     <a href="#courses" class="btn btn-outline-d" style="align-self:flex-start">View courses →</a>
   </div>
   <div class="slot" style="min-height:75vh;border-radius:0">
-    <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-bowl.jpg" alt="Calligraphy brushes in bowl" onerror="this.style.display='none'">
+    <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-bowl.webp" alt="Calligraphy brushes in bowl" onerror="this.style.display='none'">
     <div class="slot-bg"></div>
     <div class="slot-zh" style="font-size:14rem">道</div>
   </div>
@@ -1136,10 +1136,10 @@ section,div[class*="section"]{position:relative;z-index:1}
     <div class="vs-player rv" id="vsPlayer">
       <div class="vs-thumb" id="vsThumb">
         <div class="vs-slides" id="vsSlides">
-          <img width="756" height="463" decoding="async" loading="lazy" class="vs-slide active" src="images/calligraphy-class.jpg"                        alt="Calligraphy class">
-          <img width="325" height="215" decoding="async" loading="lazy" class="vs-slide sharp"  src="images/academy-practice.png"        alt="Academy practice">
-          <img width="202" height="221" decoding="async" loading="lazy" class="vs-slide"        src="images/studio-session.png"        alt="Studio session">
-          <img width="736" height="736" decoding="async" loading="lazy" class="vs-slide"        src="images/landscape.jpg"                                 alt="Tong Shu Academy">
+          <img width="756" height="463" decoding="async" loading="lazy" class="vs-slide active" src="images/calligraphy-class.webp"                        alt="Calligraphy class">
+          <img width="325" height="215" decoding="async" loading="lazy" class="vs-slide sharp"  src="images/academy-practice.webp"        alt="Academy practice">
+          <img width="202" height="221" decoding="async" loading="lazy" class="vs-slide"        src="images/studio-session.webp"        alt="Studio session">
+          <img width="736" height="736" decoding="async" loading="lazy" class="vs-slide"        src="images/landscape.webp"                                 alt="Tong Shu Academy">
         </div>
         <div class="vs-grad"></div>
         <div class="vs-center-btn" id="vsCenterBtn">
@@ -1203,75 +1203,75 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <!-- edges — darker/muted -->
       <div class="gi" data-cat="brushes all" data-title="The Craftsman">
-        <img width="692" height="550" decoding="async" loading="lazy" src="images/artisan-brush.png" alt="Artisan brush resting in stone dust">
+        <img width="692" height="550" decoding="async" loading="lazy" src="images/artisan-brush.webp" alt="Artisan brush resting in stone dust">
         <div class="gi-over"><span class="gi-zh">匠</span><p class="gi-name">The Craftsman</p><p class="gi-meta">Artisan Tools</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="The Bowl">
-        <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-ceramic-bowl.png" alt="Calligraphy brushes in ceramic bowl">
+        <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-ceramic-bowl.webp" alt="Calligraphy brushes in ceramic bowl">
         <div class="gi-over"><span class="gi-zh">器</span><p class="gi-name">The Bowl</p><p class="gi-meta">Studio Tools</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="Laid to Rest">
-        <img width="463" height="365" decoding="async" loading="lazy" src="images/brushes-on-stone.png" alt="Brushes laid on stone">
+        <img width="463" height="365" decoding="async" loading="lazy" src="images/brushes-on-stone.webp" alt="Brushes laid on stone">
         <div class="gi-over"><span class="gi-zh">靜</span><p class="gi-name">Laid to Rest</p><p class="gi-meta">After Practice</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Classical Script">
-        <img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.png" alt="Classical calligraphy scroll">
+        <img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.webp" alt="Classical calligraphy scroll">
         <div class="gi-over"><span class="gi-zh">書</span><p class="gi-name">Classical Script</p><p class="gi-meta">Tang Dynasty</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Spring Character">
-        <img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.png" alt="Hand writing spring character on red paper">
+        <img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.webp" alt="Hand writing spring character on red paper">
         <div class="gi-over"><span class="gi-zh">春</span><p class="gi-name">Spring Character</p><p class="gi-meta">Calligraphy · Red Paper</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <!-- centre — most colourful, highest z-index -->
       <div class="gi" data-cat="brushes all" data-title="Colour & Form">
-        <img width="438" height="584" decoding="async" loading="lazy" src="images/paint-dipped-brushes.png" alt="Vibrant paint-dipped brushes on white background">
+        <img width="438" height="584" decoding="async" loading="lazy" src="images/paint-dipped-brushes.webp" alt="Vibrant paint-dipped brushes on white background">
         <div class="gi-over"><span class="gi-zh">彩</span><p class="gi-name">Colour & Form</p><p class="gi-meta">The Brushes</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="academy all" data-title="Lantern Street · Chengdu">
-        <img width="826" height="458" decoding="async" loading="lazy" src="images/chinese-lanterns.png" alt="Chinese lanterns glowing orange red and blue">
+        <img width="826" height="458" decoding="async" loading="lazy" src="images/chinese-lanterns.webp" alt="Chinese lanterns glowing orange red and blue">
         <div class="gi-over"><span class="gi-zh">燈</span><p class="gi-name">Lantern Street</p><p class="gi-meta">Chengdu · Festival</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <!-- fading back out -->
       <div class="gi" data-cat="brushes all" data-title="Dragon Brush">
-        <img width="886" height="504" decoding="async" loading="lazy" src="images/dragon-brush.png" alt="Decorative dragon brush resting on red calligraphy paper">
+        <img width="886" height="504" decoding="async" loading="lazy" src="images/dragon-brush.webp" alt="Decorative dragon brush resting on red calligraphy paper">
         <div class="gi-over"><span class="gi-zh">筆</span><p class="gi-name">Dragon Brush</p><p class="gi-meta">Chengdu Market</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="Market Colours">
-        <img width="249" height="344" decoding="async" loading="lazy" src="images/beaded-brushes.png" alt="Colorful beaded calligraphy brushes">
+        <img width="249" height="344" decoding="async" loading="lazy" src="images/beaded-brushes.webp" alt="Colorful beaded calligraphy brushes">
         <div class="gi-over"><span class="gi-zh">色</span><p class="gi-name">Market Colours</p><p class="gi-meta">Chengdu Market</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Ink · Smoke · Art">
-        <img width="346" height="606" decoding="async" loading="lazy" src="images/ink-smoke.png" alt="Ink smoke calligraphy art">
+        <img width="346" height="606" decoding="async" loading="lazy" src="images/ink-smoke.webp" alt="Ink smoke calligraphy art">
         <div class="gi-over"><span class="gi-zh">氣</span><p class="gi-name">Ink · Smoke · Art</p><p class="gi-meta">Calligraphy</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="The Craft">
-        <img width="473" height="409" decoding="async" loading="lazy" src="images/brush-fan.png" alt="Fan of calligraphy brushes">
+        <img width="473" height="409" decoding="async" loading="lazy" src="images/brush-fan.webp" alt="Fan of calligraphy brushes">
         <div class="gi-over"><span class="gi-zh">藝</span><p class="gi-name">The Craft</p><p class="gi-meta">Traditional Brushes</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="academy all" data-title="The Practice — Tong Shu Academy">
-        <img width="756" height="463" decoding="async" loading="lazy" src="images/calligraphy-class.jpg" alt="Students practicing calligraphy" style="object-position:center 30%">
+        <img width="756" height="463" decoding="async" loading="lazy" src="images/calligraphy-class.webp" alt="Students practicing calligraphy" style="object-position:center 30%">
         <div class="gi-over"><span class="gi-zh">習</span><p class="gi-name">The Practice</p><p class="gi-meta">Academy · Chengdu</p></div>
         <span class="gi-expand">↗</span>
       </div>
@@ -1293,7 +1293,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv">
         <div class="sp-img-wrap">
-          <img width="429" height="437" decoding="async" loading="lazy" class="sp-img" src="images/brushes-bowl.jpg" alt="Starter brush set in ceramic bowl">
+          <img width="429" height="437" decoding="async" loading="lazy" class="sp-img" src="images/brushes-bowl.webp" alt="Starter brush set in ceramic bowl">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Beginner</span>
@@ -1308,7 +1308,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.06s">
         <div class="sp-img-wrap">
-          <img width="473" height="409" decoding="async" loading="lazy" class="sp-img" src="images/brush-fan.png" alt="Fan of traditional calligraphy brushes">
+          <img width="473" height="409" decoding="async" loading="lazy" class="sp-img" src="images/brush-fan.webp" alt="Fan of traditional calligraphy brushes">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Intermediate</span>
@@ -1323,7 +1323,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.12s">
         <div class="sp-img-wrap">
-          <img width="249" height="344" decoding="async" loading="lazy" class="sp-img" src="images/colorful-brushes.jpg" alt="Collection of colourful calligraphy brushes">
+          <img width="249" height="344" decoding="async" loading="lazy" class="sp-img" src="images/colorful-brushes.webp" alt="Collection of colourful calligraphy brushes">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Collector</span>
@@ -1338,7 +1338,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.18s">
         <div class="sp-img-wrap">
-          <img width="463" height="365" decoding="async" loading="lazy" class="sp-img" src="images/brushes-on-stone.png" alt="Brushes resting on stone after practice">
+          <img width="463" height="365" decoding="async" loading="lazy" class="sp-img" src="images/brushes-on-stone.webp" alt="Brushes resting on stone after practice">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Specialty</span>
@@ -1369,10 +1369,10 @@ section,div[class*="section"]{position:relative;z-index:1}
       <!-- behind: students' work, revealed by dragging -->
       <div class="tst-works">
         <span class="tst-works-tag">Students' work</span>
-        <figure><img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.png" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
-        <figure><img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.png" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
-        <figure><img width="346" height="606" decoding="async" loading="lazy" src="images/ink-orchid.jpg" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
-        <figure><img width="736" height="736" decoding="async" loading="lazy" src="images/landscape.jpg" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
+        <figure><img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.webp" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
+        <figure><img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.webp" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
+        <figure><img width="346" height="606" decoding="async" loading="lazy" src="images/ink-orchid.webp" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
+        <figure><img width="736" height="736" decoding="async" loading="lazy" src="images/landscape.webp" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
       </div>
       <!-- front: the testimonials (clipped by the divider) -->
       <div class="tst-cover" id="tstCover">
@@ -1767,8 +1767,8 @@ setInterval(spawnBgChar, 480);
 // The 墨 brush character writes itself first; the title follows once the ink lands.
 window.addEventListener('load', () => {
   const img = new Image();
-  img.onload = () => { heroBg.style.backgroundImage = "url('images/ink-orchid.jpg')"; heroBg.style.opacity = '.55'; };
-  img.src = 'images/ink-orchid.jpg';
+  img.onload = () => { heroBg.style.backgroundImage = "url('images/ink-orchid.webp')"; heroBg.style.opacity = '.55'; };
+  img.src = 'images/ink-orchid.webp';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const brush  = document.getElementById('brushHero');
