@@ -115,7 +115,8 @@ nav.on{background:rgba(12,10,24,.94);backdrop-filter:blur(18px)}
   letter-spacing:.12em;text-transform:uppercase;display:inline-block;width:1.6em;text-align:center}
 html.lang-zh .ig-body,html.lang-zh .os-body,html.lang-zh .tc-quote,
 html.lang-zh .cc-desc,html.lang-zh .faq-a p,html.lang-zh .sp-desc,
-html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Serif SC',serif}
+html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey,
+html.lang-zh .pr-lead,html.lang-zh .pr-hint,html.lang-zh .pr-choose{font-family:'Noto Serif SC',serif}
 .cart-btn{position:relative;background:none;border:none;cursor:pointer;padding:.3rem .4rem;
   display:flex;align-items:center;color:rgba(240,232,213,.55);transition:color .2s;margin-left:.5rem}
 .cart-btn:hover{color:var(--gold)}
@@ -823,6 +824,44 @@ section,div[class*="section"]{position:relative;z-index:1}
   .pen-photo{display:none}
   .foot-bar{flex-direction:column;gap:.8rem;text-align:center}
 }
+/* ── PRACTICE PAD — trace a character, clear, redraw ── */
+.practice{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
+.pr-lead{max-width:540px;margin:1.1rem auto 0;font-size:.95rem;line-height:1.7;color:var(--muted);text-align:center}
+.pr-wrap{display:flex;gap:2.6rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:3rem}
+.pr-pad{position:relative;width:min(420px,86vw);aspect-ratio:1/1;flex:none;
+  background:linear-gradient(180deg,#fbf6ea,#efe6d0);
+  border:1px solid rgba(16,14,28,.14);border-radius:6px;
+  box-shadow:0 26px 60px rgba(16,14,28,.20),inset 0 0 0 1px rgba(255,255,255,.45);
+  overflow:hidden;touch-action:none;cursor:crosshair}
+.pr-guide,.pr-draw{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pr-guide{z-index:1;transition:opacity .3s}
+.pr-guide.hide{opacity:0}
+.pr-draw{z-index:2;touch-action:none}
+.pr-side{display:flex;flex-direction:column;gap:1.15rem;max-width:280px}
+.pr-choose{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);margin:0}
+.pr-chars{display:flex;flex-wrap:wrap;gap:.5rem}
+.pr-char{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:1.5rem;line-height:1;
+  width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid rgba(16,14,28,.18);border-radius:6px;color:var(--ink);
+  cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.pr-char:hover{border-color:var(--gold);color:var(--gold)}
+.pr-char.active{background:var(--ink);border-color:var(--ink);color:var(--gold)}
+.pr-actions{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap}
+.pr-btn{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  background:var(--seal);color:#fff;border:none;border-radius:4px;padding:.6rem 1.15rem;
+  cursor:pointer;transition:background .2s}
+.pr-btn:hover{background:#b83018}
+.pr-toggle{display:flex;align-items:center;gap:.45rem;font-size:.78rem;color:var(--muted);cursor:pointer;user-select:none}
+.pr-toggle input{accent-color:var(--seal);cursor:pointer}
+.pr-hint{font-size:.8rem;line-height:1.6;color:var(--muted);font-style:italic;
+  border-left:2px solid var(--gold);padding-left:.85rem;margin:0}
+@media(max-width:768px){
+  .practice{padding:4rem 0}
+  .pr-wrap{gap:1.6rem}
+  .pr-side{max-width:none;align-items:center;text-align:center}
+  .pr-hint{text-align:left}
+}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -1045,6 +1084,33 @@ section,div[class*="section"]{position:relative;z-index:1}
     <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-bowl.jpg" alt="Calligraphy brushes in bowl" onerror="this.style.display='none'">
     <div class="slot-bg"></div>
     <div class="slot-zh" style="font-size:14rem">道</div>
+  </div>
+</section>
+
+<!-- ── PRACTICE PAD ── -->
+<section class="practice" id="practice">
+  <div class="container">
+    <div class="rv" style="text-align:center">
+      <p class="ey ey-c">Try the Brush</p>
+      <h2 class="sh sh-d">Trace a character.<br>Feel the stroke.</h2>
+      <div class="rule"></div>
+      <p class="pr-lead" id="prLead">Follow the faint guide with your mouse or finger — slower strokes lay thicker ink. Clear it and try again as often as you like.</p>
+    </div>
+    <div class="pr-wrap rv">
+      <div class="pr-pad" id="prPad">
+        <canvas class="pr-guide" id="prGuide"></canvas>
+        <canvas class="pr-draw" id="prDraw" aria-label="Calligraphy practice canvas"></canvas>
+      </div>
+      <div class="pr-side">
+        <p class="pr-choose" id="prChoose">Choose a character</p>
+        <div class="pr-chars" id="prChars"></div>
+        <div class="pr-actions">
+          <button class="pr-btn" id="prClear">Clear</button>
+          <label class="pr-toggle"><input type="checkbox" id="prGuideToggle" checked><span id="prGuideLabel">Show guide</span></label>
+        </div>
+        <p class="pr-hint" id="prHint">永 is the classic first character — its eight strokes contain every basic move in Chinese calligraphy.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2391,6 +2457,13 @@ new IntersectionObserver(entries => {
     'ig-h2':      '笔知，<br>先于你心',
     'ig-body':    '羊毫柔顺，狼毫富弹，兔毫精准——先识其笔，后习其法。',
     'ig-btn':     '查看课程 →',
+    'pr-ey':      '试笔',
+    'pr-h2':      '临摹一字，<br>感受运笔',
+    'pr-lead':    '用鼠标或手指沿着淡淡的字样书写——运笔越慢，墨迹越浓。随时可以清除，反复练习。',
+    'pr-choose':  '选择一个字',
+    'pr-clear':   '清除',
+    'pr-guide-label':'显示字样',
+    'pr-hint':    '「永」是入门第一字——其八画涵盖了中国书法所有基本笔法。',
     'vs-ey':      '了解学院',
     'vs-h2':      '走进我们的工作室',
     'vs-body':    '成都的笔法传承——空间、老师，与墨中修行。',
@@ -2478,6 +2551,13 @@ new IntersectionObserver(entries => {
     'ig-h2':      '#inkGarden .sh',
     'ig-body':    '#inkGarden .ig-body',
     'ig-btn':     '#inkGarden .btn',
+    'pr-ey':      '#practice .ey',
+    'pr-h2':      '#practice .sh',
+    'pr-lead':    '#prLead',
+    'pr-choose':  '#prChoose',
+    'pr-clear':   '#prClear',
+    'pr-guide-label':'#prGuideLabel',
+    'pr-hint':    '#prHint',
     'vs-ey':      '#academy-video .ey',
     'vs-h2':      '#academy-video .sh',
     'vs-body':    '#academy-video .vs-head p:last-child',
@@ -2692,6 +2772,131 @@ new IntersectionObserver(entries => {
 
     setTimeout(() => el.remove(), 1450);
   });
+})();
+
+// ── PRACTICE PAD — trace a character with a brush, clear, redraw ──
+(function(){
+  const pad = document.getElementById('prPad');
+  const gc  = document.getElementById('prGuide');
+  const dc  = document.getElementById('prDraw');
+  if (!pad || !gc || !dc) return;
+  const gctx = gc.getContext('2d');
+  const dctx = dc.getContext('2d');
+
+  const CHARS = ['永','道','心','山','水','書'];
+  let cur = '永';
+  let W = 0, H = 0;
+
+  function fit(cv){
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    cv.width  = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    cv.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function drawGuide(){
+    gctx.clearRect(0, 0, W, H);
+    const m = 10;
+    // 米字格 practice grid — faint seal red
+    gctx.strokeStyle = 'rgba(212,59,32,.30)';
+    gctx.lineWidth = 1;
+    gctx.strokeRect(m, m, W - 2*m, H - 2*m);
+    gctx.save();
+    gctx.setLineDash([5,5]);
+    gctx.strokeStyle = 'rgba(212,59,32,.22)';
+    gctx.beginPath();
+    gctx.moveTo(W/2, m); gctx.lineTo(W/2, H-m);
+    gctx.moveTo(m, H/2); gctx.lineTo(W-m, H/2);
+    gctx.moveTo(m, m);   gctx.lineTo(W-m, H-m);
+    gctx.moveTo(W-m, m); gctx.lineTo(m, H-m);
+    gctx.stroke();
+    gctx.restore();
+    // reference character — faint ink to trace over
+    const size = Math.min(W, H) * 0.74;
+    gctx.fillStyle = 'rgba(16,14,28,.17)';
+    gctx.font = size + "px 'Ma Shan Zheng','Noto Serif SC',serif";
+    gctx.textAlign = 'center';
+    gctx.textBaseline = 'middle';
+    gctx.fillText(cur, W/2, H/2 + size*0.04);
+  }
+
+  function clearDraw(){ dctx.clearRect(0, 0, W, H); }
+
+  function setup(){
+    const r = pad.getBoundingClientRect();
+    W = r.width; H = r.height;
+    if (!W || !H) return;
+    fit(gc); fit(dc);           // resets each context transform for the new pixel size
+    drawGuide();
+    clearDraw();
+  }
+
+  // ── brush: slower strokes lay thicker ink ──
+  let drawing = false, lastX = 0, lastY = 0, lastT = 0, lastW = 10;
+  function pt(e){ const r = dc.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  function down(e){
+    drawing = true;
+    const p = pt(e);
+    lastX = p.x; lastY = p.y; lastT = performance.now(); lastW = 11;
+    try { dc.setPointerCapture(e.pointerId); } catch (_) {}
+    dctx.fillStyle = 'rgba(16,14,28,.92)';
+    dctx.beginPath(); dctx.arc(p.x, p.y, lastW/2, 0, Math.PI*2); dctx.fill();  // a tap leaves a dot
+    e.preventDefault();
+  }
+  function move(e){
+    if (!drawing) return;
+    const p = pt(e), now = performance.now();
+    const dist = Math.hypot(p.x - lastX, p.y - lastY);
+    const speed = dist / Math.max(1, now - lastT);   // px per ms
+    let w = 15 - speed * 9;                            // slow → thick, fast → thin
+    w = Math.max(3, Math.min(16, w));
+    w = lastW * 0.55 + w * 0.45;                       // smooth width changes
+    dctx.strokeStyle = 'rgba(16,14,28,.92)';
+    dctx.lineCap = 'round'; dctx.lineJoin = 'round';
+    dctx.lineWidth = w;
+    const mx = (lastX + p.x)/2, my = (lastY + p.y)/2;
+    dctx.beginPath();
+    dctx.moveTo(lastX, lastY);
+    dctx.quadraticCurveTo(lastX, lastY, mx, my);
+    dctx.lineTo(p.x, p.y);
+    dctx.stroke();
+    lastX = p.x; lastY = p.y; lastT = now; lastW = w;
+    e.preventDefault();
+  }
+  function up(){ drawing = false; }
+  dc.addEventListener('pointerdown', down);
+  dc.addEventListener('pointermove', move);
+  dc.addEventListener('pointerup', up);
+  dc.addEventListener('pointercancel', up);
+
+  // ── controls ──
+  const charsWrap = document.getElementById('prChars');
+  CHARS.forEach((ch, i) => {
+    const b = document.createElement('button');
+    b.className = 'pr-char' + (i === 0 ? ' active' : '');
+    b.textContent = ch;
+    b.setAttribute('aria-label', 'Practise ' + ch);
+    b.addEventListener('click', () => {
+      cur = ch;
+      charsWrap.querySelectorAll('.pr-char').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      drawGuide(); clearDraw();
+    });
+    charsWrap.appendChild(b);
+  });
+  document.getElementById('prClear').addEventListener('click', clearDraw);
+  const toggle = document.getElementById('prGuideToggle');
+  toggle.addEventListener('change', () => gc.classList.toggle('hide', !toggle.checked));
+
+  // Wait for the brush font so the guide glyph is correct, then draw.
+  if (document.fonts && document.fonts.load) {
+    document.fonts.load("40px 'Ma Shan Zheng'").then(setup).catch(setup);
+    document.fonts.ready.then(setup);
+  } else {
+    setup();
+  }
+  let rt = null;
+  new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(setup, 150); }).observe(pad);
 })();
 
 // ── AI ASSISTANT (墨童 · Inkling) ──
