@@ -228,11 +228,9 @@ html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Ser
 .h-ey{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--seal);margin-bottom:.8rem;
   opacity:0;transform:translateY(10px);transition:opacity .4s .18s,transform .4s .18s}
 .h-school{font-family:'Noto Serif SC',serif;font-size:clamp(2rem,4vw,3.6rem);font-weight:700;
-  color:var(--paper);margin-bottom:.6rem;letter-spacing:.02em;line-height:1.15;
-  opacity:0;transform:translateY(12px);transition:opacity .65s,transform .65s}
+  color:var(--paper);margin-bottom:.6rem;letter-spacing:.02em;line-height:1.15}
 .h-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,1.6vw,1.35rem);
-  font-weight:300;font-style:italic;line-height:1.5;color:rgba(240,232,213,.7);text-shadow:none;
-  opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s cubic-bezier(.16,1,.3,1)}
+  font-weight:300;font-style:italic;line-height:1.5;color:rgba(240,232,213,.7);text-shadow:none}
 .h-ti strong{color:var(--gold);font-weight:400;font-style:normal}
 
 /* ── SELF-DRAWING BRUSH HERO — the 墨 paints itself in gold, top-to-bottom, on load ── */
@@ -257,10 +255,15 @@ html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Ser
 .brush-hero.go .brush-svg {animation:brushWipe 1.9s cubic-bezier(.6,0,.35,1) forwards}
 .brush-hero.go .ink-bloom {animation:brushBloom 2s ease-out forwards}
 
-/* Reduced motion (or no JS): show the finished character immediately, no drawing */
+/* The title paints on with the SAME brush-wipe as the 墨 icon (top-to-bottom) */
+.hero-text{clip-path:inset(0 0 100% 0)}
+.hero-text.painting{animation:brushWipe 1.9s cubic-bezier(.6,0,.35,1) forwards}
+
+/* Reduced motion (or no JS): show the finished character + title immediately, no drawing */
 @media (prefers-reduced-motion: reduce){
   .brush-svg{clip-path:none}
   .ink-bloom{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+  .hero-text{clip-path:none}
 }
 
 /* ── SHARED ── */
@@ -1692,10 +1695,7 @@ window.addEventListener('load', () => {
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const brush  = document.getElementById('brushHero');
-  const revealText = () => {
-    hSchool.style.opacity = '1'; hSchool.style.transform = 'none';
-    hTi.style.opacity     = '1'; hTi.style.transform     = 'none';
-  };
+  const revealText = () => { heroText.classList.add('painting'); };   // brush-wipe, same as the 墨 icon
   const revealPen = () => { penPhoto.style.opacity = '1'; };
 
   if (reduce) { revealPen(); revealText(); return; }   // no drawing — show everything right away
@@ -1770,7 +1770,7 @@ function _cancelMomentum() {
   _mVy = 0;
 }
 (function(){
-  const FRICTION = 0.93, MAX = 65, MIN = 0.3;   // 62 → 65 (+5% faster)
+  const FRICTION = 0.93, MAX = 78, MIN = 0.3;   // 65 → 78 (+20% faster)
   function loop() {
     _mVy *= FRICTION;
     if (Math.abs(_mVy) < MIN) { _mVy = 0; _mRaf = null; return; }
@@ -1783,7 +1783,7 @@ function _cancelMomentum() {
     let d = e.deltaY;
     if (e.deltaMode === 1) d *= 40;
     if (e.deltaMode === 2) d *= window.innerHeight;
-    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.162));  // 0.154 → 0.162 (+5% faster per tick)
+    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.1944));  // 0.162 → 0.1944 (+20% faster per tick)
     if (!_mRaf) _mRaf = requestAnimationFrame(loop);
   }, { passive: false });
 })();
