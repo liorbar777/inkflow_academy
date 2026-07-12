@@ -827,7 +827,13 @@ section,div[class*="section"]{position:relative;z-index:1}
 /* ── PRACTICE PAD — trace a character, clear, redraw ── */
 .practice{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
 .practice .container{position:relative;z-index:1}
-.pr-lead{max-width:540px;margin:1.1rem auto 0;font-size:.95rem;line-height:1.7;color:var(--muted);text-align:center}
+.pr-lead{max-width:600px;margin:1.1rem auto 0;font-size:1.18rem;line-height:1.55;color:var(--ink);text-align:center;
+  animation:leadGlow 2.6s ease-in-out infinite}
+@keyframes leadGlow{0%,100%{text-shadow:0 0 2px rgba(201,160,40,.15)}
+  50%{text-shadow:0 0 18px rgba(201,160,40,.6),0 0 4px rgba(201,160,40,.4)}}
+.pr-arrow{display:flex;justify-content:center;color:var(--gold);margin:.7rem 0 -.3rem;animation:prArrowBob 1.5s ease-in-out infinite}
+.pr-arrow svg{width:26px;height:42px;filter:drop-shadow(0 0 8px rgba(201,160,40,.5))}
+@keyframes prArrowBob{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(9px);opacity:1}}
 .pr-wrap{display:flex;gap:2.6rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:3rem}
 .pr-pad{position:relative;width:min(420px,86vw);aspect-ratio:1/1;flex:none;
   background:radial-gradient(120% 120% at 30% 20%,#fdf9ef,#efe4cd 72%,#e7dabf);
@@ -837,7 +843,8 @@ section,div[class*="section"]{position:relative;z-index:1}
     0 0 0 8px #efe5cf,                                    /* paper mount */
     0 0 0 9px rgba(201,160,40,.45),                       /* gold hairline frame */
     inset 0 0 44px rgba(120,90,30,.12);                   /* soft paper vignette */
-  overflow:hidden;touch-action:none;cursor:crosshair}
+  overflow:hidden;touch-action:none;
+  cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='52'><line x1='28' y1='2' x2='10' y2='36' stroke='%23C9A028' stroke-width='4' stroke-linecap='round' opacity='0.9'/><rect x='8' y='34' width='6' height='5' rx='1' fill='%237A4F00' transform='rotate(-35 11 36)'/><path d='M6 40 L14 37 L5 52 Z' fill='%23C9A028'/><path d='M8 44 L11 41 L6 52 Z' fill='%23F0D878' opacity='0.5'/></svg>") 5 51, auto}
 /* a real calligrapher's red seal, stamped in the corner */
 .pr-pad::after{content:'墨';position:absolute;right:16px;bottom:16px;z-index:3;pointer-events:none;
   width:38px;height:38px;display:flex;align-items:center;justify-content:center;
@@ -876,19 +883,26 @@ section,div[class*="section"]{position:relative;z-index:1}
 /* ── MEET THE MASTERS ── */
 .masters{background:var(--paper);padding:7rem 0;position:relative;overflow:hidden}
 .masters .container{position:relative;z-index:1}
-.masters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.8rem;margin-top:3rem}
+.masters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3.2rem}
 .mc{background:none;border:none;padding:0}
+/* first view: the four gather inward to their places (the reverse of an expand) */
+.masters-grid .mc{opacity:0;transition:transform 1s cubic-bezier(.16,1,.3,1),opacity .8s ease}
+.masters-grid .mc:nth-child(1){transform:translateX(-72px) scale(1.06)}
+.masters-grid .mc:nth-child(2){transform:translateX(-26px) scale(1.03)}
+.masters-grid .mc:nth-child(3){transform:translateX(26px) scale(1.03)}
+.masters-grid .mc:nth-child(4){transform:translateX(72px) scale(1.06)}
+.masters-grid.in .mc{opacity:1;transform:none}
 .mc-photo{aspect-ratio:3/4;overflow:hidden;border-radius:8px;margin-bottom:.9rem}
 .mc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;
   filter:saturate(.92) contrast(1.02);transition:transform .5s cubic-bezier(.16,1,.3,1),filter .4s}
 .mc:hover .mc-photo img{transform:scale(1.05);filter:saturate(1.05)}
-.mc-role{font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);margin:0 0 .4rem}
-.mc-name{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;color:var(--ink);
-  margin:0 0 .4rem;line-height:1.15}
-.mc-name span{font-family:'Noto Serif SC',serif;font-size:.95rem;color:var(--muted);margin-left:.4rem}
-.mc-bio{font-size:.84rem;line-height:1.6;color:var(--muted);margin:0}
+.mc-role{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);margin:0 0 .45rem}
+.mc-name{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--ink);
+  margin:0 0 .45rem;line-height:1.15}
+.mc-name span{font-family:'Noto Serif SC',serif;font-size:1.05rem;color:var(--muted);margin-left:.4rem}
+.mc-bio{font-size:.95rem;line-height:1.55;color:var(--muted);margin:0}
 html.lang-zh .mc-bio{font-family:'Noto Serif SC',serif}
-@media(max-width:768px){.masters{padding:4.5rem 0}}
+@media(max-width:768px){.masters{padding:4.5rem 0}.masters-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem}}
 
 /* ── INTRO: calligraphy characters falling like leaves, once on load, then gone ── */
 .leaf-fall{position:fixed;inset:0;z-index:450;pointer-events:none;overflow:hidden}
@@ -1136,7 +1150,10 @@ html.lang-zh .mc-bio{font-family:'Noto Serif SC',serif}
       <p class="ey ey-c">Try the Brush</p>
       <h2 class="sh sh-d">Trace a character.<br>Feel the stroke.</h2>
       <div class="rule"></div>
-      <p class="pr-lead" id="prLead">Follow the faint guide with your mouse or finger — slower strokes lay thicker ink. Clear it and try again as often as you like.</p>
+      <p class="pr-lead" id="prLead">Paint over the character — slower strokes lay thicker ink.</p>
+    </div>
+    <div class="pr-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 42"><path d="M12 2 V33 M4 25 L12 34 L20 25" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div class="pr-wrap rv">
       <div class="pr-pad" id="prPad">
@@ -1221,7 +1238,7 @@ html.lang-zh .mc-bio{font-family:'Noto Serif SC',serif}
 <section class="masters" id="masters">
   <div class="container">
     <div class="rv" style="text-align:center">
-      <p class="ey ey-c">The Lineage</p>
+      <p class="ey ey-c">The Masters</p>
       <h2 class="sh sh-d">The hands that guide the brush</h2>
       <div class="rule"></div>
     </div>
@@ -2549,7 +2566,7 @@ new IntersectionObserver(entries => {
     'ig-btn':     '查看课程 →',
     'pr-ey':      '试笔',
     'pr-h2':      '临摹一字，<br>感受运笔',
-    'pr-lead':    '用鼠标或手指沿着淡淡的字样书写——运笔越慢，墨迹越浓。随时可以清除，反复练习。',
+    'pr-lead':    '沿着字样书写——运笔越慢，墨迹越浓。',
     'pr-choose':  '选择一个字',
     'pr-clear':   '清除',
     'pr-guide-label':'显示字样',
@@ -2566,7 +2583,7 @@ new IntersectionObserver(entries => {
     'os-s2':      '位驻院名师',
     'os-s3':      '名学员',
     'os-quote':   '习书法，先学为人。',
-    'ms-ey':      '师承',
+    'ms-ey':      '名师',
     'ms-h2':      '执笔引路的人',
     'ms-role1':   '创始人 · 篆书',
     'ms-bio1':    '2004 年创立墨流。',
