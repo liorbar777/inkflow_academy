@@ -873,6 +873,20 @@ section,div[class*="section"]{position:relative;z-index:1}
   .pr-hint{text-align:left}
 }
 
+/* ── INTRO: calligraphy characters falling like leaves, once on load, then gone ── */
+.leaf-fall{position:fixed;inset:0;z-index:450;pointer-events:none;overflow:hidden}
+.leaf{position:absolute;top:-14vh;font-family:'Ma Shan Zheng','Noto Serif SC',serif;
+  line-height:1;user-select:none;will-change:transform,opacity;opacity:0}
+@keyframes leafFall{
+  0%  {transform:translate3d(0,-14vh,0) rotate(0deg);opacity:0}
+  10% {opacity:var(--o,.8)}
+  25% {transform:translate3d(2.2vw,18vh,0) rotate(42deg)}
+  50% {transform:translate3d(-2.4vw,46vh,0) rotate(-24deg)}
+  75% {transform:translate3d(1.8vw,74vh,0) rotate(30deg)}
+  88% {opacity:var(--o,.8)}
+  100%{transform:translate3d(-1.2vw,113vh,0) rotate(-12deg);opacity:0}
+}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -2786,6 +2800,40 @@ new IntersectionObserver(entries => {
 
     setTimeout(() => el.remove(), 1450);
   });
+})();
+
+// ── INTRO: calligraphy characters fall like leaves once on load, then clear ──
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const CHARS = '永書法道墨筆心禪雅風山水竹蘭梅松雲月花鳥龍鳳韻意氣靜';
+  const GOLD = 'rgba(201,160,40,', INK = 'rgba(16,14,28,', PAPER = 'rgba(240,232,213,';
+  const N = 24;
+  const layer = document.createElement('div');
+  layer.className = 'leaf-fall';
+  layer.setAttribute('aria-hidden', 'true');
+  let maxEnd = 0;
+  for (let i = 0; i < N; i++) {
+    const s = document.createElement('span');
+    s.className = 'leaf';
+    s.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+    const size  = 20 + Math.random() * 32;     // 20–52 px
+    const left  = Math.random() * 100;          // vw
+    const dur   = 3.2 + Math.random() * 1.9;    // 3.2–5.1 s
+    const delay = Math.random() * 1.4;          // 0–1.4 s
+    const op    = (0.4 + Math.random() * 0.42).toFixed(2);
+    const tone  = Math.random();
+    const base  = tone < 0.55 ? GOLD : (tone < 0.8 ? PAPER : INK);   // mostly gold, some paper, a few ink
+    s.style.cssText =
+      `left:${left}vw;font-size:${size}px;color:${base}${op});` +
+      `filter:blur(${(Math.random() * 1.1).toFixed(1)}px);--o:${op};` +
+      `animation:leafFall ${dur.toFixed(2)}s cubic-bezier(.45,.05,.55,.95) ${delay.toFixed(2)}s forwards`;
+    layer.appendChild(s);
+    maxEnd = Math.max(maxEnd, dur + delay);
+  }
+  // Wait for the brush font so the glyphs fall in their true form, then run once and self-remove.
+  const go = () => { document.body.appendChild(layer); setTimeout(() => layer.remove(), (maxEnd + 0.6) * 1000); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go);
+  else go();
 })();
 
 // ── PRACTICE PAD — trace a character with a brush, clear, redraw ──
