@@ -75,6 +75,17 @@ nav.on{background:rgba(12,10,24,.94);backdrop-filter:blur(18px)}
   border-color:rgba(201,160,40,.6);transform:scale(1.06)}
 .sound-btn.on{color:var(--gold);background:rgba(201,160,40,.14);border-color:var(--gold)}
 @keyframes soundPulse{0%,100%{box-shadow:0 0 0 0 rgba(201,160,40,.35)}50%{box-shadow:0 0 0 6px rgba(201,160,40,0)}}
+/* heartbeat — draws the eye to the OFF sound button (lub-dub, then a rest) */
+@keyframes soundHeartbeat{
+  0%   {transform:scale(1);   box-shadow:0 0 0 0 rgba(201,160,40,.5),  0 0 0 0 rgba(201,160,40,.35)}
+  10%  {transform:scale(1.16);box-shadow:0 0 14px 3px rgba(201,160,40,.6),0 0 0 0 rgba(201,160,40,.35)}
+  20%  {transform:scale(1);   box-shadow:0 0 6px 1px rgba(201,160,40,.3), 0 0 0 0 rgba(201,160,40,.2)}
+  30%  {transform:scale(1.13);box-shadow:0 0 16px 4px rgba(201,160,40,.55),0 0 0 0 rgba(201,160,40,.3)}
+  42%  {transform:scale(1);   box-shadow:0 0 0 0 rgba(201,160,40,0),   0 0 0 10px rgba(201,160,40,0)}
+  100% {transform:scale(1);   box-shadow:0 0 0 0 rgba(201,160,40,0),   0 0 0 0 rgba(201,160,40,0)}
+}
+.sound-btn.beat{animation:soundHeartbeat 2.08s ease-in-out infinite}
+.sound-btn:hover{animation:none}
 .sound-btn.on{animation:soundPulse 2.8s ease-in-out infinite}
 
 /* ── CART ICON ── */
@@ -772,6 +783,121 @@ section,div[class*="section"]{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* ── AI ASSISTANT (墨童 · Inkling) ── */
+.ai-fab{position:fixed;right:26px;bottom:26px;z-index:2100;
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,#E8C766,var(--gold) 62%,#a8831c);
+  border:1px solid rgba(201,160,40,.55);color:var(--dark);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 0 0 rgba(201,160,40,.5);
+  animation:aiPulse 3s ease-in-out infinite;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.ai-fab:hover{transform:scale(1.08) rotate(-4deg)}
+.ai-fab .ai-glyph{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:1.9rem;line-height:1;
+  transform:translateY(1px)}
+.ai-fab .ai-close-x{display:none;font-size:1.4rem;font-weight:300}
+.ai-fab.open .ai-glyph{display:none}
+.ai-fab.open .ai-close-x{display:block}
+.ai-fab.open{animation:none}
+@keyframes aiPulse{0%,100%{box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 0 0 rgba(201,160,40,.45)}
+  50%{box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 0 12px rgba(201,160,40,0)}}
+/* attention ping — a soft dot until first open */
+.ai-ping{position:absolute;top:-2px;right:-2px;width:15px;height:15px;border-radius:50%;
+  background:var(--seal);border:2px solid var(--paper);
+  animation:aiPingPulse 1.8s ease-in-out infinite}
+.ai-fab.open .ai-ping,.ai-fab.seen .ai-ping{display:none}
+@keyframes aiPingPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+
+.ai-panel{position:fixed;right:26px;bottom:104px;z-index:2100;
+  width:380px;max-width:calc(100vw - 40px);height:min(560px,calc(100vh - 150px));
+  background:var(--ink);border:1px solid rgba(201,160,40,.22);border-radius:16px;
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+  opacity:0;transform:translateY(18px) scale(.96);transform-origin:bottom right;
+  pointer-events:none;transition:opacity .3s,transform .35s cubic-bezier(.16,1,.3,1)}
+.ai-panel.open{opacity:1;transform:none;pointer-events:all}
+
+.ai-head{display:flex;align-items:center;gap:.8rem;padding:1.1rem 1.3rem;
+  border-bottom:1px solid rgba(240,232,213,.08);background:var(--dark)}
+.ai-avatar{width:42px;height:42px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 28%,#E8C766,var(--gold) 62%,#a8831c);
+  display:flex;align-items:center;justify-content:center;color:var(--dark);
+  font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:1.35rem}
+.ai-id{flex:1;min-width:0}
+.ai-name{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:600;
+  color:var(--on-ink);letter-spacing:.03em;line-height:1.1}
+.ai-status{display:flex;align-items:center;gap:.4rem;margin-top:.15rem;
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.8}
+.ai-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 6px var(--gold);animation:aiPulse2 2s ease-in-out infinite}
+@keyframes aiPulse2{0%,100%{opacity:1}50%{opacity:.35}}
+.ai-head-close{background:none;border:none;cursor:pointer;color:rgba(240,232,213,.4);
+  font-size:1.15rem;line-height:1;padding:.2rem;transition:color .2s}
+.ai-head-close:hover{color:var(--on-ink)}
+
+.ai-body{flex:1;overflow-y:auto;padding:1.2rem 1.2rem .4rem;
+  display:flex;flex-direction:column;gap:.85rem;scroll-behavior:smooth}
+.ai-msg{max-width:82%;padding:.75rem 1rem;border-radius:14px;font-size:.98rem;line-height:1.55;
+  animation:aiMsgIn .3s cubic-bezier(.16,1,.3,1)}
+@keyframes aiMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ai-msg.bot{align-self:flex-start;background:rgba(240,232,213,.06);color:var(--on-ink);
+  border:1px solid rgba(240,232,213,.07);border-bottom-left-radius:4px}
+.ai-msg.user{align-self:flex-end;background:var(--seal);color:#fff;border-bottom-right-radius:4px}
+.ai-msg .ai-tag{display:inline-block;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.35rem;opacity:.75}
+.ai-typing{align-self:flex-start;display:flex;gap:5px;padding:.85rem .95rem;
+  background:rgba(240,232,213,.06);border-radius:14px;border-bottom-left-radius:4px}
+.ai-typing span{width:7px;height:7px;border-radius:50%;background:var(--gold);opacity:.6;
+  animation:aiDot 1.2s infinite ease-in-out}
+.ai-typing span:nth-child(2){animation-delay:.2s}
+.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes aiDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+.ai-chips{display:flex;flex-wrap:wrap;gap:.45rem;padding:.2rem 1.2rem .9rem}
+.ai-chip{font-size:.76rem;color:var(--on-ink);background:rgba(201,160,40,.08);
+  border:1px solid rgba(201,160,40,.28);border-radius:999px;padding:.4rem .85rem;
+  cursor:pointer;transition:background .2s,border-color .2s}
+.ai-chip:hover{background:rgba(201,160,40,.18);border-color:var(--gold)}
+
+.ai-input{display:flex;align-items:center;gap:.6rem;padding:.9rem 1.1rem;
+  border-top:1px solid rgba(240,232,213,.08);background:var(--dark)}
+.ai-input input{flex:1;background:rgba(240,232,213,.05);border:1px solid rgba(240,232,213,.12);
+  border-radius:999px;padding:.65rem 1.05rem;color:var(--on-ink);font-family:'Hanken Grotesk',sans-serif;
+  font-size:.92rem;outline:none;transition:border-color .2s}
+.ai-input input::placeholder{color:rgba(240,232,213,.32)}
+.ai-input input:focus{border-color:rgba(201,160,40,.5)}
+.ai-send{flex:none;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--gold);color:var(--dark);display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,background .2s}
+.ai-send:hover{transform:scale(1.08);background:#E8C766}
+.ai-send svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.ai-foot{text-align:center;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(240,232,213,.28);padding:0 0 .7rem;background:var(--dark)}
+
+/* first-visit greeting bubble — appears beside the button to invite a click */
+.ai-teaser{position:fixed;right:100px;bottom:34px;z-index:2100;
+  max-width:250px;background:var(--ink);color:var(--on-ink);
+  border:1px solid rgba(201,160,40,.3);border-radius:14px;border-bottom-right-radius:4px;
+  padding:.85rem 2rem .85rem 1rem;font-size:.92rem;line-height:1.5;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);cursor:pointer;
+  opacity:0;transform:translateX(14px) scale(.9);transform-origin:bottom right;pointer-events:none;
+  transition:opacity .35s,transform .45s cubic-bezier(.16,1,.3,1)}
+.ai-teaser.show{opacity:1;transform:none;pointer-events:all;animation:aiTeaserBob 3s ease-in-out 1s infinite}
+.ai-teaser strong{color:var(--gold);font-weight:600}
+.ai-teaser::after{content:'';position:absolute;right:-8px;bottom:16px;width:14px;height:14px;
+  background:var(--ink);border-right:1px solid rgba(201,160,40,.3);border-bottom:1px solid rgba(201,160,40,.3);
+  transform:rotate(-45deg)}
+.ai-teaser-x{position:absolute;top:5px;right:7px;background:none;border:none;cursor:pointer;
+  color:rgba(240,232,213,.4);font-size:.8rem;line-height:1;padding:.15rem;transition:color .2s}
+.ai-teaser-x:hover{color:var(--on-ink)}
+@keyframes aiTeaserBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+@media(max-width:768px){
+  .ai-fab{right:18px;bottom:18px;width:56px;height:56px}
+  .ai-panel{right:12px;left:12px;bottom:86px;width:auto;max-width:none}
+  .ai-teaser{right:84px;bottom:24px;max-width:200px;font-size:.86rem}
+}
 </style>
 </head>
 <body>
@@ -1261,6 +1387,36 @@ section,div[class*="section"]{position:relative;z-index:1}
     <span class="foot-made">Crafted with ink &amp; intention</span>
   </div>
 </footer>
+
+<!-- ── AI ASSISTANT (墨童 · Inkling) ── -->
+<div class="ai-panel" id="aiPanel" role="dialog" aria-modal="false" aria-label="Inkling assistant">
+  <div class="ai-head">
+    <div class="ai-avatar">墨</div>
+    <div class="ai-id">
+      <div class="ai-name" id="aiName">Inkling · 墨童</div>
+      <div class="ai-status" id="aiStatus">Online</div>
+    </div>
+    <button class="ai-head-close" id="aiHeadClose" aria-label="Close assistant">✕</button>
+  </div>
+  <div class="ai-body" id="aiBody"></div>
+  <div class="ai-chips" id="aiChips"></div>
+  <form class="ai-input" id="aiForm" autocomplete="off">
+    <input type="text" id="aiInput" placeholder="Ask me anything…" aria-label="Message Inkling">
+    <button type="submit" class="ai-send" aria-label="Send">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </form>
+  <div class="ai-foot" id="aiFoot">Your guide to Inkflow Academy</div>
+</div>
+<div class="ai-teaser" id="aiTeaser" role="button" tabindex="0" aria-label="Open Inkling assistant">
+  <button class="ai-teaser-x" id="aiTeaserX" aria-label="Dismiss">✕</button>
+  <span id="aiTeaserText"></span>
+</div>
+<button class="ai-fab" id="aiFab" aria-label="Open Inkling assistant">
+  <span class="ai-glyph">墨</span>
+  <span class="ai-close-x">✕</span>
+  <span class="ai-ping" aria-hidden="true"></span>
+</button>
 
 <!-- ── CART OVERLAY + PANEL ── -->
 <div class="cart-overlay" id="cartOverlay"></div>
@@ -2394,6 +2550,14 @@ new IntersectionObserver(entries => {
   });
 
   sync();   // render the OFF icon initially
+
+  // Heartbeat the sound button for the first 10 seconds after load to catch the eye,
+  // then let it rest. (While playing, the calmer .on pulse takes over.)
+  const _sb = document.getElementById('soundToggle');
+  if (_sb) {
+    _sb.classList.add('beat');
+    setTimeout(() => _sb.classList.remove('beat'), 10000);
+  }
 })();
 
 // ── CHINESE CHARACTER MOUSE TRAIL ──
@@ -2436,6 +2600,424 @@ new IntersectionObserver(entries => {
 
     setTimeout(() => el.remove(), 1450);
   });
+})();
+
+// ── AI ASSISTANT (墨童 · Inkling) ──
+// A bilingual site assistant answering from a curated knowledge base of the
+// academy: courses, brushes, the store, visiting, our story, and booking.
+(function(){
+  const fab   = document.getElementById('aiFab');
+  const panel = document.getElementById('aiPanel');
+  const body  = document.getElementById('aiBody');
+  const chips = document.getElementById('aiChips');
+  const form  = document.getElementById('aiForm');
+  const input = document.getElementById('aiInput');
+  const teaser     = document.getElementById('aiTeaser');
+  const teaserText = document.getElementById('aiTeaserText');
+  const teaserX    = document.getElementById('aiTeaserX');
+  if (!fab || !panel) return;
+
+  const isZh = () => document.documentElement.classList.contains('lang-zh');
+
+  const TEASER = {
+    en: "Hi — I'm <strong>Inkling</strong>. Ask me anything about the academy ✒️",
+    zh: "你好 —— 我是<strong>墨童</strong>。关于学院尽管问我 ✒️",
+  };
+  let teaserTimer = null;
+  function showTeaser(){
+    if (panel.classList.contains('open') || fab.classList.contains('seen')) return;
+    teaserText.innerHTML = TEASER[isZh() ? 'zh' : 'en'];
+    teaser.classList.add('show');
+    teaserTimer = setTimeout(hideTeaser, 12000);   // fade on its own if ignored
+  }
+  function hideTeaser(){
+    clearTimeout(teaserTimer);
+    teaser.classList.remove('show');
+  }
+
+  // Static labels re-rendered on open so they follow the language toggle.
+  const LABELS = {
+    en: { name:'Inkling · 墨童', status:'Online', foot:'Your guide to Inkflow Academy',
+          placeholder:'Ask me anything…' },
+    zh: { name:'墨童 · Inkling', status:'在线', foot:'墨流书院 · 您的向导',
+          placeholder:'问我任何问题…' },
+  };
+
+  // Suggested starter questions (also drive keyword routing).
+  const CHIPS = {
+    en: ['Tell me about the academy', 'What courses do you offer?', 'Which brush suits a beginner?', 'How do I book?', 'Where are you & when are you open?'],
+    zh: ['介绍一下学院', '有哪些课程？', '新手适合哪种毛笔？', '如何预约？', '地址和营业时间？'],
+  };
+
+  // Greeting shown on first open.
+  const GREET = {
+    en: "Hi — I'm <strong>Inkling</strong> (墨童), your guide to Inkflow Academy. <strong>Ask me anything</strong> — our courses, the brushes, our story, prices, the store, or planning a visit. Where shall we begin? ✒️",
+    zh: "你好 —— 我是<strong>墨童</strong>（Inkling），墨流书院的向导。<strong>有任何问题都可以问我</strong> —— 课程、毛笔、我们的故事、价格、店铺，或如何来访。想从哪儿开始呢？✒️",
+  };
+
+  // Knowledge base — keyword → reply. Ordered specific → general; the matcher
+  // scores by keyword length, so precise topics win over broad ones.
+  const RULES = [
+    // ── ABOUT / STORY ──
+    { k:['founder','who founded','founded by','liu wen','liú wén','who started','who owns','owner','谁创','创始人','创办人'],
+      en:"The academy was founded by <strong>Master Liú Wén</strong> (刘文), a revered Sichuan calligrapher. It's grown into one of the region's most respected brush-arts centres, with six resident masters carrying the lineage forward.",
+      zh:"学院由<strong>刘文大师</strong>创办 —— 一位备受敬重的四川书法家。如今它已成为四川最受尊崇的笔墨艺术中心之一，六位常驻大师延续着这一传承。" },
+    { k:['history','when was it founded','when did you open','established','how old','since when','how long have you','年历史','成立','创立','什么时候开'],
+      en:"We were founded in <strong>Chengdu in 2004</strong> — that's <strong>21 years</strong> of daily teaching, six resident masters, and more than <strong>1,400 students</strong> guided from their first stroke onward.",
+      zh:"我们于<strong>2004 年在成都</strong>创立 —— 至今已教学 <strong>21 年</strong>，拥有六位常驻大师，指导过 <strong>1,400 多名</strong>学生，从第一笔起悉心相授。" },
+    { k:['how many students','number of students','students taught','学生人数','多少学生','多少学员'],
+      en:"More than <strong>1,400 students</strong> have trained with us since 2004 — from curious first-timers to working designers.",
+      zh:"自 2004 年以来，已有 <strong>1,400 多名学生</strong>在此研习 —— 从好奇的初学者到职业设计师。" },
+    { k:['teacher','teachers','master','masters','instructor','faculty','who teaches','laoshi','老师','师父','导师','谁教'],
+      en:"Six <strong>resident masters</strong> teach here, each rooted in a living lineage. Private critiques are led by <strong>Master Chen</strong>, with real-time red-ink corrections.",
+      zh:"六位<strong>常驻大师</strong>在此授课，皆承续鲜活的师承。一对一点评由<strong>陈大师</strong>亲授，当场以朱笔批改。" },
+    { k:['philosophy','motto','belief','why calligraphy','what do you believe','meaning of calligraphy','理念','格言','座右铭','宗旨'],
+      en:"Our guiding line is: <em>“To learn calligraphy, first learn to be human.”</em> Here the brush is daily practice — patience, balance, and presence, one stroke at a time.",
+      zh:"我们的箴言是：<em>「学书先学做人。」</em>在这里，笔是日日的修行 —— 一笔一画间，修的是耐心、平衡与专注。" },
+    { k:['name mean','meaning of the name','what does inkflow mean','what does 墨流','ink flow','墨流是什么意思','名字的意思'],
+      en:"<strong>墨流 (Mòliú) — “flowing ink.”</strong> It's the idea that ink, like water, finds its own path down the page; our craft is learning to guide that flow.",
+      zh:"<strong>墨流 —— 「流动的墨」。</strong>寓意墨如水，自会在纸上寻得去路；而书艺，正是学着去引导这份流动。" },
+    { k:['about the academy','tell me about','what is inkflow','what is this place','introduce','overview','介绍','关于','这是什么地方'],
+      en:"<strong>Inkflow Academy (墨流)</strong> is a Chinese calligraphy studio in Chengdu, founded 2004. Small groups, master teachers, and a courtyard ink-garden — from your very first stroke to refined script. Ask me about courses, brushes, the store, or visiting!",
+      zh:"<strong>墨流书院</strong>是成都的一家中国书法工作室，创立于 2004 年。小班教学、名师亲授，还有一座庭院墨园 —— 从第一笔到成熟书体皆可研习。课程、毛笔、店铺或来访事宜，尽管问我！" },
+
+    // ── LOCATION / VISIT / HOURS ──
+    { k:['hours','opening hours','when are you open','what time','open time','close time','when do you close','营业时间','几点','开门','关门'],
+      en:"We're open <strong>Tuesday–Sunday, 09:00–17:30</strong> (closed Mondays). Drop by during those hours — no appointment needed just to look around.",
+      zh:"营业时间为<strong>周二至周日 09:00–17:30</strong>（周一休息）。这段时间随时欢迎前来 —— 只是参观的话无需预约。" },
+    { k:['what days','which days','open on monday','closed monday','open weekends','周一','星期几','哪几天','周末开'],
+      en:"Open <strong>Tuesday through Sunday</strong>, 09:00–17:30. We're <strong>closed on Mondays</strong> — the studio's rest day.",
+      zh:"<strong>周二至周日</strong>开放，09:00–17:30。<strong>周一休息</strong> —— 是工作室的静养日。" },
+    { k:['parking','park','metro','subway','bus','how to get','how do i get','directions','transport','nearest station','停车','地铁','公交','怎么去','怎么走'],
+      en:"We're on <strong>Kuanzhai Alley (宽窄巷子)</strong> in central Chengdu — a walkable historic lane, easiest reached by metro or taxi to Qingyang District. Street parking is limited, so metro or taxi is best.",
+      zh:"我们位于成都市中心的<strong>宽窄巷子</strong> —— 一条适宜步行的历史街巷，乘地铁或打车至青羊区最为方便。周边路边车位有限，建议地铁或打车前来。" },
+    { k:['visit','drop in','come by','walk in','tour','see the studio','can i come','参观','拜访','来看看','逛'],
+      en:"Visitors are warmly welcome during opening hours (Tue–Sun, 09:00–17:30). Come watch a class, see the ink-garden, and browse the brush store — no booking needed just to visit.",
+      zh:"营业时间内（周二至周日 09:00–17:30）诚挚欢迎来访。可旁观课程、参观墨园、逛逛毛笔店 —— 只是参观无需预约。" },
+    { k:['where','location','address','located','find you','map','哪里','地址','在哪','位置'],
+      en:"You'll find us at <strong>21 Kuanzhai Alley, Qingyang District, Chengdu, Sichuan 610000</strong> — in the heart of the old city. Open Tue–Sun, 09:00–17:30.",
+      zh:"我们在<strong>四川省成都市青羊区宽窄巷子 21 号，邮编 610000</strong> —— 就在老城中心。营业时间周二至周日 09:00–17:30。" },
+    { k:['chengdu','sichuan','which city','what city','china','成都','四川','哪个城市'],
+      en:"We're in <strong>Chengdu, Sichuan</strong> — on historic Kuanzhai Alley in Qingyang District.",
+      zh:"我们位于<strong>四川成都</strong> —— 青羊区历史悠久的宽窄巷子。" },
+
+    // ── CONTACT ──
+    { k:['wechat','weixin','instagram','social','follow you','social media','微信','社交','关注'],
+      en:"Find us on WeChat: <strong>tongshu_academy</strong>. It's the quickest way to ask about upcoming class dates.",
+      zh:"微信搜索 <strong>tongshu_academy</strong> 即可找到我们，也是咨询近期开课日期最快的方式。" },
+    { k:['contact','phone','call','email','e-mail','reach you','phone number','联系','电话','邮箱','邮件','怎么联系'],
+      en:"You can reach us by email at <strong>hello@tongshuacademy.com</strong>, by phone at <strong>+86 28 8765 4321</strong>, or on WeChat <strong>tongshu_academy</strong>.",
+      zh:"可通过邮箱 <strong>hello@tongshuacademy.com</strong>、电话 <strong>+86 28 8765 4321</strong>，或微信 <strong>tongshu_academy</strong> 联系我们。" },
+
+    // ── COURSES ──
+    { k:['private critique','private lesson','one-on-one','one on one','1-on-1','private class','master chen','classical script class','私教','一对一','私人课'],
+      en:"<strong>Private Critique — Classical Script</strong> is a <strong>90-minute one-on-one</strong> with Master Chen, with red-ink corrections in real time. <strong>CN¥ 480</strong>. Ideal if you want focused, personal feedback.",
+      zh:"<strong>私人点评 —— 古典书体</strong>是与陈大师的 <strong>90 分钟一对一</strong>课程，当场朱笔批改。<strong>CN¥ 480</strong>。适合希望获得专注、个性化指导的学员。" },
+    { k:['group workshop','kai-shu','kaishu','kai shu','regular script','basics class','group class','群','楷书','基础课'],
+      en:"<strong>Group Workshop — Kai-Shu Basics</strong> is a <strong>3-hour</strong> class (max 12 people) covering foundational regular script, from horizontal strokes to full characters. <strong>CN¥ 320</strong>.",
+      zh:"<strong>小组工作坊 —— 楷书基础</strong>为 <strong>3 小时</strong>课程（最多 12 人），讲授楷书基本功，从横画到完整字形。<strong>CN¥ 320</strong>。" },
+    { k:['brand lettering','logotype','logo','weekend intensive','brand class','vector','commercial','design course','品牌','字体设计','周末班','商标'],
+      en:"<strong>Weekend — Brand Lettering</strong> is a <strong>2-day intensive</strong> (max 8 people) taking you from brush lettering to a vectorized logotype. Both days included, <strong>CN¥ 1,200</strong>.",
+      zh:"<strong>周末班 —— 品牌字体设计</strong>是 <strong>为期两天的强化课</strong>（最多 8 人），带你从毛笔字走向矢量标志字体。含两天课程，<strong>CN¥ 1,200</strong>。" },
+    { k:['beginner','first time','never done','no experience','prior experience','start from scratch','complete beginner','new to calligraphy','新手','初学','零基础','没经验'],
+      en:"No experience needed at all! Introductory workshops start with the most basic strokes before building to full characters. The <strong>Group Kai-Shu Basics</strong> class (CN¥ 320) is the perfect first step.",
+      zh:"完全不需要任何基础！入门工作坊从最基本的笔画教起，再逐步过渡到完整字形。<strong>楷书基础小组课</strong>（CN¥ 320）是理想的第一步。" },
+    { k:['class size','how many people','group size','maximum','how big','人数','多少人','班级大小'],
+      en:"Group workshops cap at <strong>12</strong>, the weekend intensive at <strong>8</strong>, and private critiques are <strong>one-on-one</strong> — small by design, so every brush gets attention.",
+      zh:"小组课最多 <strong>12 人</strong>，周末强化课最多 <strong>8 人</strong>，私人点评为<strong>一对一</strong> —— 有意保持小班，让每一支笔都被看见。" },
+    { k:['how long is the course','duration','how long does','length of','课程多长','时长','多久'],
+      en:"It depends on the course: the group workshop runs <strong>3 hours</strong>, private critiques <strong>90 minutes</strong>, and Brand Lettering is a full <strong>2-day</strong> weekend.",
+      zh:"视课程而定：小组工作坊 <strong>3 小时</strong>，私人点评 <strong>90 分钟</strong>，品牌字体设计则是完整的<strong>两天</strong>周末课。" },
+    { k:['kid','kids','child','children','age','minimum age','too old','too young','for adults','孩子','儿童','小孩','年龄','年纪'],
+      en:"Calligraphy welcomes every age — steady hands come with patience, not youth. Younger students and seniors alike train here; just mention who's joining when you book so we match the right class.",
+      zh:"书法不拘年龄 —— 稳健的手源于耐心，而非年岁。少年与长者皆在此研习；预约时说明参加者的情况，我们便能安排合适的班级。" },
+    { k:['levels','advanced','intermediate','experienced','curriculum','progression','higher level','等级','进阶','高级','水平','课程体系'],
+      en:"We teach from the ground up: foundational <strong>Kai-Shu</strong> for beginners, focused <strong>private critiques</strong> to refine your hand, and the <strong>Brand Lettering</strong> intensive for applied, design-oriented work.",
+      zh:"我们由浅入深：面向初学者的<strong>楷书基础</strong>、精修笔法的<strong>私人点评</strong>，以及偏应用与设计的<strong>品牌字体设计</strong>强化课。" },
+    { k:['schedule','when is the next','dates','availability','next class','timetable','when do classes','排课','时间表','什么时候上课','开课时间'],
+      en:"Class dates rotate through the season. The quickest way to see the next opening is to tap <em>“Book a Session”</em> or message us on WeChat, and we'll share the current schedule.",
+      zh:"开课日期按季度轮排。想知道最近的名额，最快的方式是点击<em>「Book a Session」</em>或加微信咨询，我们会告知当前的排课。" },
+    { k:['online','remote','virtual','zoom','distance learning','from home','网课','线上','远程','在家学'],
+      en:"Our classes are <strong>in-person in Chengdu</strong> — brush, ink, and paper are hard to teach through a screen. The ink-garden really has to be felt in person.",
+      zh:"我们的课程均为<strong>成都线下授课</strong> —— 笔、墨、纸的手感很难隔着屏幕传授，墨园更需亲身体会。" },
+    { k:['language','english','mandarin','speak english','taught in','in chinese','语言','英语','用什么语言','中文授课'],
+      en:"Classes are taught primarily in <strong>Mandarin</strong>, with English support available for visitors — the brush, happily, speaks a language of its own.",
+      zh:"课程主要以<strong>普通话</strong>授课，并为来访者提供英语协助 —— 好在，笔墨自有其通行的语言。" },
+    { k:['corporate','team building','team workshop','team session','company','private event','group booking','workshop for','party','团队','公司','活动','包场','团建'],
+      en:"Yes — we host private groups and team sessions. Reach out via <em>“Book a Session”</em> or WeChat with your group size and dates, and we'll tailor a workshop.",
+      zh:"可以 —— 我们承接私人团体与团队课程。请通过<em>「Book a Session」</em>或微信告知人数与日期，我们会量身安排工作坊。" },
+    { k:['gift','voucher','present','certificate','for someone','gift card','礼物','礼券','送人','代金券'],
+      en:"A calligraphy class makes a lovely gift. We can arrange gift bookings and brush sets — message us via <em>“Book a Session”</em> or WeChat and we'll sort the details.",
+      zh:"书法课是很雅致的礼物。我们可安排课程赠礼与毛笔套装 —— 通过<em>「Book a Session」</em>或微信联系我们即可安排细节。" },
+    { k:['course','courses','class','classes','lesson','lessons','program','workshop','learn','课程','课','班','学习'],
+      en:"We offer three paths: <strong>Group Kai-Shu Basics</strong> (CN¥ 320, 3 hrs), <strong>Private Critique — Classical Script</strong> (CN¥ 480, 90 min, one-on-one), and the <strong>Weekend Brand Lettering</strong> intensive (CN¥ 1,200, 2 days). See the <em>Courses</em> section above.",
+      zh:"我们提供三条路径：<strong>楷书基础小组课</strong>（CN¥ 320，3 小时）、<strong>私人点评 —— 古典书体</strong>（CN¥ 480，90 分钟，一对一），以及<strong>周末品牌字体设计</strong>强化课（CN¥ 1,200，两天）。详见上方<em>课程</em>板块。" },
+
+    // ── BOOKING / PAYMENT ──
+    { k:['cancel','reschedule','change my booking','refund','no-show','miss a class','policy','取消','改期','退款','爽约','政策'],
+      en:"Rescheduling needs <strong>24 hours notice for private critiques</strong> and <strong>48 hours for group workshops</strong>. No-shows aren't refunded.",
+      zh:"改期须提前通知：<strong>私人点评 24 小时</strong>，<strong>小组工作坊 48 小时</strong>。未到场者恕不退款。" },
+    { k:['how do i book','book','reserve','sign up','enroll','register','appointment','join a class','预约','报名','注册','怎么报名'],
+      en:"Tap <em>“Book a Session”</em> in the top navigation — it opens a pre-filled email to the studio. You can also book over WeChat (<strong>tongshu_academy</strong>) or by phone.",
+      zh:"点击顶部导航的<em>「Book a Session」</em> —— 会打开一封预填好、发给工作室的邮件。也可通过微信（<strong>tongshu_academy</strong>）或电话预约。" },
+    { k:['payment','pay','alipay','wechat pay','credit card','cash','how do i pay','支付','付款','支付宝','现金','刷卡'],
+      en:"Payment is arranged when you book — the usual local methods all work: WeChat Pay, Alipay, card, or cash on arrival.",
+      zh:"付款在预约时安排 —— 常见的本地方式均可：微信支付、支付宝、刷卡，或到店现金支付。" },
+    { k:['discount','deal','offer','promo','cheaper','package','student discount','优惠','折扣','套餐','便宜','有没有活动'],
+      en:"Seasonal offers and multi-class packages come and go — ask us on WeChat for what's current. Buying a brush set alongside a course is the usual way to save.",
+      zh:"季节性优惠与多课套餐时有推出 —— 具体可加微信咨询。报名课程时一并选购毛笔套装，是常见的省钱方式。" },
+    { k:['price','cost','how much','fee','pricing','expensive','rates','价格','多少钱','费用','贵','收费'],
+      en:"Courses run <strong>CN¥ 320</strong> (Group Kai-Shu), <strong>CN¥ 480</strong> (Private Critique), and <strong>CN¥ 1,200</strong> (Weekend Brand Lettering). Brush sets in the store range <strong>CN¥ 160–980</strong>.",
+      zh:"课程价格为 <strong>CN¥ 320</strong>（楷书小组课）、<strong>CN¥ 480</strong>（私人点评）与 <strong>CN¥ 1,200</strong>（周末品牌字体设计）。店内毛笔套装价格区间为 <strong>CN¥ 160–980</strong>。" },
+
+    // ── BRUSHES / MATERIALS ──
+    { k:['which brush','brush for beginner','recommend a brush','best brush','first brush','what brush should','推荐毛笔','哪种笔','新手用什么笔'],
+      en:"For beginners, start with a soft <strong>goat-hair</strong> brush — it's forgiving and teaches control. The <strong>Starter Set</strong> (CN¥ 280) has three goat-hair brushes, an inkstone, and a grinding rod: everything you need.",
+      zh:"新手建议从柔软的<strong>羊毫</strong>笔入手 —— 包容性强，利于练习控笔。<strong>入门套装</strong>（CN¥ 280）含三支羊毫笔、一方砚台和一根墨条，一应俱全。" },
+    { k:['goat hair','goat-hair','soft brush','softness','羊毫','软毫'],
+      en:"<strong>Goat hair</strong> is prized for its <strong>softness</strong> — it holds plenty of ink and rewards a patient, controlled hand. It's what we start beginners on.",
+      zh:"<strong>羊毫</strong>以<strong>柔软</strong>著称 —— 含墨量大，回馈耐心而稳定的运笔。这正是我们让新手入门时所用。" },
+    { k:['wolf hair','wolf-hair','springy','弹性','狼毫'],
+      en:"<strong>Wolf hair</strong> gives <strong>spring</strong> — a crisp, responsive bounce that snaps back, ideal for lively, expressive strokes.",
+      zh:"<strong>狼毫</strong>富有<strong>弹性</strong> —— 挺括、回弹灵敏，适合书写生动而有神采的笔画。" },
+    { k:['rabbit hair','rabbit-hair','precision','fine detail','紫毫','兔毫','精细'],
+      en:"<strong>Rabbit hair</strong> is all about <strong>precision</strong> — fine, firm, and exacting, for delicate detail and controlled fine lines.",
+      zh:"<strong>兔毫（紫毫）</strong>贵在<strong>精准</strong> —— 细而挺、锋芒分明，适合精微的细节与工整的细线。" },
+    { k:['brush care','clean','clean the brush','wash brush','maintain','how to care','dry the brush','store brush','保养','清洗毛笔','护理','怎么洗笔'],
+      en:"Rinse a brush in cool water until it runs clear, gently reshape the tip to a point, and hang it bristles-down to dry — never leave it standing in water. Treated well, a good brush lasts years.",
+      zh:"用清水冲洗至水色变清，轻轻将笔锋理顺成尖，然后笔头朝下悬挂晾干 —— 切勿让笔久泡水中。养护得当，好笔可用多年。" },
+    { k:['ink','inkstone','grind','grinding','ink stick','墨','墨条','砚台','研墨'],
+      en:"Traditional ink is <strong>ground on an inkstone</strong> — a little water, a slow circular grind of the ink stick, until it's rich and glossy. It's a meditative start to every session. A stone and grinding rod come in the Starter Set.",
+      zh:"传统墨是<strong>在砚台上研磨</strong>而成 —— 少许清水，缓缓打圈研墨，直至墨色浓亮。这是每次练习前静心的开端。入门套装中即含砚台与墨条。" },
+    { k:['paper','xuan','rice paper','what paper','宣纸','纸','用什么纸'],
+      en:"Calligraphy is written on <strong>xuan paper (宣纸)</strong> — an absorbent handmade paper that lets ink bloom just so. Beginners practise on plainer sheets before moving to fine xuan.",
+      zh:"书法书写于<strong>宣纸</strong>之上 —— 一种吸墨的手工纸，能让墨韵恰到好处地晕染。初学者先在较普通的纸上练习，再过渡到精制宣纸。" },
+    { k:['what should i bring','what do i need','bring to class','materials provided','supplies','need to bring','带什么','需要准备','材料','提供工具'],
+      en:"Bring <strong>nothing to your first class</strong> — all materials are provided. Afterward, we recommend a level-matched supply kit so you can keep practising at home.",
+      zh:"<strong>第一次上课什么都不用带</strong> —— 所有材料均已备好。之后我们会推荐与你水平相配的用具套装，方便在家继续练习。" },
+
+    // ── STORE / PRODUCTS ──
+    { k:['starter set','入门套装'],
+      en:"The <strong>Starter Set (CN¥ 280)</strong> includes three goat-hair brushes, an inkstone, and a grinding rod — the ideal first kit for a new calligrapher.",
+      zh:"<strong>入门套装（CN¥ 280）</strong>含三支羊毫笔、一方砚台和一根墨条 —— 是书法新手的理想首选。" },
+    { k:['bamboo master','bamboo set','master set','中级套装'],
+      en:"The <strong>Bamboo Master Set (CN¥ 560)</strong> has six mixed-hair brushes — wolf, goat, and rabbit blends — for calligraphers ready to explore different strokes.",
+      zh:"<strong>竹韵大师套装（CN¥ 560）</strong>含六支混毫笔 —— 狼毫、羊毫与兔毫的调配 —— 适合准备探索不同笔法的学书者。" },
+    { k:['festival collection','collector','lacquered','silk','brocade','收藏','节日套装'],
+      en:"The <strong>Festival Collection (CN¥ 980)</strong> is our collector's set: eight lacquered brushes, hand-wrapped in silk brocade — as much heirloom as tool.",
+      zh:"<strong>节庆典藏（CN¥ 980）</strong>是我们的收藏级套装：八支漆柄毛笔，以丝绸锦缎手工包裹 —— 既是工具，亦是传家之物。" },
+    { k:['market brush','handmade brush','unique brush','市场毛笔','手工笔'],
+      en:"<strong>Market Brushes (CN¥ 160)</strong> are handmade in Chengdu's brush market — each one slightly different, with real character. A lovely everyday brush.",
+      zh:"<strong>市集毛笔（CN¥ 160）</strong>手工制作于成都的毛笔市场 —— 每支略有不同，各具韵味。是很称手的日常用笔。" },
+    { k:['shipping','ship','deliver','delivery','post','international','send abroad','邮寄','快递','配送','发货','海外'],
+      en:"We ship across China, and internationally on request. After checkout, we'll confirm shipping options and cost with you by WeChat or email.",
+      zh:"我们提供中国境内配送，境外亦可按需寄送。下单后，我们会通过微信或邮件与你确认配送方式与费用。" },
+    { k:['return','exchange','warranty','faulty','退货','换货','保修'],
+      en:"If something arrives not-quite-right, reach out via WeChat or email and we'll make it good. Brushes are natural, handmade items, so slight variation is part of their charm — not a fault.",
+      zh:"若收到的商品有任何不妥，请通过微信或邮件联系，我们会妥善处理。毛笔为天然手工之物，细微差异是其韵味所在 —— 并非瑕疵。" },
+    { k:['cart','checkout','order','basket','buy online','how do i order','购物车','结账','下单','怎么买'],
+      en:"Add pieces to your cart from the <em>Store</em> section (the basket icon, top-right). Checkout composes an order-summary email to the studio, and we confirm the details with you.",
+      zh:"在<em>店铺</em>板块把作品加入购物车（右上角购物袋图标）。结账时会生成一封订单摘要邮件发给工作室，我们再与你确认细节。" },
+    { k:['store','shop','buy','purchase','products','for sale','merchandise','商店','店铺','购买','商品'],
+      en:"Our store carries four brush sets: <strong>Market Brushes (¥160)</strong>, <strong>Starter Set (¥280)</strong>, <strong>Bamboo Master Set (¥560)</strong>, and the <strong>Festival Collection (¥980)</strong>. Browse the <em>Store</em> section above.",
+      zh:"店内售有四款毛笔套装：<strong>市集毛笔（¥160）</strong>、<strong>入门套装（¥280）</strong>、<strong>竹韵大师套装（¥560）</strong>与<strong>节庆典藏（¥980）</strong>。请见上方<em>店铺</em>板块。" },
+
+    // ── PRACTICE / EXPERIENCE / MEDIA ──
+    { k:['ink garden','garden','flagstone','water brush','courtyard','evaporate','water calligraphy','水写','地书','庭院','墨园'],
+      en:"The <strong>ink-garden</strong> is our courtyard practice: you paint with a <strong>water brush on wet flagstone</strong>, and the strokes shimmer, then evaporate within minutes. It's open practice — no instructor needed, no pressure, just you and the stroke.",
+      zh:"<strong>墨园</strong>是我们的庭院练习：以<strong>清水笔在湿润的石板上</strong>书写，笔迹微光乍现，几分钟后便蒸发消散。这是自由练习 —— 无需老师，没有压力，只有你与这一笔。" },
+    { k:['practice','how do i practice','how to improve','get better','tips','improve my','练习','怎么练','如何提高','进步'],
+      en:"Calligraphy rewards <strong>daily practice</strong> over long sessions — even ten minutes a day. Start slow, watch balance and spacing more than speed, and use the ink-garden to loosen up without wasting paper.",
+      zh:"书法重在<strong>日日练习</strong>，胜过偶尔苦练 —— 哪怕每天十分钟。起笔要慢，多留意结构与布白而非快慢，并善用墨园松手，还不费纸。" },
+    { k:['what will i learn','what do you learn','outcome','after the course','will i be able','learn to write','能学到什么','学会什么','成果'],
+      en:"You'll go from <strong>basic strokes to full characters</strong>, learning how the brush moves, how ink behaves, and how to read balance in a character. Even one class shifts how you see written form.",
+      zh:"你将从<strong>基本笔画走向完整字形</strong>，体会运笔之法、墨性之变，以及如何品读一个字的结构平衡。哪怕只上一堂课，也会改变你看待书写形态的方式。" },
+    { k:['script','style','xing','running script','cursive','seal script','clerical','what styles','字体','书体','行书','草书','篆书','隶书','书法风格'],
+      en:"We ground students in <strong>Kai-Shu (regular script)</strong> first, then move toward classical and running scripts in private critiques, and applied brush-lettering in the Brand course. Master the regular hand and the flowing styles open up.",
+      zh:"我们先以<strong>楷书</strong>打基础，再于私人点评中走向古典与行书，并在品牌课中练习应用型的毛笔字。楷书功底扎实，行草诸体自会豁然开朗。" },
+    { k:['video','watch','footage','film','see inside','glimpse','视频','看看','影片','片子'],
+      en:"There's a short film in the <em>Know the Academy</em> section above — a glimpse inside the Chengdu studio: the space, the teachers, and the discipline of ink.",
+      zh:"上方<em>Know the Academy</em>板块有一段短片 —— 带你一窥成都工作室：空间、师者，以及墨的修行。" },
+    { k:['gallery','artwork','works','pieces','exhibit','see work','作品','画廊','展品'],
+      en:"The <em>Gallery</em> section above fans out a selection of works and studio photography — scroll up and hover to see them spread.",
+      zh:"上方<em>Gallery</em>板块以扇形展开了部分作品与工作室摄影 —— 向上滚动并悬停即可看它们铺展开来。" },
+    { k:['review','reviews','testimonial','feedback','what students say','rating','评价','评论','口碑','学员反馈'],
+      en:"You'll find student voices in the <em>Students</em> section above. One favourite: <em>“One class taught me more about visual balance than four years of design school.”</em>",
+      zh:"上方<em>Students</em>板块收录了学员心声。其中一句尤为动人：<em>「一堂课让我对视觉平衡的领悟，胜过四年的设计学院。」</em>" },
+
+    // ── SITE / META ──
+    { k:['music','sound','audio','song','theme song','background music','音乐','声音','背景音乐'],
+      en:"There's an ambient Chinese instrumental theme — toggle it with the <strong>speaker icon</strong> in the top nav (the one gently beating for your attention). 🎵",
+      zh:"页面有一段中式器乐氛围曲 —— 用顶部导航的<strong>喇叭图标</strong>即可开关（就是那个轻轻跳动、想引起你注意的按钮）。🎵" },
+    { k:['switch','switch language','change language','中文','english version','translate','语言切换','换语言','切换'],
+      en:"Use the <strong>CN / EN toggle</strong> in the top nav to switch the whole site between English and 中文 — and I'll follow along in whichever you pick.",
+      zh:"用顶部导航的 <strong>CN / EN 切换</strong>可让整站在英文与中文间切换 —— 无论你选哪种，我都会随之应答。" },
+    { k:['cursor','pointer','brush cursor','光标','鼠标','指针'],
+      en:"That gold <strong>brush cursor</strong> trailing your pointer? A little flourish of the house — leave a few calligraphy characters drifting as you move. ✒️",
+      zh:"跟着指针游走的那支金色<strong>毛笔光标</strong>？是本院的一点小巧思 —— 移动时会飘落几个书法字符。✒️" },
+    { k:['accessible','accessibility','wheelchair','disability','无障碍','轮椅','残障'],
+      en:"The Kuanzhai Alley studio is in a historic lane; please mention any access needs when you book and we'll make sure your visit is comfortable.",
+      zh:"宽窄巷子的工作室位于历史街巷之中；预约时请告知任何无障碍需求，我们会确保你的来访舒适顺畅。" },
+    { k:['photo','photograph','camera','take pictures','拍照','照相','能拍照'],
+      en:"Photos are welcome — the studio and ink-garden are lovely to capture. Just ask before photographing other students' work up close.",
+      zh:"欢迎拍照 —— 工作室与墨园都很上镜。只是近距离拍摄他人作品前，请先征得同意。" },
+    { k:['tea','food','drink','coffee','refreshment','茶','喝的','吃的'],
+      en:"Tea is part of the ritual here — a quiet cup often accompanies practice. There's no full café, but you'll rarely sit down to ink without one.",
+      zh:"茶是这里仪式的一部分 —— 一盏清茶常伴练习。虽无正式茶室，但提笔研墨时，几乎总有一杯相随。" },
+    { k:['what can you do','help','how can you help','what do you know','options','你能做什么','帮助','你会什么','能帮我'],
+      en:"I can tell you about our <strong>courses, prices, brushes and materials, the store, our story, visiting hours, and how to book</strong>. Try a suggestion below, or just ask in your own words!",
+      zh:"我可以介绍我们的<strong>课程、价格、毛笔与材料、店铺、学院故事、营业时间以及如何预约</strong>。可以点下面的建议，也可直接用自己的话问我！" },
+    { k:['who are you','what are you','your name','are you real','are you human','are you a bot','are you ai','你是谁','你是什么','你叫','机器人','真人'],
+      en:"I'm <strong>Inkling · 墨童</strong>, the studio's assistant and your guide to Inkflow Academy. Ask me anything about our courses, brushes, the store, our story, or planning a visit!",
+      zh:"我是<strong>墨童 · Inkling</strong>，本院的助手，也是你在墨流书院的向导。课程、毛笔、店铺、我们的故事或来访事宜，尽管问我！" },
+    { k:['joke','funny','make me laugh','something fun','笑话','有趣','讲个笑话'],
+      en:"Why did the calligrapher stay so calm? Because no matter what happened, they always knew how to <em>brush it off</em>. ✒️",
+      zh:"书法家为何总是气定神闲？因为不论遇上什么，他们都懂得如何「一笔带过」。✒️" },
+    { k:['bye','goodbye','see you','farewell','再见','拜拜','回见'],
+      en:"Farewell for now — may your strokes be steady and your ink rich. Come back anytime, and do visit us in Chengdu. 🖌️",
+      zh:"暂且别过 —— 愿你运笔沉稳，墨色丰盈。随时欢迎再来，也盼你亲临成都。🖌️" },
+    { k:['thank','thanks','thx','谢谢','感谢','多谢'],
+      en:"You're most welcome! Anything else about the academy, the brushes, or booking a class? I'm happy to help. 🙏",
+      zh:"不客气！关于学院、毛笔或预约课程，还有什么想了解的吗？我很乐意帮忙。🙏" },
+    { k:['hello','hey','good morning','good afternoon','good evening','greetings','你好','您好','早上好','嗨','哈喽'],
+      en:"Hello, and welcome to Inkflow! 🖌️ I'm Inkling. Ask me anything about the academy — courses, brushes, prices, our story, or visiting. Where would you like to start?",
+      zh:"你好，欢迎来到墨流！🖌️ 我是墨童。关于学院的任何事都可以问我 —— 课程、毛笔、价格、我们的故事或来访事宜。想从哪儿开始呢？" },
+  ];
+
+  const FALLBACK = {
+    en: "I'm not sure about that one yet — but <strong>ask me anything about the academy</strong>: our courses, the brushes, prices, our story, visiting, or the store. Try a suggestion below 👇",
+    zh: "这个问题我还答不上来 —— 不过<strong>关于学院的任何事都可以问我</strong>：课程、毛笔、价格、我们的故事、来访或店铺。可以试试下面的建议 👇",
+  };
+
+  let greeted = false;
+
+  function scrollDown(){ body.scrollTop = body.scrollHeight; }
+
+  function addMsg(html, who, tagged){
+    const el = document.createElement('div');
+    el.className = 'ai-msg ' + who;
+    if (who === 'bot' && tagged) {
+      el.innerHTML = '<span class="ai-tag">' + (isZh() ? '墨童' : 'Inkling') + '</span>' + html;
+    } else {
+      el.innerHTML = html;
+    }
+    body.appendChild(el);
+    scrollDown();
+  }
+
+  function showTyping(){
+    const t = document.createElement('div');
+    t.className = 'ai-typing';
+    t.id = 'aiTyping';
+    t.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(t);
+    scrollDown();
+  }
+  function hideTyping(){ const t = document.getElementById('aiTyping'); if (t) t.remove(); }
+
+  // Latin keywords match on word boundaries (so "hi" won't fire inside "which");
+  // CJK keywords match as substrings. Score by keyword length so the most
+  // specific rule (e.g. "private critique") beats a broad one (e.g. "course").
+  function keywordHit(q, k){
+    if (/[一-鿿]/.test(k)) return q.includes(k);
+    const esc = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // start on a word boundary; tolerate a plural "s"/"es" before the end boundary
+    return new RegExp('(^|[^a-z0-9])' + esc + '(s|es)?([^a-z0-9]|$)', 'i').test(q);
+  }
+  function bestRule(q){
+    let best = null, bestScore = 0;
+    for (const r of RULES){
+      let score = 0;
+      for (const k of r.k) if (keywordHit(q, k)) score += k.length;
+      if (score > bestScore){ bestScore = score; best = r; }
+    }
+    return best;
+  }
+
+  function reply(text){
+    const q = text.toLowerCase();
+    const hit = bestRule(q);
+    const msg = hit ? hit[isZh() ? 'zh' : 'en'] : FALLBACK[isZh() ? 'zh' : 'en'];
+    showTyping();
+    setTimeout(() => { hideTyping(); addMsg(msg, 'bot', true); }, 650 + Math.min(text.length * 18, 700));
+  }
+
+  function renderChips(){
+    chips.innerHTML = '';
+    CHIPS[isZh() ? 'zh' : 'en'].forEach(c => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ai-chip';
+      b.textContent = c;
+      b.addEventListener('click', () => send(c));
+      chips.appendChild(b);
+    });
+  }
+
+  function syncLabels(){
+    const L = LABELS[isZh() ? 'zh' : 'en'];
+    document.getElementById('aiName').textContent = L.name;
+    document.getElementById('aiStatus').textContent = L.status;
+    document.getElementById('aiFoot').textContent = L.foot;
+    input.placeholder = L.placeholder;
+    renderChips();
+  }
+
+  function send(text){
+    const t = (text || '').trim();
+    if (!t) return;
+    addMsg(t.replace(/</g,'&lt;'), 'user', false);
+    input.value = '';
+    reply(t);
+  }
+
+  // Close when clicking anywhere outside the panel (the page, the ink canvas, etc.).
+  function onDocClick(e){
+    if (!panel.contains(e.target) && !fab.contains(e.target)) close();
+  }
+
+  function open(){
+    hideTeaser();
+    panel.classList.add('open');
+    fab.classList.add('open', 'seen');
+    fab.setAttribute('aria-label', isZh() ? '关闭助手' : 'Close assistant');
+    syncLabels();
+    if (!greeted){
+      greeted = true;
+      showTyping();
+      setTimeout(() => { hideTyping(); addMsg(GREET[isZh() ? 'zh' : 'en'], 'bot', true); }, 500);
+    }
+    setTimeout(() => input.focus(), 350);
+    // Register on the next tick so the click that opened the panel doesn't close it.
+    setTimeout(() => document.addEventListener('click', onDocClick), 0);
+  }
+  function close(){
+    panel.classList.remove('open');
+    fab.classList.remove('open');
+    fab.setAttribute('aria-label', isZh() ? '打开墨童助手' : 'Open Inkling assistant');
+    document.removeEventListener('click', onDocClick);
+  }
+  function toggle(){ panel.classList.contains('open') ? close() : open(); }
+
+  fab.addEventListener('click', toggle);
+  document.getElementById('aiHeadClose').addEventListener('click', close);
+  form.addEventListener('submit', e => { e.preventDefault(); send(input.value); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('open')) close(); });
+
+  // Teaser: click opens the assistant; the × just dismisses it.
+  teaser.addEventListener('click', open);
+  teaser.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  teaserX.addEventListener('click', e => { e.stopPropagation(); fab.classList.add('seen'); hideTeaser(); });
+
+  // Keep labels/greeting language in sync if the visitor toggles EN/中文 while open.
+  document.getElementById('langToggle')?.addEventListener('click', () => {
+    if (panel.classList.contains('open')) setTimeout(syncLabels, 0);
+    if (teaser.classList.contains('show')) setTimeout(() => { teaserText.innerHTML = TEASER[isZh() ? 'zh' : 'en']; }, 0);
+  });
+
+  syncLabels();
+  // Pop the greeting bubble shortly after the page settles, drawing the eye to the button.
+  setTimeout(showTeaser, 2800);
 })();
 </script>
 
