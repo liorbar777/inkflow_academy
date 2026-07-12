@@ -669,7 +669,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
 /* ── COURSES ── */
 .courses{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
-.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;background:transparent}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:3rem;background:transparent}
 .cc{background:var(--paper);padding:2.5rem 2rem;position:relative;overflow:hidden;
   border:1px solid rgba(16,14,28,.1);
   transition:background .25s,box-shadow .25s,border-color .25s;cursor:pointer;user-select:none}
@@ -1303,6 +1303,14 @@ section,div[class*="section"]{position:relative;z-index:1}
         <h3 class="cc-name">Weekend — Brand Lettering</h3>
         <p class="cc-desc">Brush lettering to vectorized logotype. Both days included.</p>
         <p class="cc-price">CN¥ 1,200</p>
+      </div>
+      <div class="cc rv" style="transition-delay:.18s" data-course="Online — Live Brush Class" data-price="CN¥ 380">
+        <div class="cc-check"></div>
+        <div class="cc-zh">網</div>
+        <p class="cc-tag">Online · Live · Worldwide</p>
+        <h3 class="cc-name">Online — Live Brush Class</h3>
+        <p class="cc-desc">Join live from anywhere. Taught in English &amp; Mandarin, with a starter kit shipped to your door.</p>
+        <p class="cc-price">CN¥ 380</p>
       </div>
     </div>
     <p class="cc-selection rv" id="ccSelection"></p>
@@ -2357,6 +2365,9 @@ new IntersectionObserver(entries => {
     'cc-tag3':    '集训 · 2天 · 限8人',
     'cc-name3':   '周末集训——品牌字体设计',
     'cc-desc3':   '从毛笔字到矢量标志，两天全程包含。',
+    'cc-tag4':    '在线 · 直播 · 全球',
+    'cc-name4':   '在线直播 · 毛笔课',
+    'cc-desc4':   '全球皆可在线参与。中英双语授课，入门套装直邮到家。',
     'cc-reserve': '立即预约',
     'faq-ey':     '常见问题',
     'faq-h2':     '开始之前。',
@@ -2435,6 +2446,7 @@ new IntersectionObserver(entries => {
     'cc-tag1':  ['.cc-tag', 0], 'cc-name1': ['.cc-name', 0], 'cc-desc1': ['.cc-desc', 0],
     'cc-tag2':  ['.cc-tag', 1], 'cc-name2': ['.cc-name', 1], 'cc-desc2': ['.cc-desc', 1],
     'cc-tag3':  ['.cc-tag', 2], 'cc-name3': ['.cc-name', 2], 'cc-desc3': ['.cc-desc', 2],
+    'cc-tag4':  ['.cc-tag', 3], 'cc-name4': ['.cc-name', 3], 'cc-desc4': ['.cc-desc', 3],
     'faq-q1':   ['.faq-q', 0], 'faq-a1': ['.faq-a p', 0],
     'faq-q2':   ['.faq-q', 1], 'faq-a2': ['.faq-a p', 1],
     'faq-q3':   ['.faq-q', 2], 'faq-a3': ['.faq-a p', 2],
@@ -2645,8 +2657,8 @@ new IntersectionObserver(entries => {
 
   // Suggested starter questions (also drive keyword routing).
   const CHIPS = {
-    en: ['Tell me about the academy', 'What courses do you offer?', 'Which brush suits a beginner?', 'How do I book?', 'Where are you & when are you open?'],
-    zh: ['介绍一下学院', '有哪些课程？', '新手适合哪种毛笔？', '如何预约？', '地址和营业时间？'],
+    en: ['Tell me about the academy', 'What courses do you offer?', 'Do you offer online classes?', 'Which brush suits a beginner?', 'How do I book?'],
+    zh: ['介绍一下学院', '有哪些课程？', '有在线课程吗？', '新手适合哪种毛笔？', '如何预约？'],
   };
 
   // Greeting shown on first open.
@@ -2737,9 +2749,9 @@ new IntersectionObserver(entries => {
     { k:['schedule','when is the next','dates','availability','next class','timetable','when do classes','排课','时间表','什么时候上课','开课时间'],
       en:"Class dates rotate through the season. The quickest way to see the next opening is to tap <em>“Book a Session”</em> or message us on WeChat, and we'll share the current schedule.",
       zh:"开课日期按季度轮排。想知道最近的名额，最快的方式是点击<em>「Book a Session」</em>或加微信咨询，我们会告知当前的排课。" },
-    { k:['online','remote','virtual','zoom','distance learning','from home','网课','线上','远程','在家学'],
-      en:"Our classes are <strong>in-person in Chengdu</strong> — brush, ink, and paper are hard to teach through a screen. The ink-garden really has to be felt in person.",
-      zh:"我们的课程均为<strong>成都线下授课</strong> —— 笔、墨、纸的手感很难隔着屏幕传授，墨园更需亲身体会。" },
+    { k:['online course','online class','online lesson','live class','online','remote','virtual','zoom','distance learning','from home','international','overseas','outside china','abroad','not in china','anywhere','english speaker','在线课程','在线课','在线','网课','线上','远程','在家学','海外','国外','国际'],
+      en:"Yes! Our new <strong>Online — Live Brush Class (CN¥ 380)</strong> is open to students <strong>worldwide</strong> — live video tuition in <strong>English &amp; Mandarin</strong>, with a starter kit shipped to your door. You no longer need to be in Chengdu to learn with us.",
+      zh:"可以！我们新推出的<strong>在线直播 · 毛笔课（CN¥ 380）</strong>面向<strong>全球</strong>学员 —— <strong>中英双语</strong>直播授课，入门套装直邮到家。想跟我们学书，不必再身在成都。" },
     { k:['language','english','mandarin','speak english','taught in','in chinese','语言','英语','用什么语言','中文授课'],
       en:"Classes are taught primarily in <strong>Mandarin</strong>, with English support available for visitors — the brush, happily, speaks a language of its own.",
       zh:"课程主要以<strong>普通话</strong>授课，并为来访者提供英语协助 —— 好在，笔墨自有其通行的语言。" },
@@ -2750,8 +2762,8 @@ new IntersectionObserver(entries => {
       en:"A calligraphy class makes a lovely gift. We can arrange gift bookings and brush sets — message us via <em>“Book a Session”</em> or WeChat and we'll sort the details.",
       zh:"书法课是很雅致的礼物。我们可安排课程赠礼与毛笔套装 —— 通过<em>「Book a Session」</em>或微信联系我们即可安排细节。" },
     { k:['course','courses','class','classes','lesson','lessons','program','workshop','learn','课程','课','班','学习'],
-      en:"We offer three paths: <strong>Group Kai-Shu Basics</strong> (CN¥ 320, 3 hrs), <strong>Private Critique — Classical Script</strong> (CN¥ 480, 90 min, one-on-one), and the <strong>Weekend Brand Lettering</strong> intensive (CN¥ 1,200, 2 days). See the <em>Courses</em> section above.",
-      zh:"我们提供三条路径：<strong>楷书基础小组课</strong>（CN¥ 320，3 小时）、<strong>私人点评 —— 古典书体</strong>（CN¥ 480，90 分钟，一对一），以及<strong>周末品牌字体设计</strong>强化课（CN¥ 1,200，两天）。详见上方<em>课程</em>板块。" },
+      en:"We offer four paths: <strong>Group Kai-Shu Basics</strong> (CN¥ 320, 3 hrs), <strong>Private Critique — Classical Script</strong> (CN¥ 480, 90 min, one-on-one), the <strong>Weekend Brand Lettering</strong> intensive (CN¥ 1,200, 2 days), and — open to students worldwide — our <strong>Online Live Brush Class</strong> (CN¥ 380, in English &amp; Mandarin). See the <em>Courses</em> section above.",
+      zh:"我们提供四条路径：<strong>楷书基础小组课</strong>（CN¥ 320，3 小时）、<strong>私人点评 —— 古典书体</strong>（CN¥ 480，90 分钟，一对一）、<strong>周末品牌字体设计</strong>强化课（CN¥ 1,200，两天），以及面向全球学员的<strong>在线直播毛笔课</strong>（CN¥ 380，中英双语）。详见上方<em>课程</em>板块。" },
 
     // ── BOOKING / PAYMENT ──
     { k:['cancel','reschedule','change my booking','refund','no-show','miss a class','policy','取消','改期','退款','爽约','政策'],
@@ -2767,8 +2779,8 @@ new IntersectionObserver(entries => {
       en:"Seasonal offers and multi-class packages come and go — ask us on WeChat for what's current. Buying a brush set alongside a course is the usual way to save.",
       zh:"季节性优惠与多课套餐时有推出 —— 具体可加微信咨询。报名课程时一并选购毛笔套装，是常见的省钱方式。" },
     { k:['price','cost','how much','fee','pricing','expensive','rates','价格','多少钱','费用','贵','收费'],
-      en:"Courses run <strong>CN¥ 320</strong> (Group Kai-Shu), <strong>CN¥ 480</strong> (Private Critique), and <strong>CN¥ 1,200</strong> (Weekend Brand Lettering). Brush sets in the store range <strong>CN¥ 160–980</strong>.",
-      zh:"课程价格为 <strong>CN¥ 320</strong>（楷书小组课）、<strong>CN¥ 480</strong>（私人点评）与 <strong>CN¥ 1,200</strong>（周末品牌字体设计）。店内毛笔套装价格区间为 <strong>CN¥ 160–980</strong>。" },
+      en:"Courses run <strong>CN¥ 320</strong> (Group Kai-Shu), <strong>CN¥ 380</strong> (Online Live Class), <strong>CN¥ 480</strong> (Private Critique), and <strong>CN¥ 1,200</strong> (Weekend Brand Lettering). Brush sets in the store range <strong>CN¥ 160–980</strong>.",
+      zh:"课程价格为 <strong>CN¥ 320</strong>（楷书小组课）、<strong>CN¥ 380</strong>（在线直播课）、<strong>CN¥ 480</strong>（私人点评）与 <strong>CN¥ 1,200</strong>（周末品牌字体设计）。店内毛笔套装价格区间为 <strong>CN¥ 160–980</strong>。" },
 
     // ── BRUSHES / MATERIALS ──
     { k:['which brush','brush for beginner','recommend a brush','best brush','first brush','what brush should','推荐毛笔','哪种笔','新手用什么笔'],

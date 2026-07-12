@@ -34,7 +34,7 @@ No framework, no bundler, no package manager.
 
 The site ships with a built-in **conversational assistant** that behaves like a real website concierge — it greets visitors, answers questions, and guides them toward booking or the store.
 
-- **Knowledge-base driven.** Inkling answers from a curated, bilingual knowledge base of **~70 topics** covering the whole academy: courses and pricing, the three class formats, brushes and materials (goat / wolf / rabbit hair), the store products, the ink-garden, our story and teachers, visiting hours and location, contact, booking, and cancellation policy. Every answer is grounded in the site's real content.
+- **Knowledge-base driven.** Inkling answers from a curated, bilingual knowledge base of **~70 topics** covering the whole academy: courses and pricing, the four class formats — including the **worldwide Online Live Brush Class** for students outside Chengdu — brushes and materials (goat / wolf / rabbit hair), the store products, the ink-garden, our story and teachers, visiting hours and location, contact, booking, and cancellation policy. Every answer is grounded in the site's real content.
 - **Natural-language matching.** A lightweight matcher resolves each question to the best topic using word-boundary keyword matching, plural tolerance, and length-weighted scoring, so specific questions (*"tell me about the private critique"*) beat broad ones (*"what courses?"*).
 - **Fully bilingual (EN / 中文).** Every reply, label, greeting, and suggestion follows the site's language toggle — even mid-conversation.
 - **Noticeable by design.** A gold floating launcher (bottom-right) with a soft attention ping, plus a greeting bubble that slides in shortly after load inviting *"Ask me anything about the academy."*
@@ -66,7 +66,7 @@ Hero → Ink Garden ("The Practice") → Video → Our Story → Gallery → Sto
 - **Bilingual EN / 中文** — the nav toggle swaps copy in place; Chinese text activates `Noto Serif SC` via a `lang-zh` class.
 - **Ambient music** — a looped Chinese instrumental theme (`audio/theme.mp3`), gently faded in, toggled from the nav; the button beats like a heart for the first 10 seconds to draw the eye.
 - **Shopping cart** — add/remove/adjust store items with a running total and slide-out panel. Checkout composes an order-summary `mailto:`.
-- **Course reservation** — the "Book a Session" CTA opens a prefilled `mailto:`.
+- **Course reservation** — four class formats (Group Kai-Shu, Private Critique, Weekend Brand Lettering, and a **worldwide Online Live Brush Class**), reserved via a prefilled `mailto:` from the "Book a Session" CTA.
 - **Live ink background** — a canvas flow-field animation plus spawned calligraphy characters.
 - **Scroll reveals** — driven by `IntersectionObserver`, including a fanning gallery interaction.
 - **Custom brush cursor** — a gold SVG brush replaces the default pointer.
