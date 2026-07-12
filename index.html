@@ -228,15 +228,43 @@ html.lang-zh .sp-tag,html.lang-zh .cc-tag,html.lang-zh .ey{font-family:'Noto Ser
 .h-ey{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--seal);margin-bottom:.8rem;
   opacity:0;transform:translateY(10px);transition:opacity .4s .18s,transform .4s .18s}
 .h-school{font-family:'Noto Serif SC',serif;font-size:clamp(2rem,4vw,3.6rem);font-weight:700;
-  color:var(--paper);margin-bottom:.6rem;letter-spacing:.02em;line-height:1.15;
-  opacity:0;transform:translateY(12px);transition:opacity .65s,transform .65s}
+  color:var(--paper);margin-bottom:.6rem;letter-spacing:.02em;line-height:1.15}
 .h-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,1.6vw,1.35rem);
-  font-weight:300;font-style:italic;line-height:1.5;color:rgba(240,232,213,.7);text-shadow:none;
-  opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s cubic-bezier(.16,1,.3,1)}
+  font-weight:300;font-style:italic;line-height:1.5;color:rgba(240,232,213,.7);text-shadow:none}
 .h-ti strong{color:var(--gold);font-weight:400;font-style:normal}
 
+/* ── SELF-DRAWING BRUSH HERO — the 墨 paints itself in gold, top-to-bottom, on load ── */
+.brush-hero{position:absolute;inset:0;z-index:5;pointer-events:none;
+  display:flex;align-items:center;justify-content:center}
+.brush-stage{position:relative;transform:translate(-6%,-3vh)}   /* nudge into the gap between title and pen */
+.ink-bloom{position:absolute;top:50%;left:50%;width:64vh;height:64vh;border-radius:50%;
+  transform:translate(-50%,-50%) scale(.5);opacity:0;
+  background:radial-gradient(circle,rgba(201,160,40,.30),rgba(201,160,40,.06) 45%,transparent 66%);
+  filter:blur(26px)}
+/* clip-path reveals the solid character top-to-bottom, like a brush laying ink */
+.brush-svg{position:relative;display:block;width:min(52vh,58vw);height:auto;overflow:visible;
+  clip-path:inset(0 0 100% 0)}
+.brush-svg text{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:360px}
+.brush-ink{fill:none;stroke:rgba(201,160,40,.55);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+.brush-fill{fill:var(--gold);opacity:.5;filter:drop-shadow(0 4px 22px rgba(0,0,0,.4)) drop-shadow(0 0 16px rgba(201,160,40,.25))}
 
+@keyframes brushWipe{to{clip-path:inset(0 0 0% 0)}}
+@keyframes brushBloom{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}
+  55%{opacity:.85}100%{transform:translate(-50%,-50%) scale(1);opacity:.5}}
 
+.brush-hero.go .brush-svg {animation:brushWipe 1.9s cubic-bezier(.6,0,.35,1) forwards}
+.brush-hero.go .ink-bloom {animation:brushBloom 2s ease-out forwards}
+
+/* The title paints on with the SAME brush-wipe as the 墨 icon (top-to-bottom) */
+.hero-text{clip-path:inset(0 0 100% 0)}
+.hero-text.painting{animation:brushWipe 1.9s cubic-bezier(.6,0,.35,1) forwards}
+
+/* Reduced motion (or no JS): show the finished character + title immediately, no drawing */
+@media (prefers-reduced-motion: reduce){
+  .brush-svg{clip-path:none}
+  .ink-bloom{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+  .hero-text{clip-path:none}
+}
 
 /* ── SHARED ── */
 section,div[class*="section"]{position:relative;z-index:1}
@@ -975,6 +1003,16 @@ section,div[class*="section"]{position:relative;z-index:1}
     <img width="286" height="342" decoding="async" src="images/pen-nib.jpg" alt="Gold fountain pen"
          onerror="this.parentElement.style.display='none'">
   </div>
+  <!-- self-drawing brush centerpiece — the 墨 writes itself in gold on load -->
+  <div class="brush-hero" id="brushHero" aria-hidden="true">
+    <div class="brush-stage">
+      <div class="ink-bloom"></div>
+      <svg class="brush-svg" viewBox="0 0 400 400">
+        <text class="brush-ink"  x="200" y="322" text-anchor="middle">墨</text>
+        <text class="brush-fill" x="200" y="322" text-anchor="middle">墨</text>
+      </svg>
+    </div>
+  </div>
   <div class="hero-text" id="heroText">
     <p class="h-school" id="hSchool">墨流 · Inkflow Academy of Calligraphy</p>
     <h1 class="h-ti" id="hTi">Where the brush<br>still <strong>teaches</strong><br>the hand</h1>
@@ -1649,17 +1687,24 @@ setInterval(spawnBgChar, 480);
 
 
 // ── HERO ENTRANCE ──
+// The 墨 brush character writes itself first; the title follows once the ink lands.
 window.addEventListener('load', () => {
   const img = new Image();
   img.onload = () => { heroBg.style.backgroundImage = "url('images/ink-orchid.jpg')"; heroBg.style.opacity = '.55'; };
   img.src = 'images/ink-orchid.jpg';
-  // Class photo fades in first — sets atmosphere
-  // Pen + text appear together — one moment, same fade
-  setTimeout(() => {
-    penPhoto.style.opacity = '1';
-    hSchool.style.opacity = '1'; hSchool.style.transform = 'none';
-    hTi.style.opacity    = '1'; hTi.style.transform    = 'none';
-  }, 360);
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const brush  = document.getElementById('brushHero');
+  const revealText = () => { heroText.classList.add('painting'); };   // brush-wipe, same as the 墨 icon
+  const revealPen = () => { penPhoto.style.opacity = '1'; };
+
+  if (reduce) { revealPen(); revealText(); return; }   // no drawing — show everything right away
+
+  // Brush, title, and pen all enter together the moment the stroke begins.
+  const start = () => { if (brush) brush.classList.add('go'); revealPen(); revealText(); };
+  // Wait for the brush font so the character draws in its true form (no fallback flash).
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(start, 60));
+  else setTimeout(start, 200);
 });
 
 
@@ -1725,7 +1770,7 @@ function _cancelMomentum() {
   _mVy = 0;
 }
 (function(){
-  const FRICTION = 0.93, MAX = 65, MIN = 0.3;   // 62 → 65 (+5% faster)
+  const FRICTION = 0.93, MAX = 78, MIN = 0.3;   // 65 → 78 (+20% faster)
   function loop() {
     _mVy *= FRICTION;
     if (Math.abs(_mVy) < MIN) { _mVy = 0; _mRaf = null; return; }
@@ -1738,7 +1783,7 @@ function _cancelMomentum() {
     let d = e.deltaY;
     if (e.deltaMode === 1) d *= 40;
     if (e.deltaMode === 2) d *= window.innerHeight;
-    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.162));  // 0.154 → 0.162 (+5% faster per tick)
+    _mVy = Math.max(-MAX, Math.min(MAX, _mVy + d * 0.1944));  // 0.162 → 0.1944 (+20% faster per tick)
     if (!_mRaf) _mRaf = requestAnimationFrame(loop);
   }, { passive: false });
 })();
