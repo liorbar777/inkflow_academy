@@ -68,7 +68,7 @@ inkflow_academy/
 
 A single vertical scroll:
 
-Hero → Ink Garden ("The Practice") → **Practice pad ("Try the Brush")** → Video → Our Story → Gallery → Store → Testimonials → Courses → FAQ → Footer — with the **Inkling assistant** floating above every section.
+Hero → Ink Garden ("The Practice") → **Practice pad ("Try the Brush")** → Video → Our Story → **Meet the Masters** → Gallery → Store → Testimonials → Courses → FAQ → Footer — with the **Inkling assistant** floating above every section.
 
 ## Features
 
