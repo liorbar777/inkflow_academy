@@ -855,6 +855,11 @@ section,div[class*="section"]{position:relative;z-index:1}
 .pr-guide{z-index:1;transition:opacity .3s}
 .pr-guide.hide{opacity:0}
 .pr-draw{z-index:2;touch-action:none}
+/* one-time "brush paints a stroke, then fades" demo hint */
+.pr-demo-c{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;opacity:0;transition:opacity .55s ease}
+.pr-demo-brush{position:absolute;top:0;left:0;z-index:4;pointer-events:none;opacity:0;
+  transform:translate(-3px,-42px);transition:opacity .55s ease;will-change:left,top}
+.pr-demo-brush svg{display:block;width:30px;height:48px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}
 .pr-side{display:flex;flex-direction:column;gap:1.15rem;max-width:280px}
 .pr-choose{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);margin:0}
 .pr-chars{display:flex;flex-wrap:wrap;gap:.5rem}
@@ -886,7 +891,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 .masters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3.2rem}
 .mc{background:none;border:none;padding:0}
 /* first view: the four gather inward to their places (the reverse of an expand) */
-.masters-grid .mc{opacity:0;transition:transform 2s cubic-bezier(.16,1,.3,1),opacity 1.4s ease}
+.masters-grid .mc{opacity:0;transition:transform 3.4s cubic-bezier(.16,1,.3,1),opacity 2s ease}
 .masters-grid .mc:nth-child(1){transform:translateX(-72px) scale(1.06)}
 .masters-grid .mc:nth-child(2){transform:translateX(-26px) scale(1.03)}
 .masters-grid .mc:nth-child(3){transform:translateX(26px) scale(1.03)}
@@ -1159,6 +1164,10 @@ html.lang-zh .mc-bio{font-family:'Noto Serif SC',serif}
       <div class="pr-pad" id="prPad">
         <canvas class="pr-guide" id="prGuide"></canvas>
         <canvas class="pr-draw" id="prDraw" aria-label="Calligraphy practice canvas"></canvas>
+        <canvas class="pr-demo-c" id="prDemo" aria-hidden="true"></canvas>
+        <div class="pr-demo-brush" id="prDemoBrush" aria-hidden="true">
+          <svg viewBox="0 0 32 52"><line x1="28" y1="2" x2="10" y2="36" stroke="#C9A028" stroke-width="4" stroke-linecap="round" opacity="0.9"/><rect x="8" y="34" width="6" height="5" rx="1" fill="#7A4F00" transform="rotate(-35 11 36)"/><path d="M6 40 L14 37 L5 52 Z" fill="#C9A028"/><path d="M8 44 L11 41 L6 52 Z" fill="#F0D878" opacity="0.5"/></svg>
+        </div>
       </div>
       <div class="pr-side">
         <p class="pr-choose" id="prChoose">Choose a character</p>
@@ -2939,6 +2948,9 @@ new IntersectionObserver(entries => {
   if (!pad || !gc || !dc) return;
   const gctx = gc.getContext('2d');
   const dctx = dc.getContext('2d');
+  const demoC = document.getElementById('prDemo');
+  const demoBrush = document.getElementById('prDemoBrush');
+  const dmx = demoC && demoC.getContext('2d');
 
   const CHARS = ['永','道','心','山','水','書'];
   let cur = '永';
@@ -2982,8 +2994,42 @@ new IntersectionObserver(entries => {
     W = r.width; H = r.height;
     if (!W || !H) return;
     fit(gc); fit(dc);           // resets each context transform for the new pixel size
+    if (demoC) fit(demoC);
     drawGuide();
     clearDraw();
+  }
+
+  // ── one-time demo: a brush paints a stroke (~2s), then it fades out ──
+  let demoPlayed = false;
+  function demoPoint(t){                       // cubic bezier across the pad, in CSS px
+    const p0={x:.28*W,y:.34*H}, p1={x:.44*W,y:.26*H}, p2={x:.58*W,y:.52*H}, p3={x:.72*W,y:.72*H};
+    const m=1-t;
+    return { x:m*m*m*p0.x+3*m*m*t*p1.x+3*m*t*t*p2.x+t*t*t*p3.x,
+             y:m*m*m*p0.y+3*m*m*t*p1.y+3*m*t*t*p2.y+t*t*t*p3.y };
+  }
+  function playDemo(){
+    if (demoPlayed || !dmx) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!W || !H) setup();
+    if (!W || !H) return;
+    demoPlayed = true;
+    dmx.clearRect(0,0,W,H);
+    dmx.strokeStyle='rgba(20,16,28,.82)'; dmx.lineCap='round'; dmx.lineJoin='round';
+    demoC.style.opacity='1'; demoBrush.style.opacity='1';
+    const DUR=1900; const start=performance.now(); let prev=demoPoint(0);
+    (function frame(now){
+      const t=Math.min(1,(now-start)/DUR);
+      const p=demoPoint(t);
+      dmx.lineWidth=5+9*Math.sin(t*Math.PI);   // thicker through the slow middle
+      dmx.beginPath(); dmx.moveTo(prev.x,prev.y); dmx.lineTo(p.x,p.y); dmx.stroke();
+      prev=p;
+      demoBrush.style.left=p.x+'px'; demoBrush.style.top=p.y+'px';
+      if (t<1) requestAnimationFrame(frame);
+      else setTimeout(() => {                  // hold a beat, then fade out and clear
+        demoC.style.opacity='0'; demoBrush.style.opacity='0';
+        setTimeout(() => dmx.clearRect(0,0,W,H), 600);
+      }, 300);
+    })(start);
   }
 
   // ── brush: slower strokes lay thicker ink ──
@@ -3052,6 +3098,16 @@ new IntersectionObserver(entries => {
   }
   let rt = null;
   new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(setup, 150); }).observe(pad);
+
+  // Play the brush demo once, when the pad first scrolls into view.
+  if ('IntersectionObserver' in window) {
+    const dio = new IntersectionObserver((es) => {
+      if (es[0].isIntersecting) { setTimeout(playDemo, 250); dio.disconnect(); }
+    }, { threshold: 0.45 });
+    dio.observe(pad);
+  } else {
+    setTimeout(playDemo, 800);
+  }
 })();
 
 // ── AI ASSISTANT (墨童 · Inkling) ──
