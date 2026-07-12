@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>墨流 Inkflow Academy — Chinese Calligraphy & Brush Arts · Chengdu</title>
+<meta name="description" content="Inkflow Academy (墨流) — a Chinese calligraphy and brush-arts studio in Chengdu since 2004. In-person courses, private critiques, and a worldwide online live class. Learn the brush from master teachers.">
+<meta name="theme-color" content="#0C0A18">
+<!-- Favicon: the 墨 seal in gold on ink -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230C0A18'/><text x='16' y='24' font-size='22' text-anchor='middle' fill='%23C9A028' font-family='serif'>墨</text></svg>">
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="墨流 Inkflow Academy — Chinese Calligraphy & Brush Arts">
+<meta property="og:description" content="A Chinese calligraphy studio in Chengdu since 2004. Courses, private critiques, and a worldwide online live class.">
+<meta property="og:image" content="images/ink-orchid.jpg">
+<meta property="og:locale" content="en">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="墨流 Inkflow Academy — Chinese Calligraphy & Brush Arts">
+<meta name="twitter:description" content="A Chinese calligraphy studio in Chengdu since 2004. Courses, private critiques, and a worldwide online live class.">
+<meta name="twitter:image" content="images/ink-orchid.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Hanken+Grotesk:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
@@ -669,7 +684,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
 /* ── COURSES ── */
 .courses{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
-.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;background:transparent}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:3rem;background:transparent}
 .cc{background:var(--paper);padding:2.5rem 2rem;position:relative;overflow:hidden;
   border:1px solid rgba(16,14,28,.1);
   transition:background .25s,box-shadow .25s,border-color .25s;cursor:pointer;user-select:none}
@@ -945,7 +960,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div id="heroBg"></div>
   <video class="hero-video" autoplay muted loop playsinline preload="auto"><source src="video/motion.mp4" type="video/mp4"></video>
   <div id="heroBgOverlay"></div>
-  <img id="classPhoto" src="images/calligraphy-class.jpg" alt="Calligraphy class"
+  <img width="756" height="463" decoding="async" fetchpriority="high" id="classPhoto" src="images/calligraphy-class.jpg" alt="Calligraphy class"
        onerror="this.style.display='none'">
   <!-- ink-wash base blobs — cool smoke tones -->
   <div class="ink-wash" style="width:55vw;height:42vw;left:-8%;top:5%;background:radial-gradient(ellipse,rgba(90,95,110,1),transparent);animation:iw0 26s ease-in-out infinite"></div>
@@ -957,7 +972,7 @@ section,div[class*="section"]{position:relative;z-index:1}
   <div class="hfc" id="hfc4">墨</div>
   <!-- pen — static -->
   <div class="pen-photo" id="penPhoto">
-    <img src="images/pen-nib.jpg" alt="Gold fountain pen"
+    <img width="286" height="342" decoding="async" src="images/pen-nib.jpg" alt="Gold fountain pen"
          onerror="this.parentElement.style.display='none'">
   </div>
   <div class="hero-text" id="heroText">
@@ -989,7 +1004,7 @@ section,div[class*="section"]{position:relative;z-index:1}
     <a href="#courses" class="btn btn-outline-d" style="align-self:flex-start">View courses →</a>
   </div>
   <div class="slot" style="min-height:75vh;border-radius:0">
-    <img src="images/brushes-bowl.jpg" alt="Calligraphy brushes in bowl" onerror="this.style.display='none'">
+    <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-bowl.jpg" alt="Calligraphy brushes in bowl" onerror="this.style.display='none'">
     <div class="slot-bg"></div>
     <div class="slot-zh" style="font-size:14rem">道</div>
   </div>
@@ -1006,10 +1021,10 @@ section,div[class*="section"]{position:relative;z-index:1}
     <div class="vs-player rv" id="vsPlayer">
       <div class="vs-thumb" id="vsThumb">
         <div class="vs-slides" id="vsSlides">
-          <img class="vs-slide active" src="images/calligraphy-class.jpg"                        alt="Calligraphy class">
-          <img class="vs-slide sharp"  src="images/academy-practice.png"        alt="Academy practice">
-          <img class="vs-slide"        src="images/studio-session.png"        alt="Studio session">
-          <img class="vs-slide"        src="images/landscape.jpg"                                 alt="Tong Shu Academy">
+          <img width="756" height="463" decoding="async" loading="lazy" class="vs-slide active" src="images/calligraphy-class.jpg"                        alt="Calligraphy class">
+          <img width="325" height="215" decoding="async" loading="lazy" class="vs-slide sharp"  src="images/academy-practice.png"        alt="Academy practice">
+          <img width="202" height="221" decoding="async" loading="lazy" class="vs-slide"        src="images/studio-session.png"        alt="Studio session">
+          <img width="736" height="736" decoding="async" loading="lazy" class="vs-slide"        src="images/landscape.jpg"                                 alt="Tong Shu Academy">
         </div>
         <div class="vs-grad"></div>
         <div class="vs-center-btn" id="vsCenterBtn">
@@ -1073,75 +1088,75 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <!-- edges — darker/muted -->
       <div class="gi" data-cat="brushes all" data-title="The Craftsman">
-        <img src="images/artisan-brush.png" alt="Artisan brush resting in stone dust">
+        <img width="692" height="550" decoding="async" loading="lazy" src="images/artisan-brush.png" alt="Artisan brush resting in stone dust">
         <div class="gi-over"><span class="gi-zh">匠</span><p class="gi-name">The Craftsman</p><p class="gi-meta">Artisan Tools</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="The Bowl">
-        <img src="images/brushes-ceramic-bowl.png" alt="Calligraphy brushes in ceramic bowl">
+        <img width="429" height="437" decoding="async" loading="lazy" src="images/brushes-ceramic-bowl.png" alt="Calligraphy brushes in ceramic bowl">
         <div class="gi-over"><span class="gi-zh">器</span><p class="gi-name">The Bowl</p><p class="gi-meta">Studio Tools</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="Laid to Rest">
-        <img src="images/brushes-on-stone.png" alt="Brushes laid on stone">
+        <img width="463" height="365" decoding="async" loading="lazy" src="images/brushes-on-stone.png" alt="Brushes laid on stone">
         <div class="gi-over"><span class="gi-zh">靜</span><p class="gi-name">Laid to Rest</p><p class="gi-meta">After Practice</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Classical Script">
-        <img src="images/calligraphy-scroll.png" alt="Classical calligraphy scroll">
+        <img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.png" alt="Classical calligraphy scroll">
         <div class="gi-over"><span class="gi-zh">書</span><p class="gi-name">Classical Script</p><p class="gi-meta">Tang Dynasty</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Spring Character">
-        <img src="images/writing-spring-character.png" alt="Hand writing spring character on red paper">
+        <img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.png" alt="Hand writing spring character on red paper">
         <div class="gi-over"><span class="gi-zh">春</span><p class="gi-name">Spring Character</p><p class="gi-meta">Calligraphy · Red Paper</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <!-- centre — most colourful, highest z-index -->
       <div class="gi" data-cat="brushes all" data-title="Colour & Form">
-        <img src="images/paint-dipped-brushes.png" alt="Vibrant paint-dipped brushes on white background">
+        <img width="438" height="584" decoding="async" loading="lazy" src="images/paint-dipped-brushes.png" alt="Vibrant paint-dipped brushes on white background">
         <div class="gi-over"><span class="gi-zh">彩</span><p class="gi-name">Colour & Form</p><p class="gi-meta">The Brushes</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="academy all" data-title="Lantern Street · Chengdu">
-        <img src="images/chinese-lanterns.png" alt="Chinese lanterns glowing orange red and blue">
+        <img width="826" height="458" decoding="async" loading="lazy" src="images/chinese-lanterns.png" alt="Chinese lanterns glowing orange red and blue">
         <div class="gi-over"><span class="gi-zh">燈</span><p class="gi-name">Lantern Street</p><p class="gi-meta">Chengdu · Festival</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <!-- fading back out -->
       <div class="gi" data-cat="brushes all" data-title="Dragon Brush">
-        <img src="images/dragon-brush.png" alt="Decorative dragon brush resting on red calligraphy paper">
+        <img width="886" height="504" decoding="async" loading="lazy" src="images/dragon-brush.png" alt="Decorative dragon brush resting on red calligraphy paper">
         <div class="gi-over"><span class="gi-zh">筆</span><p class="gi-name">Dragon Brush</p><p class="gi-meta">Chengdu Market</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="Market Colours">
-        <img src="images/beaded-brushes.png" alt="Colorful beaded calligraphy brushes">
+        <img width="249" height="344" decoding="async" loading="lazy" src="images/beaded-brushes.png" alt="Colorful beaded calligraphy brushes">
         <div class="gi-over"><span class="gi-zh">色</span><p class="gi-name">Market Colours</p><p class="gi-meta">Chengdu Market</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="calligraphy all" data-title="Ink · Smoke · Art">
-        <img src="images/ink-smoke.png" alt="Ink smoke calligraphy art">
+        <img width="346" height="606" decoding="async" loading="lazy" src="images/ink-smoke.png" alt="Ink smoke calligraphy art">
         <div class="gi-over"><span class="gi-zh">氣</span><p class="gi-name">Ink · Smoke · Art</p><p class="gi-meta">Calligraphy</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="brushes all" data-title="The Craft">
-        <img src="images/brush-fan.png" alt="Fan of calligraphy brushes">
+        <img width="473" height="409" decoding="async" loading="lazy" src="images/brush-fan.png" alt="Fan of calligraphy brushes">
         <div class="gi-over"><span class="gi-zh">藝</span><p class="gi-name">The Craft</p><p class="gi-meta">Traditional Brushes</p></div>
         <span class="gi-expand">↗</span>
       </div>
 
       <div class="gi" data-cat="academy all" data-title="The Practice — Tong Shu Academy">
-        <img src="images/calligraphy-class.jpg" alt="Students practicing calligraphy" style="object-position:center 30%">
+        <img width="756" height="463" decoding="async" loading="lazy" src="images/calligraphy-class.jpg" alt="Students practicing calligraphy" style="object-position:center 30%">
         <div class="gi-over"><span class="gi-zh">習</span><p class="gi-name">The Practice</p><p class="gi-meta">Academy · Chengdu</p></div>
         <span class="gi-expand">↗</span>
       </div>
@@ -1163,7 +1178,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv">
         <div class="sp-img-wrap">
-          <img class="sp-img" src="images/brushes-bowl.jpg" alt="Starter brush set in ceramic bowl">
+          <img width="429" height="437" decoding="async" loading="lazy" class="sp-img" src="images/brushes-bowl.jpg" alt="Starter brush set in ceramic bowl">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Beginner</span>
@@ -1178,7 +1193,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.06s">
         <div class="sp-img-wrap">
-          <img class="sp-img" src="images/brush-fan.png" alt="Fan of traditional calligraphy brushes">
+          <img width="473" height="409" decoding="async" loading="lazy" class="sp-img" src="images/brush-fan.png" alt="Fan of traditional calligraphy brushes">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Intermediate</span>
@@ -1193,7 +1208,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.12s">
         <div class="sp-img-wrap">
-          <img class="sp-img" src="images/colorful-brushes.jpg" alt="Collection of colourful calligraphy brushes">
+          <img width="249" height="344" decoding="async" loading="lazy" class="sp-img" src="images/colorful-brushes.jpg" alt="Collection of colourful calligraphy brushes">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Collector</span>
@@ -1208,7 +1223,7 @@ section,div[class*="section"]{position:relative;z-index:1}
 
       <div class="sp rv" style="transition-delay:.18s">
         <div class="sp-img-wrap">
-          <img class="sp-img" src="images/brushes-on-stone.png" alt="Brushes resting on stone after practice">
+          <img width="463" height="365" decoding="async" loading="lazy" class="sp-img" src="images/brushes-on-stone.png" alt="Brushes resting on stone after practice">
         </div>
         <div class="sp-body">
           <span class="sp-tag">Specialty</span>
@@ -1239,10 +1254,10 @@ section,div[class*="section"]{position:relative;z-index:1}
       <!-- behind: students' work, revealed by dragging -->
       <div class="tst-works">
         <span class="tst-works-tag">Students' work</span>
-        <figure><img src="images/writing-spring-character.png" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
-        <figure><img src="images/calligraphy-scroll.png" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
-        <figure><img src="images/ink-orchid.jpg" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
-        <figure><img src="images/landscape.jpg" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
+        <figure><img width="800" height="520" decoding="async" loading="lazy" src="images/writing-spring-character.png" alt="Student calligraphy — Spring"><figcaption>Spring · 春</figcaption></figure>
+        <figure><img width="283" height="273" decoding="async" loading="lazy" src="images/calligraphy-scroll.png" alt="Student calligraphy scroll"><figcaption>Hanging scroll</figcaption></figure>
+        <figure><img width="346" height="606" decoding="async" loading="lazy" src="images/ink-orchid.jpg" alt="Student ink painting — orchid"><figcaption>Orchid study</figcaption></figure>
+        <figure><img width="736" height="736" decoding="async" loading="lazy" src="images/landscape.jpg" alt="Student ink landscape"><figcaption>Ink landscape</figcaption></figure>
       </div>
       <!-- front: the testimonials (clipped by the divider) -->
       <div class="tst-cover" id="tstCover">
@@ -1303,6 +1318,14 @@ section,div[class*="section"]{position:relative;z-index:1}
         <h3 class="cc-name">Weekend — Brand Lettering</h3>
         <p class="cc-desc">Brush lettering to vectorized logotype. Both days included.</p>
         <p class="cc-price">CN¥ 1,200</p>
+      </div>
+      <div class="cc rv" style="transition-delay:.18s" data-course="Online — Live Brush Class" data-price="CN¥ 380">
+        <div class="cc-check"></div>
+        <div class="cc-zh">網</div>
+        <p class="cc-tag">Online · Live · Worldwide</p>
+        <h3 class="cc-name">Online — Live Brush Class</h3>
+        <p class="cc-desc">Join live from anywhere. Taught in English &amp; Mandarin, with a starter kit shipped to your door.</p>
+        <p class="cc-price">CN¥ 380</p>
       </div>
     </div>
     <p class="cc-selection rv" id="ccSelection"></p>
@@ -1598,14 +1621,30 @@ setInterval(spawnBgChar, 480);
   // 30 puffs — enough for density, low enough for smooth 60fps
   const puffs = Array.from({length: 30}, () => new Puff());
 
-  let t = 0;
+  // Skip the animation entirely for visitors who prefer reduced motion.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let t = 0, running = false, rafId = null;
   function loop() {
     cx.clearRect(0, 0, W, H);
     t += 0.016;
     puffs.forEach(p => { p.step(t); p.draw(); });
-    requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(loop);
   }
-  requestAnimationFrame(loop);
+  function start() { if (!running) { running = true; rafId = requestAnimationFrame(loop); } }
+  function stop()  { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = null; }
+
+  if (!reduceMotion) {
+    // Only animate while the hero is actually on screen — save CPU/battery once scrolled past.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        ([e]) => (e.isIntersecting ? start() : stop()),
+        { threshold: 0 }
+      ).observe(heroStage);
+    } else {
+      start();
+    }
+  }
 })();
 
 
@@ -2357,6 +2396,9 @@ new IntersectionObserver(entries => {
     'cc-tag3':    '集训 · 2天 · 限8人',
     'cc-name3':   '周末集训——品牌字体设计',
     'cc-desc3':   '从毛笔字到矢量标志，两天全程包含。',
+    'cc-tag4':    '在线 · 直播 · 全球',
+    'cc-name4':   '在线直播 · 毛笔课',
+    'cc-desc4':   '全球皆可在线参与。中英双语授课，入门套装直邮到家。',
     'cc-reserve': '立即预约',
     'faq-ey':     '常见问题',
     'faq-h2':     '开始之前。',
@@ -2435,6 +2477,7 @@ new IntersectionObserver(entries => {
     'cc-tag1':  ['.cc-tag', 0], 'cc-name1': ['.cc-name', 0], 'cc-desc1': ['.cc-desc', 0],
     'cc-tag2':  ['.cc-tag', 1], 'cc-name2': ['.cc-name', 1], 'cc-desc2': ['.cc-desc', 1],
     'cc-tag3':  ['.cc-tag', 2], 'cc-name3': ['.cc-name', 2], 'cc-desc3': ['.cc-desc', 2],
+    'cc-tag4':  ['.cc-tag', 3], 'cc-name4': ['.cc-name', 3], 'cc-desc4': ['.cc-desc', 3],
     'faq-q1':   ['.faq-q', 0], 'faq-a1': ['.faq-a p', 0],
     'faq-q2':   ['.faq-q', 1], 'faq-a2': ['.faq-a p', 1],
     'faq-q3':   ['.faq-q', 2], 'faq-a3': ['.faq-a p', 2],
@@ -2476,6 +2519,7 @@ new IntersectionObserver(entries => {
     lang = l;
     const isZh = l === 'zh';
     document.documentElement.classList.toggle('lang-zh', isZh);
+    document.documentElement.lang = isZh ? 'zh-CN' : 'en';   // keep <html lang> correct for a11y/SEO
     const _btn = document.getElementById('langToggle');
     _btn.querySelector('.lang-flag').textContent = isZh ? '🇬🇧' : '🇨🇳';
     _btn.querySelector('.lang-code').textContent = isZh ? 'EN' : 'CN';
@@ -2503,7 +2547,7 @@ new IntersectionObserver(entries => {
 
   const audio = new Audio(SRC);
   audio.loop     = true;
-  audio.preload  = 'auto';
+  audio.preload  = 'none';   // don't fetch the 3.7 MB theme until the visitor presses play
   audio.volume   = 0;
 
   function fadeTo(target, ms, onDone) {
@@ -2562,6 +2606,9 @@ new IntersectionObserver(entries => {
 
 // ── CHINESE CHARACTER MOUSE TRAIL ──
 (function(){
+  // Respect reduced-motion — no decorative trail for visitors who opt out.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const CHARS = '永書法墨筆道心禪雅風水山竹蘭梅松雲霧月星花鳥龍鳳韻意境神氣力美善';
   const GOLD  = 'rgba(201,160,40,';
   let last = 0;
@@ -2645,8 +2692,8 @@ new IntersectionObserver(entries => {
 
   // Suggested starter questions (also drive keyword routing).
   const CHIPS = {
-    en: ['Tell me about the academy', 'What courses do you offer?', 'Which brush suits a beginner?', 'How do I book?', 'Where are you & when are you open?'],
-    zh: ['介绍一下学院', '有哪些课程？', '新手适合哪种毛笔？', '如何预约？', '地址和营业时间？'],
+    en: ['Tell me about the academy', 'What courses do you offer?', 'Do you offer online classes?', 'Which brush suits a beginner?', 'How do I book?'],
+    zh: ['介绍一下学院', '有哪些课程？', '有在线课程吗？', '新手适合哪种毛笔？', '如何预约？'],
   };
 
   // Greeting shown on first open.
@@ -2737,9 +2784,9 @@ new IntersectionObserver(entries => {
     { k:['schedule','when is the next','dates','availability','next class','timetable','when do classes','排课','时间表','什么时候上课','开课时间'],
       en:"Class dates rotate through the season. The quickest way to see the next opening is to tap <em>“Book a Session”</em> or message us on WeChat, and we'll share the current schedule.",
       zh:"开课日期按季度轮排。想知道最近的名额，最快的方式是点击<em>「Book a Session」</em>或加微信咨询，我们会告知当前的排课。" },
-    { k:['online','remote','virtual','zoom','distance learning','from home','网课','线上','远程','在家学'],
-      en:"Our classes are <strong>in-person in Chengdu</strong> — brush, ink, and paper are hard to teach through a screen. The ink-garden really has to be felt in person.",
-      zh:"我们的课程均为<strong>成都线下授课</strong> —— 笔、墨、纸的手感很难隔着屏幕传授，墨园更需亲身体会。" },
+    { k:['online course','online class','online lesson','live class','online','remote','virtual','zoom','distance learning','from home','international','overseas','outside china','abroad','not in china','anywhere','english speaker','在线课程','在线课','在线','网课','线上','远程','在家学','海外','国外','国际'],
+      en:"Yes! Our new <strong>Online — Live Brush Class (CN¥ 380)</strong> is open to students <strong>worldwide</strong> — live video tuition in <strong>English &amp; Mandarin</strong>, with a starter kit shipped to your door. You no longer need to be in Chengdu to learn with us.",
+      zh:"可以！我们新推出的<strong>在线直播 · 毛笔课（CN¥ 380）</strong>面向<strong>全球</strong>学员 —— <strong>中英双语</strong>直播授课，入门套装直邮到家。想跟我们学书，不必再身在成都。" },
     { k:['language','english','mandarin','speak english','taught in','in chinese','语言','英语','用什么语言','中文授课'],
       en:"Classes are taught primarily in <strong>Mandarin</strong>, with English support available for visitors — the brush, happily, speaks a language of its own.",
       zh:"课程主要以<strong>普通话</strong>授课，并为来访者提供英语协助 —— 好在，笔墨自有其通行的语言。" },
@@ -2750,8 +2797,8 @@ new IntersectionObserver(entries => {
       en:"A calligraphy class makes a lovely gift. We can arrange gift bookings and brush sets — message us via <em>“Book a Session”</em> or WeChat and we'll sort the details.",
       zh:"书法课是很雅致的礼物。我们可安排课程赠礼与毛笔套装 —— 通过<em>「Book a Session」</em>或微信联系我们即可安排细节。" },
     { k:['course','courses','class','classes','lesson','lessons','program','workshop','learn','课程','课','班','学习'],
-      en:"We offer three paths: <strong>Group Kai-Shu Basics</strong> (CN¥ 320, 3 hrs), <strong>Private Critique — Classical Script</strong> (CN¥ 480, 90 min, one-on-one), and the <strong>Weekend Brand Lettering</strong> intensive (CN¥ 1,200, 2 days). See the <em>Courses</em> section above.",
-      zh:"我们提供三条路径：<strong>楷书基础小组课</strong>（CN¥ 320，3 小时）、<strong>私人点评 —— 古典书体</strong>（CN¥ 480，90 分钟，一对一），以及<strong>周末品牌字体设计</strong>强化课（CN¥ 1,200，两天）。详见上方<em>课程</em>板块。" },
+      en:"We offer four paths: <strong>Group Kai-Shu Basics</strong> (CN¥ 320, 3 hrs), <strong>Private Critique — Classical Script</strong> (CN¥ 480, 90 min, one-on-one), the <strong>Weekend Brand Lettering</strong> intensive (CN¥ 1,200, 2 days), and — open to students worldwide — our <strong>Online Live Brush Class</strong> (CN¥ 380, in English &amp; Mandarin). See the <em>Courses</em> section above.",
+      zh:"我们提供四条路径：<strong>楷书基础小组课</strong>（CN¥ 320，3 小时）、<strong>私人点评 —— 古典书体</strong>（CN¥ 480，90 分钟，一对一）、<strong>周末品牌字体设计</strong>强化课（CN¥ 1,200，两天），以及面向全球学员的<strong>在线直播毛笔课</strong>（CN¥ 380，中英双语）。详见上方<em>课程</em>板块。" },
 
     // ── BOOKING / PAYMENT ──
     { k:['cancel','reschedule','change my booking','refund','no-show','miss a class','policy','取消','改期','退款','爽约','政策'],
@@ -2767,8 +2814,8 @@ new IntersectionObserver(entries => {
       en:"Seasonal offers and multi-class packages come and go — ask us on WeChat for what's current. Buying a brush set alongside a course is the usual way to save.",
       zh:"季节性优惠与多课套餐时有推出 —— 具体可加微信咨询。报名课程时一并选购毛笔套装，是常见的省钱方式。" },
     { k:['price','cost','how much','fee','pricing','expensive','rates','价格','多少钱','费用','贵','收费'],
-      en:"Courses run <strong>CN¥ 320</strong> (Group Kai-Shu), <strong>CN¥ 480</strong> (Private Critique), and <strong>CN¥ 1,200</strong> (Weekend Brand Lettering). Brush sets in the store range <strong>CN¥ 160–980</strong>.",
-      zh:"课程价格为 <strong>CN¥ 320</strong>（楷书小组课）、<strong>CN¥ 480</strong>（私人点评）与 <strong>CN¥ 1,200</strong>（周末品牌字体设计）。店内毛笔套装价格区间为 <strong>CN¥ 160–980</strong>。" },
+      en:"Courses run <strong>CN¥ 320</strong> (Group Kai-Shu), <strong>CN¥ 380</strong> (Online Live Class), <strong>CN¥ 480</strong> (Private Critique), and <strong>CN¥ 1,200</strong> (Weekend Brand Lettering). Brush sets in the store range <strong>CN¥ 160–980</strong>.",
+      zh:"课程价格为 <strong>CN¥ 320</strong>（楷书小组课）、<strong>CN¥ 380</strong>（在线直播课）、<strong>CN¥ 480</strong>（私人点评）与 <strong>CN¥ 1,200</strong>（周末品牌字体设计）。店内毛笔套装价格区间为 <strong>CN¥ 160–980</strong>。" },
 
     // ── BRUSHES / MATERIALS ──
     { k:['which brush','brush for beginner','recommend a brush','best brush','first brush','what brush should','推荐毛笔','哪种笔','新手用什么笔'],
@@ -3019,6 +3066,31 @@ new IntersectionObserver(entries => {
   // Pop the greeting bubble shortly after the page settles, drawing the eye to the button.
   setTimeout(showTeaser, 2800);
 })();
+</script>
+
+<!-- Structured data — helps search engines understand the studio -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["EducationalOrganization", "LocalBusiness"],
+  "name": "Inkflow Academy of Calligraphy",
+  "alternateName": "墨流",
+  "description": "A Chinese calligraphy and brush-arts studio in Chengdu, founded 2004. Courses, private critiques, and a worldwide online live class.",
+  "foundingDate": "2004",
+  "image": "images/ink-orchid.jpg",
+  "email": "hello@tongshuacademy.com",
+  "telephone": "+86-28-8765-4321",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "21 Kuanzhai Alley, Qingyang District",
+    "addressLocality": "Chengdu",
+    "addressRegion": "Sichuan",
+    "postalCode": "610000",
+    "addressCountry": "CN"
+  },
+  "openingHours": "Tu-Su 09:00-17:30",
+  "knowsLanguage": ["en", "zh-CN"]
+}
 </script>
 
 </body>
