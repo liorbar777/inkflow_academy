@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="images/calligraphy-scroll.png" alt="Inkflow Academy" width="130">
+  <img src="images/calligraphy-scroll.webp" alt="Inkflow Academy" width="130">
 
   # 墨流 · Inkflow Academy of Calligraphy
 </div>
