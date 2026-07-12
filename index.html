@@ -826,13 +826,24 @@ section,div[class*="section"]{position:relative;z-index:1}
 }
 /* ── PRACTICE PAD — trace a character, clear, redraw ── */
 .practice{background:var(--paper);padding:6rem 0;position:relative;overflow:hidden}
+.practice .container{position:relative;z-index:1}
 .pr-lead{max-width:540px;margin:1.1rem auto 0;font-size:.95rem;line-height:1.7;color:var(--muted);text-align:center}
 .pr-wrap{display:flex;gap:2.6rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:3rem}
 .pr-pad{position:relative;width:min(420px,86vw);aspect-ratio:1/1;flex:none;
-  background:linear-gradient(180deg,#fbf6ea,#efe6d0);
-  border:1px solid rgba(16,14,28,.14);border-radius:6px;
-  box-shadow:0 26px 60px rgba(16,14,28,.20),inset 0 0 0 1px rgba(255,255,255,.45);
+  background:radial-gradient(120% 120% at 30% 20%,#fdf9ef,#efe4cd 72%,#e7dabf);
+  border-radius:3px;
+  box-shadow:0 30px 70px rgba(16,14,28,.26),
+    0 0 0 1px rgba(16,14,28,.16),                        /* crisp inner edge */
+    0 0 0 8px #efe5cf,                                    /* paper mount */
+    0 0 0 9px rgba(201,160,40,.45),                       /* gold hairline frame */
+    inset 0 0 44px rgba(120,90,30,.12);                   /* soft paper vignette */
   overflow:hidden;touch-action:none;cursor:crosshair}
+/* a real calligrapher's red seal, stamped in the corner */
+.pr-pad::after{content:'墨';position:absolute;right:16px;bottom:16px;z-index:3;pointer-events:none;
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:1.5rem;line-height:1;
+  color:#f7efe0;background:var(--seal);border-radius:4px;transform:rotate(-3deg);
+  box-shadow:0 3px 10px rgba(212,59,32,.45)}
 .pr-guide,.pr-draw{position:absolute;inset:0;width:100%;height:100%;display:block}
 .pr-guide{z-index:1;transition:opacity .3s}
 .pr-guide.hide{opacity:0}
@@ -2231,7 +2242,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     }
   }
 
-  ['inkGarden','gallery','our-story','courses','faq'].forEach(id => {
+  ['inkGarden','practice','gallery','our-story','courses','faq'].forEach(id => {
     const s = document.getElementById(id);
     if (s) addCols(s);
   });
@@ -2805,15 +2816,13 @@ new IntersectionObserver(entries => {
     gctx.setLineDash([5,5]);
     gctx.strokeStyle = 'rgba(212,59,32,.22)';
     gctx.beginPath();
-    gctx.moveTo(W/2, m); gctx.lineTo(W/2, H-m);
-    gctx.moveTo(m, H/2); gctx.lineTo(W-m, H/2);
-    gctx.moveTo(m, m);   gctx.lineTo(W-m, H-m);
-    gctx.moveTo(W-m, m); gctx.lineTo(m, H-m);
+    gctx.moveTo(W/2, m); gctx.lineTo(W/2, H-m);   // vertical centre line
+    gctx.moveTo(m, H/2); gctx.lineTo(W-m, H/2);   // horizontal centre line
     gctx.stroke();
     gctx.restore();
-    // reference character — faint ink to trace over
+    // reference character — faint warm ink to trace over
     const size = Math.min(W, H) * 0.74;
-    gctx.fillStyle = 'rgba(16,14,28,.17)';
+    gctx.fillStyle = 'rgba(28,18,12,.16)';
     gctx.font = size + "px 'Ma Shan Zheng','Noto Serif SC',serif";
     gctx.textAlign = 'center';
     gctx.textBaseline = 'middle';

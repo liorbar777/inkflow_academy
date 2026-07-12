@@ -4,7 +4,7 @@
   # 墨流 · Inkflow Academy of Calligraphy
 </div>
 
-A single-page marketing site for **Inkflow Academy**, a Chinese calligraphy and brush-arts studio in Chengdu. The entire experience — layout, styling, animation, storefront, ambient audio, and an **AI chat assistant** — lives in one self-contained `index.html` with no build step and no backend.
+A single-page marketing site for **Inkflow Academy**, a Chinese calligraphy and brush-arts studio in Chengdu. The entire experience — a self-drawing brush hero, layout, styling, animation, storefront, ambient audio, an **AI chat assistant**, and an **interactive calligraphy practice pad** — lives in one self-contained `index.html` with no build step and no backend.
 
 ## Quick start
 
@@ -42,6 +42,16 @@ The site ships with a built-in **conversational assistant** that behaves like a 
 
 All of it is self-contained vanilla JS — no API keys, no backend, no external calls.
 
+## Interactive practice pad — "Try the Brush"
+
+A hands-on **calligraphy practice canvas** that lets visitors do the thing the academy teaches — trace a character, clear it, and try again.
+
+- **Trace a reference character** shown faintly over an authentic **米字格 practice grid**, framed like a matted scroll with a gold hairline and a stamped red seal.
+- **Brush-like strokes** — the ink **thickens on slower strokes** and thins on fast ones, mimicking real brush pressure.
+- **Pick from six characters** (永 道 心 山 水 書), **Clear** to redraw, and toggle the guide on/off to test yourself freestyle.
+- Works with **mouse and touch** (pointer capture, `touch-action:none`), crisp on retina displays (device-pixel-ratio scaling), and re-fits on resize.
+- Fully bilingual and self-contained — two stacked `<canvas>` layers (guide + ink), no libraries.
+
 ## Project structure
 
 ```
@@ -58,10 +68,12 @@ inkflow_academy/
 
 A single vertical scroll:
 
-Hero → Ink Garden ("The Practice") → Video → Our Story → Gallery → Store → Testimonials → Courses → FAQ → Footer — with the **Inkling assistant** floating above every section.
+Hero → Ink Garden ("The Practice") → **Practice pad ("Try the Brush")** → Video → Our Story → Gallery → Store → Testimonials → Courses → FAQ → Footer — with the **Inkling assistant** floating above every section.
 
 ## Features
 
+- **Self-drawing brush hero** — the 墨 character paints itself in gold (clip-path reveal) as the title brushes on in unison.
+- **Interactive practice pad ("Try the Brush")** — trace a reference character with a pressure-like brush, clear, and redraw. See the section above.
 - **AI chat assistant (Inkling / 墨童)** — a bilingual, knowledge-base-backed site concierge answering ~70 topics about the academy. See the section above.
 - **Bilingual EN / 中文** — the nav toggle swaps copy in place; Chinese text activates `Noto Serif SC` via a `lang-zh` class.
 - **Ambient music** — a looped Chinese instrumental theme (`audio/theme.mp3`), gently faded in, toggled from the nav; the button beats like a heart for the first 10 seconds to draw the eye.
